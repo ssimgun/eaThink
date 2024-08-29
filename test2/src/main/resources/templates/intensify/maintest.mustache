@@ -1,0 +1,99 @@
+{{>layouts/headermain}}
+
+<!-- Banner -->
+<section id="banner">
+    <div class="content">
+        <h1>삐용삐용 오늘의 밥 도둑</h1>
+        <!--  banner > content > 이미지 div  -->
+        <div class="flex-item image fit round"
+             style="display: flex;
+            justify-content: center;
+            align-items: center;">
+            <img src='https://recipe1.ezmember.co.kr/cache/recipe/2024/06/21/e5c809195db5ee799b590f3ba4ed49a51.jpg'
+                 alt="" style="width:360px; height:360px; max-height: 50%;"></div>
+        <p> 여기에 음식 소개 및 설명 이리메라 느낌 아시죠</p>
+        <ul class="actions">
+            <li><a href="#one" class="button scrolly">도둑 잡기</a></li>
+        </ul>
+    </div>
+</section>
+
+<!-- chat -->
+<section id="one" class="wrapper">
+    <div class="inner flex flex-3">
+        <div id="chatbot-container">
+            <div class="chatbot">
+                <ul class="chatbox">
+                    <li class="chat incoming">
+                        <span class="material-symbols-outlined">smart_toy</span>
+                        <p>안녕하세요👋 <br>힘들어도 식사는 맛있게 하시와요</p>
+                    </li>
+                </ul>
+                <div class="chat-input">
+                    <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+                    <span id="send-btn" class="material-symbols-rounded">send</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- review -->
+<!--디폴트 값은 지도만 있는 상태로 해야 하며 챗봇에서 식당 추천 및 메뉴 추천 시 내용이 뜨게 해야함-->
+<section id="two" class="wrapper style1 special">
+    <div class="inner">
+        <h2>아방궁</h2>
+        <figure>
+            <blockquote>
+                "음식이 맛있어요! 친절해요! 단체모임 하기 좋아요! "
+            </blockquote>
+            <footer>
+                <cite class="author">강남</cite>
+                <cite class="company">중식당</cite>
+            </footer>
+        </figure>
+    </div>
+    <div class="inner">
+        <figure>
+            <div class="image fit">
+                <img src="/images/map_sample.jpg" alt="" width="418" height="200"></div>
+            <div class="content">
+        </figure>
+    </div>
+</section>
+
+<!-- game -->
+<section id="three" class="wrapper">
+    <div class="inner flex flex-3">
+<!--        게임-이상형월드컵-->
+        <div class="flex-item box">
+            <div class="image fit">
+                <img src="/images/foodcup.jpg" alt="" width="418" height="200"></div>
+            <div class="content">
+                <h3>음식 이상형월드컵!</h3>
+                <p>메뉴가 고민 될 때! 생각 나는 음식이 없을 때! 쩔!</p>
+            </div>
+        </div>
+<!--            게임-사다리타기-->
+        <div class="flex-item box">
+            <div class="image fit">
+                <img src="/images/사다리타기.jpg" alt="" width="418" height="200"></div>
+            <div class="content">
+                <h3>사다리 타기</h3>
+                <p>먹고 싶은 음식이 다를 때! 어쩔! 아무거나 드세요</p>
+            </div>
+        </div>
+<!--        게임 -룰렛-->
+        <div class="flex-item box">
+            <div class="image fit">
+                <img src="/images/룰렛.jpg" alt="" width="418" height="200"></div>
+            <div class="content">
+                <h3>누가 더 많이 있을까</h3>
+                <p>어떤 음식의 레시피가 더 많을까 맞춰보세요~</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{{>layouts/footer}}

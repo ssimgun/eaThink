@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test List</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#testList}}
+        <tr>
+            <th scope="row">{{id}}</th>
+            <th>{{index}}</th>
+        </tr>
+    {{/testList}}
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>Have a good meal</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+</head>
+<style>
+    @media screen and (max-width: 980px) {
+    #header nav.right {
+        display: block;
+        height: 33px;
+        line-height: 33px;
+        }
+    #header nav .button {
+    padding: 0 2em;
+    margin-top: 5px;
+    height: 2em;
+    line-height: 2em;
+}
+    }
+</style>
+<body>
+
+<!-- Header -->
+<header id="header">
+    <a href="/main" class="logo">식사를 합시다</a>
+    <nav class="right">
+        <a href="/login" class="button alt" id="nav-login-btn">로그인</a>
+    </nav>
+<!--    <nav class="right">-->
+<!--        <a href="/logout" class="button alt" id="nav-logout-btn" style="display: none;">로그아웃</a>-->
+<!--    </nav>-->
+</header>
+
+<!-- 회원가입 필드 -->
+<section id="main" class="wrapper">
+    <div class="inner">
+        <header id='banner' class="align-center" style="padding: 2em 0;"><h1>회원가입</h1>
+        </header>
+        <form id="signupForm" method="post" action="/register/add">
+            <!--  아이디   -->
+            <div>
+                <label for="InputUserId" class="form-label">아이디</label>
+                <div class="row uniform"  style="margin-bottom:20px">
+                    <div class="9u 12u$(small)">
+                        <input type="text" class="form-control me-2" id="userId" name="userId"
+                               placeholder="6~20자의 영문, 숫자, 특수문자!@만 사용"
+                               pattern="[A-Za-z0-9!@]{6,20}" title="6~20자의 영문, 숫자, 특수문자!@만 사용" required>
+                    </div>
+                    <div class="3u$ 12u$(small)">
+                        <input type="button" value="아이디 확인" class="fit" id="uk_id">
+                    </div>
+                    <div id="idMessage" style="padding-top:10px"></div> <!-- 일치 여부 메시지 표시 -->
+                </div>
+            </div>
+
+            <!-- 비밀번호-->
+            <div class="12u$(small)" style="margin-bottom:20px">
+                <label for="InputPassword" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="6~16자 영문, 숫자, 특수문자!@만 사용"
+                       pattern="[A-Za-z0-9!@]{6,16}" title="6~16자 영문, 숫자, 특수문자!@만 사용" required>
+                <div id="passwordMessage" style="padding-top:10px"></div>
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="12u$(small)" style="margin-bottom:20px">
+                <label for="InputPasswordCheck" class="form-label">비밀번호 확인</label>
+                <input type="password" class="form-control" id="passwordCheck" name="passwordCheck"
+                       placeholder="비밀번호 확인" required>
+                <div id="passwordMatchMessage" style="padding-top:10px"></div> <!-- 일치 여부 메시지 표시 -->
+            </div>
+
+            <!-- 닉네임 -->
+            <div style="margin-bottom:20px">
+                <label for="InputNickname" class="form-label">닉네임</label>
+                <div class="row uniform">
+                    <div class="9u 12u$(small)">
+                        <input type="text" class="form-control me-2" id="nickname" name="nickname"
+                               placeholder="2~10자 영문 대소문자, 한글, 숫자만 사용"
+                               pattern="[A-Za-z0-9가-힣]{2,10}" title="2~10자 영문 대소문자, 한글, 숫자만 사용" required>
+                    </div>
+                    <div class="3u$ 12u$(small)">
+                        <input type="button" value="닉네임 확인" class="fit" id="uk_nickname">
+                    </div>
+                    <div id="nicknameMessage" style="padding-top:10px"></div> <!-- 일치 여부 메시지 표시 -->
+                </div>
+            </div>
+
+            <div class="row uniform">
+                <div class="6u 12u$(xsmall)">
+                    <div class="select-wrapper">
+                        <label for="ages" class="form-label">성별을 선택해주세요</label>
+                        <select name="gender" id="gender">
+                            <option value="0">남자</option>
+                            <option value="1">여자</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="6u$ 12u$(xsmall)">
+                    <div class="select-wrapper">
+                        <label for="ages" class="form-label">연령대를 선택해주세요</label>
+                        <select name="ages" id="ages">
+                            <option value="1">10대</option>
+                            <option value="2">20대</option>
+                            <option value="3">30대</option>
+                            <option value="4">40대</option>
+                            <option value="5">50대</option>
+                            <option value="6">60대 이상</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주소입력 -->
+            <hr>
+            <label for="address" class="form-label">주소 입력</label>
+            <div class="row uniform" style="margin-bottom:20px">
+                <div class="9u 12u$(small)">
+                    <input class="form-control me-2" type="text" name="address" id="address" placeholder="주소" readonly>
+                </div>
+                <div class="3u$ 12u$(small)">
+                    <input type="button" onclick="sample3_execDaumPostcode()" value="주소찾기" class="fit">
+                </div>
+            </div>
+            <!-- 별칭 -->
+            <div class="12u$(small)" style="margin-bottom:20px">
+                <label for="InputAlias" class="form-label">주소 별칭</label>
+                <input type="text" class="form-control" id="address_name" name="address_name"
+                       placeholder="1~10자 영문, 한글, 숫자만 사용"
+                       pattern="[A-Za-z0-9가-힣]{1,10}" title="1~10자 영문, 한글, 숫자만 사용" required>
+                <div id="address_nameMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
+            </div>
+
+            <div id="wrap"
+                 style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+                <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                     style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+                     alt="접기 버튼">
+            </div>
+            <div style="text-align: center; margin-top:100px">
+                <button type="submit" class="button special big" id="submitButton">회원가입</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{{>layouts/footer}}

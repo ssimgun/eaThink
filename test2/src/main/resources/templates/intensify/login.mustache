@@ -1,0 +1,28 @@
+{{>layouts/header}}
+
+<section id="one" class="login wrapper">
+    <div class="inner flex flex-3">
+            <header class="align-center"><h1>로그인</h1>
+            </header>
+
+            <div class="form_container">
+                <form method="post" action="/login/login">
+                    <div class="12u$" style="margin-bottom:20px">
+                        <input type="text" name="userId" id="userid" placeholder="아이디입력">
+                    </div>
+                    <div class="12u$" style="margin-bottom:20px">
+                        <input type="password" name="password" id="password" placeholder="비밀번호입력">
+                    </div>
+
+                    <div class="12u$">
+                        <ul class="actions fit">
+                            <li><input type="submit" class="button fit" value="로그인"></li>
+                            <li><a href="/register" class="button alt fit">회원가입</a></li>
+                        </ul>
+                    </div>
+                </form>
+        </div>
+    </div>
+</section>
+
+{{>layouts/footer}}
