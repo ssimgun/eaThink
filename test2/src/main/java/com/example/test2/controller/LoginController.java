@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
-@RequestMapping("/login")
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -26,12 +25,17 @@ public class LoginController {
         Users users = userService.authenticate(userId, password);
 
         if(users != null){
+            HttpSession session = request.getSession(false);
+            if(session == null){
+                log.info("새 세션 생성");
+                session = request.getSession();
+            }
             //user 인증 선공 시 세션에 사용자 정보 저장
-            HttpSession session = request.getSession();
             session.setAttribute("loggedInUser", users);
             log.info(session.getAttribute("loggedInUser").toString());
+
             model.addAttribute("loggedInUser", users);
-            return "/login/home";
+            return "/home";
         }else{
             model.addAttribute("error", "일치하는 로그인 정보가 없습니다.");
             return "redirect:/login?error";
@@ -43,13 +47,15 @@ public class LoginController {
 //        로그인 시 메인 화면 이동
     @RequestMapping("/home")
     public String home(HttpSession session, Model model){
+        log.info("session check : {}",session.getAttribute("loggedInUser"));
         Users loggedInUser = (Users) session.getAttribute("loggedInUser");
-        log.info("home :", loggedInUser.toString());
 
         if(loggedInUser != null){
+            log.info("home : {}", loggedInUser.toString());
             model.addAttribute("loggedInUser", loggedInUser);
             return "intensify/maintest";
         }else {
+            log.info("session이 널 입니다.");
             return "redirect:/main";
         }
     }
