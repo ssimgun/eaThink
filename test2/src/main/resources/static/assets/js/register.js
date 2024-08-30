@@ -159,6 +159,9 @@ passwordField.addEventListener('input', function () {
     if (password !== passwordCheck){
         passwordMatchMessage.textContent = '비밀번호가 일치하지 않습니다.';
         passwordMatchMessage.style.color = 'red';
+    } else {
+        passwordMatchMessage.textContent = '비밀번호가 일치합니다.';
+        passwordMatchMessage.style.color = 'green';
     }
     validateForm();
 });
