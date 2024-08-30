@@ -32,6 +32,11 @@ public class mainController {
         return "intensify/maintest";
     }
 
+    @GetMapping("/maptest")
+    public String maptest(HttpSession session, Model model){
+        return "maptest";
+    }
+
 //    로그인 페이지로 이동
     @GetMapping("/loginpage")
     public String login(Model model){
