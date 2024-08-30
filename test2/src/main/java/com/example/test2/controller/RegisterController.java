@@ -33,7 +33,7 @@ public class RegisterController {
     @PostMapping("/add")
     public String register(UsersForm usersform){
         userService.registerUser(usersform);
-        return "redirect:/login";
+        return "redirect:/loginpage";
     }
 
 
