@@ -30,15 +30,15 @@
         <span>날씨 표시</span>
     </nav>
 
-    <a href="/main" class="logo">식사를 합시다</a>
+    <a href="/home" class="logo">식사를 합시다</a>
     {{^loggedInUser}}
     <nav class="right">
-        <a href="/login" class="button alt" id="nav-login-btn">로그인</a>
+        <a href="/loginpage" class="button alt" id="nav-login-btn">로그인</a>
     </nav>
     {{/loggedInUser}}
     {{#loggedInUser}}
     <nav class="right">
-        <a href="/login/logout" class="button alt" id="nav-logout-btn">로그아웃</a>
+        <a href="/logout" class="button alt" id="nav-logout-btn">로그아웃</a>
     </nav>
     {{/loggedInUser}}
 </header>
@@ -46,7 +46,7 @@
 <!-- Menu -->
 <nav id="menu" class="">
     <ul class="links">
-        <li><a href="/main">홈페이지</a></li>
+        <li><a href="/home">홈페이지</a></li>
         <li><a href="/edit">내정보</a></li>
         <li><a href="#one">채팅</a></li>
         <li><a href="#three">게임</a></li>
@@ -55,7 +55,7 @@
 
     {{^loggedInUser}}
     <ul class="actions vertical">
-        <li><a href="/login" class="button fit" id="side-login-btn">로그인</a></li>
+        <li><a href="/loginpage" class="button fit" id="side-login-btn">로그인</a></li>
     </ul>
     {{/loggedInUser}}
 

@@ -33,7 +33,7 @@ public class mainController {
     }
 
 //    로그인 페이지로 이동
-    @GetMapping("/login")
+    @GetMapping("/loginpage")
     public String login(Model model){
         // 사용자 인증
         return "intensify/login";
@@ -61,12 +61,5 @@ public class mainController {
         }
     }
 
-    //  회원정보 수정 페이지 이동
-//    @GetMapping("/users/{id}/edit")
-//    public String edit(@PathVariable Integer id, Model model){
-//        userService.editUser(id, model);
-//        log.info("아이디값 : " + id);
-//
-//        return "intensify/edit";
-//    }
+
 }
