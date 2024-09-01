@@ -104,11 +104,29 @@ public class UserService {
         }
         log.info(address.toString());
     }
-    public boolean existsByUserId(String userId){
+    public boolean existsByUserId(String userId, String currentId){
+        if(userId.equals(currentId)){
+            return false;
+        }
+
         return userRepository.existsByUserId(userId);
     }
 
-    public boolean existsByNickname(String nickname){
+    public boolean existsByNickname(String nickname, String currentNickname){
+        if(nickname.equals(currentNickname)){
+            return false;
+        }
+
         return userRepository.existsByNickname(nickname);
+    }
+
+    public boolean deleteUserById(Integer Id){
+        if (Id != null){
+            addressRepository.deleteById(Id);
+            userRepository.deleteById(Id);
+            return true;
+        }else {
+            return false;
+        }
     }
 }
