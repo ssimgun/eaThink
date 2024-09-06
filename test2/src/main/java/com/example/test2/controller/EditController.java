@@ -4,6 +4,7 @@ import com.example.test2.dto.UsersForm;
 import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
 import com.example.test2.repository.AddressRepository;
+import com.example.test2.repository.UserRepository;
 import com.example.test2.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/myInfo")
@@ -22,6 +25,8 @@ public class EditController {
     UserService userService;
     @Autowired
     AddressRepository addressRepository;
+    @Autowired
+    UserRepository userRepository;
 
     //    회원정보 수정 페이지 이동
     @GetMapping("/edit")
@@ -40,29 +45,34 @@ public class EditController {
 
     //  회원정보 수정 완료 버튼 클릭시
     @PostMapping("/update")
-    public String update(UsersForm usersform){
+    public String update(UsersForm usersform) {
         userService.updateUser(usersform);
         log.info("아이디값 : " + usersform.getId());
 
         return "redirect:/main";
     }
 
-//    주소 목록 페이지 이동
+    //    주소 목록 페이지 이동
     @GetMapping("/addressList")
-    public String addressList(HttpSession session, Model model){
-        Users user = (Users) session.getAttribute("loggedInUser");
-        model.addAttribute("loggedInUser", user);
-        if (user != null){
-            Address address = addressRepository.findById(user.getId()).orElse(null);
-            model.addAttribute("address", address);
+    public String addressList(HttpSession session, Model model) {
+        Users usersSession = (Users) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", usersSession);
 
-            return "intensify/addressList";
+        if (usersSession != null) {
+            Users users = userRepository.findById(usersSession.getId()).orElse(null);
+
+            if (users != null) {
+                List<Address> addresses = users.getAddressList();
+                model.addAttribute("address", addresses);
+
+                return "intensify/addressList";
+            }
+
         }
-        else {
-            log.info(user.toString());
-            return "intensify/maintest";
-        }
+        return "intensify/maintest";
+
     }
+}
 
     //  주소 추가 버튼 클릭시 작동
 //    @PostMapping("/addAddress")
@@ -71,4 +81,4 @@ public class EditController {
 //
 //        return "redirect:/myInfo/addressList";
 //    }
-}
+

@@ -6,7 +6,13 @@
         <header class="align-center"><h1>주소 추가하기</h1>
         </header>
         <form method="post" action="/myInfo/addAddress">
-            <input type="hidden" name="id" value="{{address.id}}">
+            {{#address}}
+                <li>
+                    Address: {{address}} |
+                    Address Name: {{address_name}} |
+                    User ID: {{#users}}{{id}}{{/users}}{{^users}}No User ID{{/users}}
+                </li>
+            {{/address}}
 
             <!-- 주소입력 -->
             <label for="address" class="form-label">주소 입력</label>
@@ -49,6 +55,7 @@
                 </thead>
                 <tbody>
                 {{#address}}
+                    <input type="hidden" id="id" value="{{id}}">
                     <tr>
                         <td>{{address_name}}</td>
                         <td>{{address}}</td>
