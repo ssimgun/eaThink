@@ -24,4 +24,15 @@ public class RegisterController {
         return "redirect:/loginpage";
     }
 
+
+//  회원정보 수정 완료 버튼 클릭시
+    @PostMapping("/update")
+    public String update(UsersForm usersform){
+        userService.updateUser(usersform);
+        log.info("아이디값 : " + usersform.getId());
+
+//      메인으로 돌아가게 바꿔야함
+        return "/home";
+    }
+
 }
