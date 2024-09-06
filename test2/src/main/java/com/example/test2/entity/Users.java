@@ -1,23 +1,22 @@
 package com.example.test2.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Getter
 @Setter
 @Table(name = "users")
-public class Users implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -45,4 +44,19 @@ public class Users implements Serializable {
 
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
+
+    @OneToMany(mappedBy = "users", orphanRemoval = true)
+    @JsonManagedReference
+    private List<Address> addressList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gender='" + gender + '\'' +
+                ", ages='" + ages + '\'' +
+                '}';
+    }
 }

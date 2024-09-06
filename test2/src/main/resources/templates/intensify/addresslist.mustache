@@ -1,0 +1,102 @@
+{{>layouts/header}}
+
+<!-- 주소 목록 필드 -->
+<section id="main" class="wrapper">
+    <div class="inner">
+        <header class="align-center"><h1>주소 추가하기</h1>
+        </header>
+        <form method="post" action="/myInfo/addAddress">
+            <input type="hidden" name="id" value="{{address.id}}">
+
+            <!-- 주소입력 -->
+            <label for="address" class="form-label">주소 입력</label>
+            <div class="row uniform" style="margin-bottom:20px">
+                <div class="9u 12u$(small)">
+                    <input class="form-control me-2" type="text" name="address"
+                           id="address" placeholder="주소" readonly>
+                    <div id="addressMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
+                </div>
+                <div class="3u$ 12u$(small)">
+                    <input type="button" onclick="sample3_execDaumPostcode()" value="주소찾기" class="fit">
+                </div>
+            </div>
+
+            <!-- 별칭 -->
+            <div class="12u$(small)" style="margin-bottom:20px">
+                <label for="InputAlias" class="form-label">주소 별칭</label>
+                <input type="text" class="form-control" id="address_name" name="address_name"
+                       placeholder="1~10자 영문, 한글, 숫자만 사용" pattern="[A-Za-z0-9가-힣]{1,10}"
+                       title="1~10자 영문, 한글, 숫자만 사용" required>
+                <div id="address_nameMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
+            </div>
+
+            <div style="text-align: center; margin:20px 0px">
+                <button type="submit" class="button special big" id="submitButton">추가하기</button>
+            </div>
+        </form>
+
+        <hr>
+        <header class="align-center"><h1>나의 주소 목록</h1>
+        </header>
+        <div class="table-wrapper">
+            <table class="alt">
+                <thead>
+                <tr>
+                    <th>주소 별칭</th>
+                    <th>주소</th>
+                    <th style="width:25%">선택</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#address}}
+                    <tr>
+                        <td>{{address_name}}</td>
+                        <td>{{address}}</td>
+                        <td>
+                            <div class="button-group" style="width:100%; text-align:center; display:flex;  gap: 10px;">
+                                <button class="btn edit" onclick="editAddress()" style="background-color:#2bb3d7">수정</button>
+                                <button class="btn delete" onclick="deleteAddress()">삭제</button>
+                            </div>
+                        </td>
+                    </tr>
+                {{/address}}
+                </tbody>
+            </table>
+        </div>
+
+
+        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                 style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+                 alt="접기 버튼">
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <h2>준교팀</h2>
+        <ul class="actions">
+            <li><span class="icon fa-phone"></span> <a href="#">(010) 024-1014</a></li>
+            <li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
+            <li><span class="icon fa-map-marker"></span> 123 Somewhere Road, Nashville, TN 00000</li>
+        </ul>
+        <div class="">
+            Powered by: <a href="https://templated.co/">TEMPLATED</a>.
+        </div>
+    </div>
+</footer>
+
+
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.scrolly.min.js"></script>
+<script src="/assets/js/skel.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/assets/js/addressList.js"></script>
+
+</body>
+</html>
