@@ -5,8 +5,9 @@
     <div class="inner">
         <header class="align-center"><h1>내 정보</h1>
         </header>
+
         {{#users}}
-        <form id="signupForm" method="post" action="/register/update">
+        <form id="signupForm" method="post" action="/myInfo/update">
             <input type="hidden" name="id" value="{{id}}">
             <!--  아이디   -->
             <div>

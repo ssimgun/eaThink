@@ -44,7 +44,7 @@ public class RegisterController {
         log.info("아이디값 : " + usersform.getId());
 
 //      메인으로 돌아가게 바꿔야함
-        return "/home";
+        return "redirect:/main";
     }
 
 }

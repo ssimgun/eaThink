@@ -31,24 +31,27 @@ public class UserService {
 
 //    회원 가입 클릭 시 DB에 회원 정보 및 주소 정보 저장
     @Transactional
-    public void registerUser(UsersForm usersform) {
+    public void registerUser(UsersForm usersform, AddressForm addressForm) {
         Users users = usersform.toEntity();
         userRepository.save(users);
         log.info(users.toString());
 
-        AddressForm addressform = new AddressForm();
-        addressform.setId(users.getId());
-        addressform.setAddress(users.getAddress());
-        addressform.setAddress_name(usersform.getAddress_name());
-        Address address = addressform.toEntity();
+        addressForm.setAddress_name(usersform.getAddress_name());
+        addressForm.setAddress(usersform.getAddress());
+        Address address = addressForm.toEntity(users);
         addressRepository.save(address);
         log.info(address.toString());
+
+        users.getAddressList().add(address);
+        userRepository.save(users);
+
     }
 
+//  회원정보 수정
     @Transactional
     public void editUser(@PathVariable Integer id, Model model) {
         Users users = userRepository.findById(id).orElse(null);
-        Address address = addressRepository.findById(id).orElse(null);
+        Address address = addressRepository.findById(users.getId()).orElse(null);
 
         model.addAttribute("users", users);
         model.addAttribute("address", address);
@@ -96,7 +99,7 @@ public class UserService {
         addressform.setId(usersEntity.getId());
         addressform.setAddress(usersEntity.getAddress());
         addressform.setAddress_name(usersform.getAddress_name());
-        Address address = addressform.toEntity();
+        Address address = addressform.toEntity(usersEntity);
 
         Address adTarget = addressRepository.findById(usersEntity.getId()).orElse(null);
         if (adTarget != null) {
@@ -129,4 +132,6 @@ public class UserService {
             return false;
         }
     }
+
+
 }

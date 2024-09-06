@@ -47,6 +47,7 @@
 <nav id="menu" class="">
     <ul class="links">
         <li><a href="/home">홈페이지</a></li>
+        <li><a href="/edit">내정보</a></li>
         <li><a href="#one">채팅</a></li>
         <li><a href="#three">게임</a></li>
         <li><a href="elements.html">나의 음식 취향</a></li>
@@ -70,29 +71,17 @@
 
     <!--        유저 정보 표시-->
     <!--<div class="flex-item nav-under">-->
-<!--    <#= 데이터가 있을 때>-->
 {{#loggedInUser}}
-    <ul class="links-under nav-under">
-        <li><a href="/edit">{{nickname}}</a></li>
-        <li><a href="/addresslist">{{address}}</a></li>
-        <li class="button-container">
-            <button type="button" href="/edit" style="padding-left: 20px; padding-right: 20px;">내 정보</button>
-            <button type="button" href="/addresslist">주소목록</button>
-        </li>
+    <ul class="links nav-under">
+        <li><a href="내정보">{{nickname}}</a></li>
+        <li><a href="주소목록">{{address}}</a></li>
     </ul>
 {{/loggedInUser}}
-
-<!--    <^ = 데이터가 없을 때>-->
-<!--{{^loggedInUser}}
-    <ul class="links-under nav-under">
+{{^loggedInUser}}
+    <ul class="links nav-under">
         <li><a href="내정보">내 정보</a></li>
-        <li> </li>
-        <li style="display: flex; gap: 10px;">
-            <button href="주소목록">내 정보</button>
-            <button href="주소목록">주소목록</button>
-        </li>
-
+        <li><a href="주소목록">주소 목록</a></li>
     </ul>
-{{/loggedInUser}}-->
+{{/loggedInUser}}
     <!--</div>-->
 </nav>

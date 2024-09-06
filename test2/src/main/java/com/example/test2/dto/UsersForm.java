@@ -1,8 +1,6 @@
 package com.example.test2.dto;
 
 import com.example.test2.entity.Users;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,8 +22,20 @@ public class UsersForm {
     private LocalDateTime modifiedDate;
 
     private String address_name;
-    // Dto --> ENTITY 로 변환
+
+    // DTO -> ENTITY 변환
     public Users toEntity() {
-        return new Users(id, this.userId, this.password, this.nickname, this.gender, this.ages, this.address
-        , createDate, modifiedDate);}
+        // @AllArgsConstructor가 자동으로 생성자를 생성함
+        Users user = new Users();
+        user.setId(this.id);
+        user.setUserId(this.userId);
+        user.setPassword(this.password);
+        user.setNickname(this.nickname);
+        user.setGender(this.gender);
+        user.setAges(this.ages);
+        user.setAddress(this.address);
+        user.setCreateDate(this.createDate);
+        user.setModifiedDate(this.modifiedDate);
+        return user;
+    }
 }
