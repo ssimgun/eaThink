@@ -65,6 +65,5 @@ address_nameField.addEventListener("input", function () {
     validateForm();
 });
 
-
 submitButton.addEventListener("click", validateAddress);
 

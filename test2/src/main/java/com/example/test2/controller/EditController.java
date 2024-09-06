@@ -1,5 +1,6 @@
 package com.example.test2.controller;
 
+import com.example.test2.dto.AddressForm;
 import com.example.test2.dto.UsersForm;
 import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -60,7 +62,7 @@ public class EditController {
 
         if (usersSession != null) {
             Users users = userRepository.findById(usersSession.getId()).orElse(null);
-
+            log.info(users.toString());
             if (users != null) {
                 List<Address> addresses = users.getAddressList();
                 model.addAttribute("address", addresses);
@@ -72,13 +74,14 @@ public class EditController {
         return "intensify/maintest";
 
     }
+//  주소 추가 버튼 클릭시 작동
+    @PostMapping("/addAddress")
+    public String addAddress(HttpSession session, AddressForm addressForm){
+        Users userSession = (Users) session.getAttribute("loggedInUser");
+        userService.addAddress(userSession , addressForm);
+
+        return "redirect:/myInfo/addressList";
+    }
 }
 
-    //  주소 추가 버튼 클릭시 작동
-//    @PostMapping("/addAddress")
-//    public String addAddress(AddressForm addressForm){
-//        userService.addAddress(addressForm);
-//
-//        return "redirect:/myInfo/addressList";
-//    }
 

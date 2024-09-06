@@ -133,5 +133,10 @@ public class UserService {
         }
     }
 
-
+    public void addAddress(Users userSession, AddressForm addressForm){
+        Users users = userRepository.findById(userSession.getId()).orElse(null);
+        Address address = addressForm.toEntity(users);
+        log.info(address.toString());
+        addressRepository.save(address);
+    }
 }

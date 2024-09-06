@@ -7,11 +7,7 @@
         </header>
         <form method="post" action="/myInfo/addAddress">
             {{#address}}
-                <li>
-                    Address: {{address}} |
-                    Address Name: {{address_name}} |
-                    User ID: {{#users}}{{id}}{{/users}}{{^users}}No User ID{{/users}}
-                </li>
+                <input type="hidden" id="userId" value="{{#users}}{{id}}{{/users}}">
             {{/address}}
 
             <!-- 주소입력 -->
@@ -57,8 +53,8 @@
                 {{#address}}
                     <input type="hidden" id="id" value="{{id}}">
                     <tr>
-                        <td>{{address_name}}</td>
-                        <td>{{address}}</td>
+                        <td><a onclick="selectAddress()" id="select_address_name">{{address_name}}</a></td>
+                        <td><a onclick="selectAddress()" id="select_address">{{address}}</a></td>
                         <td>
                             <div class="button-group" style="width:100%; text-align:center; display:flex;  gap: 10px;">
                                 <button class="btn edit" onclick="editAddress()" style="background-color:#2bb3d7">수정</button>
