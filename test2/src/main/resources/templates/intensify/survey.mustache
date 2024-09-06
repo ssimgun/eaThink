@@ -1,0 +1,205 @@
+{{>layouts/header}}
+
+<style>
+    .flex {
+        display: flex; /* 플렉스 컨테이너 */
+        gap: 20px; /* 아이템 간격 */
+        flex-wrap: wrap; /* 아이템 줄바꿈 */
+        justify-content: center; /* 중앙 정렬 */
+    }
+
+    .food-item {
+        width: 200px; /* 각 아이템의 너비 */
+        text-align: center; /* 텍스트 가운데 정렬 */
+    }
+
+    .food-item img {
+        width: 100%; /* 이미지의 너비 */
+        border-radius: 8px; /* 이미지 테두리 둥글게 */
+    }
+
+    .range-slider {
+        width: 100%; /* 슬라이더의 너비 */
+        margin-top: 10px; /* 슬라이더 위 여백 */
+
+
+
+</style>
+
+<section id="koreaFoods" class="wrapper style1 special">
+    <div class="inner flex flex-3">
+        <!-- 한식 선택 -->
+        {{#koreaFoods}}
+            <div class="food-item">
+                <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                <h3>{{name}}</h3>
+                <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                <input type="range" min="0" max="10" value="5" class="range-slider" name="{{name}}">
+
+            </div>
+        {{/koreaFoods}}
+</section>
+
+
+<section id="chineseFoods" class="wrapper">
+    <div class="inner flex flex-3">
+        <!-- 중식 선택 -->
+        {{#chineseFoods}}
+            <div class="food-item">
+                <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                <h3>{{name}}</h3>
+                <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                <input type="range" min="0" max="10" value="5" class="range-slider" name="{{name}}">
+
+            </div>
+        {{/chineseFoods}}
+</section>
+
+
+<section id="japanFoods" class="wrapper style1 special">
+    <div class="inner flex flex-3">
+        <!-- 일식 선택 -->
+        {{#japanFoods}}
+            <div class="food-item">
+                <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                <h3>{{name}}</h3>
+                <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                <input type="range" min="0" max="10" value="5" class="range-slider" name="{{name}}">
+
+            </div>
+        {{/japanFoods}}
+</section>
+
+<section id="westernFoods" class="wrapper">
+    <div class="inner flex flex-3">
+        <!-- 양식 선택 -->
+        {{#westernFoods}}
+            <div class="food-item">
+                <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                <h3>{{name}}</h3>
+                <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                <input type="range" min="0" max="10" value="5" class="range-slider" name="{{name}}">
+
+            </div>
+        {{/westernFoods}}
+</section>
+
+<section id="q1-wrapper" class="wrapper" style="border-top: solid 1px rgba(0, 0, 0, 0.3);">
+    <div class="inner flex flex-3">
+        <!-- 식사 장소 선호 패턴 설문지-->
+        <div class="food-item">
+            <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+        </div>
+        <!--                <h3>친구와의 모임 상황</h3>-->
+        <p style="
+            -webkit-text-stroke-width: medium;font-size: large;">
+
+            주말 저녁 오랜만에 친구들과 만나기로 했습니다.
+            친구들은 새로운 음식을 시도해보는 것을 해서
+            친구들과 함께 새로은 음식을 먹으러 가기로 했습니다.
+            이때 당신은 어떤 선택을 하겠습니까?
+        </p>
+
+        <div class="options label-text" style="color:#ffffff; label:hover{color:#000000};">
+            <input type="radio" id="q1-option1" name="q1" value="일반식당">
+            <label for="q1-option1" style="position: relative;"> 인근의 새로운 레스토랑을 예약해서 여러 음식 나눠먹기 </label>
+
+            <input type="radio" id="q1-option2" name="q1" value="카페|베이커리">
+            <label for="q1-option2" style="position: relative;"> 트렌디한 카페나 베이커리에서 가볍게 식사를 하고 디저트도 먹기</label>
+
+            <input type="radio" id="q1-option3" name="q1" value="가정조리">
+            <label for="q1-option3" style="position: relative;"><input type="radio" name="q1" value="가정 조리"> 집에서 친구들과 함께 새로운 요리에 도전하기</label>
+
+            <input type="radio" id="q1-option4" name="q1" value="배달|테이크아웃">
+            <label for="q1-option4" style="position: relative;"> 다양한 음식을 배달하여 집에서 편하게 먹기</label>
+
+            <input type="radio" id="q1-option5" name="q1" value="편의점">
+            <label for="q1-option5" style="position: relative;"> 근처의 푸드코트나 편의점에서 새로나온 음식을 사서 피크닉 가기</label>
+        </div>
+
+    </div>
+</section>
+
+<section id="q2-wrapper" class="wrapper">
+    <div class="inner flex flex-3">
+        <!-- 식사 장소 선호 패턴 설문지-->
+        <div class="food-item">
+            <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+        </div>
+        <!--                <h3>직장에서의 점심 선택</h3>-->
+        <p style="
+            -webkit-text-stroke-width: medium;font-size: large;">
+
+            오늘은 바쁜 직장인의 하루입니다.
+            오전 업무를 마치고 점심시간이 다가왔습니다.
+            점심시간은 1시간뿐이고 오후에 중요한 회의가 예정되어 있습니다.
+            이럴 때 당신은 어떤 식사를 선택하겠습니까?
+
+        </p>
+
+        <div class="options label-text" style="color:#ffffff; label:hover{color:#000000};">
+            <input type="radio" id="q2-option1" name="q2" value="일반식당">
+            <label for="q2-option1" style="position: relative;"> 회사 근처의 단골 식당에 가서 빠르게 한 끼를 해결하기</label>
+
+            <input type="radio" id="q2-option2" name="q2" value="카페|베이커리">
+            <label for="q2-option2" style="position: relative;"> 주변 카페에서 간단하게 샐러드나 샌드위치를 먹기</label>
+
+            <input type="radio" id="q2-option3" name="q2" value="가정조리">
+            <label for="q2-option3" style="position: relative;"> 아침에 싸온 도시락 먹기</label>
+
+            <input type="radio" id="q2-option4" name="q2" value="배달|테이크아웃">
+            <label for="q2-option4" style="position: relative;"> 배달 앱으로 음식 주문해서 먹기</label>
+
+            <input type="radio" id="q2-option5" name="q2" value="편의점">
+            <label for="q2-option5" style="position: relative;"> 구내식당에서 해결하기</label>
+        </div>
+
+    </div>
+</section>
+
+
+<section id="q2-wrapper" class="wrapper">
+    <div class="inner flex flex-3">
+        <!-- 식사 장소 선호 패턴 설문지-->
+        <div class="food-item">
+            <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+        </div>
+        <!--                <h3>직장에서의 점심 선택</h3>-->
+        <p style="
+            -webkit-text-stroke-width: medium;font-size: large;">
+
+            바쁜 월요일을 일을 마치고 드디어 집으로 돌아왔습니다!!
+            오늘은 집에서 저녁을 야무지게 만들어서 먹으려고 합니다.
+            어떤 요리를 준비하겠습니까?
+
+        </p>
+
+        <div class="options label-text" style="color:#ffffff; label:hover{color:#000000};">
+            <input type="radio" id="q3-option1" name="q3" value="건강">
+            <label for="q3-option1" style="position: relative;"> 간단하게 닭가슴살에 샐러드로 가볍게 만들어 먹기 </label>
+
+            <input type="radio" id="q3-option2" name="q3" value="편의">
+            <label for="q3-option2" style="position: relative;"> 냉동실을 열어 편하게 먹을 수 있는 즉석식품을 데워서 먹기 </label>
+
+            <input type="radio" id="q3-option3" name="q3" value="경제">
+            <label for="q3-option3" style="position: relative;"> 마트에서 사온 재료들을 이용해 며칠 간 먹을 반찬을 만들어 먹기 </label>
+
+            <input type="radio" id="q3-option4" name="q3" value="유행">
+            <label for="q3-option4" style="position: relative;"> 배달 앱으로 요즘 유행하는 음식을 시켜 먹기 </label>
+
+            <input type="radio" id="q3-option5" name="q3" value="미각">
+            <label for="q3-option5" style="position: relative;"> 요리는 무슨! 자주 가는 맛집에서 좋아하는 요리 먹기 </label>
+        </div>
+
+    </div>
+</section>
+
+
+<button class="submit-button" onclick="submitSurvey()">설문 제출</button>
+
+
+
+
+
+
+{{>layouts/footer}}
