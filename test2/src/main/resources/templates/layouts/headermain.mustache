@@ -15,11 +15,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Fonts Link For Icons -->
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="/assets/css/kakaomap.css" />
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0"/>
+    <link rel="stylesheet" href="/assets/css/kakaomap.css"/>
 </head>
+
+<!-- 네이버 지도 호출 스크립트-->
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=dl1k0ms7ds"></script>
 
 <body>
 
@@ -32,14 +35,14 @@
 
     <a href="/home" class="logo">식사를 합시다</a>
     {{^loggedInUser}}
-    <nav class="right">
-        <a href="/loginpage" class="button alt" id="nav-login-btn">로그인</a>
-    </nav>
+        <nav class="right">
+            <a href="/loginpage" class="button alt" id="nav-login-btn">로그인</a>
+        </nav>
     {{/loggedInUser}}
     {{#loggedInUser}}
-    <nav class="right">
-        <a href="/logout" class="button alt" id="nav-logout-btn">로그아웃</a>
-    </nav>
+        <nav class="right">
+            <a href="/logout" class="button alt" id="nav-logout-btn">로그아웃</a>
+        </nav>
     {{/loggedInUser}}
 </header>
 
@@ -53,43 +56,43 @@
     </ul>
 
     {{^loggedInUser}}
-    <ul class="actions vertical">
-        <li><a href="/loginpage" class="button fit" id="side-login-btn">로그인</a></li>
-    </ul>
+        <ul class="actions vertical">
+            <li><a href="/loginpage" class="button fit" id="side-login-btn">로그인</a></li>
+        </ul>
     {{/loggedInUser}}
 
     {{#loggedInUser}}
-    <ul class="actions vertical">
-        <li><a href="/login/logout" class="button fit" id="side-logout-btn">로그아웃</a></li>
-    </ul>
+        <ul class="actions vertical">
+            <li><a href="/login/logout" class="button fit" id="side-logout-btn">로그아웃</a></li>
+        </ul>
     {{/loggedInUser}}
 
     <!--개인 프로필 추가하기 -->
     <!--로그인 했을 때만 띄어야 함-->
-<!--    날씨 데이터 표시-->
+    <!--    날씨 데이터 표시-->
 
     <!--        유저 정보 표시-->
     <!--<div class="flex-item nav-under">-->
-{{#loggedInUser}}
-    <ul class="links-under nav-under">
-        <li><a href="/edit">{{nickname}}</a></li>
-        <li><a href="/addresslist">{{address}}</a></li>
-        <li class="button-container">
-            <button type="button" href="/edit" style="padding-left: 20px; padding-right: 20px;">내 정보</button>
-            <button type="button" href="/addresslist">주소목록</button>
-        </li>
-    </ul>
-{{/loggedInUser}}
+    {{#loggedInUser}}
+        <ul class="links-under nav-under">
+            <li><a href="/edit">{{nickname}}</a></li>
+            <li><a href="/addresslist">{{address}}</a></li>
+            <li class="button-container">
+                <button type="button" href="/edit" style="padding-left: 20px; padding-right: 20px;">내 정보</button>
+                <button type="button" href="/addresslist">주소목록</button>
+            </li>
+        </ul>
+    {{/loggedInUser}}
 
-<!--  비로그인 시 띄워줄 사이드바 언더  -->
-<!--{{^loggedInUser}}-->
-<!--    <ul class="links-under nav-under">-->
-<!--        <li><a href="내정보">닉네임</a></li>-->
-<!--        <li class="button-container">-->
-<!--            <button href="주소목록">내 정보</button>-->
-<!--            <button href="주소목록">주소목록</button>-->
-<!--        </li>-->
-<!--    </ul>-->
-<!--{{/loggedInUser}}-->
+    <!--  비로그인 시 띄워줄 사이드바 언더  -->
+        <!--{{^loggedInUser}}-->
+    <!--    <ul class="links-under nav-under">-->
+    <!--        <li><a href="내정보">닉네임</a></li>-->
+    <!--        <li class="button-container">-->
+    <!--            <button href="주소목록">내 정보</button>-->
+    <!--            <button href="주소목록">주소목록</button>-->
+    <!--        </li>-->
+    <!--    </ul>-->
+        <!--{{/loggedInUser}}-->
     <!--</div>-->
 </nav>
