@@ -15,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{#address}}
+                {{#addresses}}
                     <tr id="address-row-{{id}}">
                         <td>
                             <!-- 주소 별칭 입력 -->
@@ -43,9 +43,9 @@
                                 <div class="button-group"
                                      style="width:100%; text-align:center; display:flex; gap: 10px;">
                                     <button id="default_btn_edit_{{id}}" onclick="editAddress({{id}})"
-                                            style="background-color:#8ECAE6">수정
+                                            style="background-color:#2bb3d7">수정
                                     </button>
-                                    <button id="default_btn_save_{{id}}" onclick="saveAddress({{id}})"
+                                    <button id="default_btn_save_{{id}}" onclick="saveDefaultAddress({{id}})"
                                             style="background-color:#21AB72;">저장
                                     </button>
                                 </div>
@@ -66,7 +66,7 @@
                             </td>
                         {{/isDefault}}
                     </tr>
-                {{/address}}
+                {{/addresses}}
                 </tbody>
             </table>
         </div>
@@ -80,9 +80,9 @@
         <header class="align-center"><h1>주소 추가하기</h1>
         </header>
         <form method="post" action="/myInfo/addAddress" id="addressForm">
-            {{#address}}
+            {{#addresses}}
                 <input type="hidden" id="userId" value="{{#users}}{{id}}{{/users}}">
-            {{/address}}
+            {{/addresses}}
 
             <!-- 주소입력 -->
             <label for="address" class="form-label">주소 입력</label>

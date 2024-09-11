@@ -252,3 +252,60 @@ document.getElementById('addressForm').addEventListener('submit', function(event
         event.preventDefault(); // 폼 제출 방지
     }
 });
+
+function saveDefaultAddress(id){
+    // 수정된 값을 가져옴
+    var newAddressName = document.getElementById('address_name_input_' + id);
+    var newAddress = document.getElementById('address_input_' + id);
+    var address_nameDisplay = document.getElementById('address_name_display_' + id);
+    var addressDisplay = document.getElementById('address_display_' + id);
+    var default_editBtn = document.getElementById("default_btn_edit_" + id); // 기본 주소지 수정 버튼
+
+    // AJAX 요청을 통해 서버에 업데이트 요청을 보냄
+    fetch('/update-default-address', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            address_name: newAddressName.value,
+            address: newAddress.value
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text(); // 서버에서 반환하는 데이터 읽기
+        } else {
+            throw new Error("서버 오류");
+        }
+    })
+    .then(data => {
+        if (data === '수정이 완료되었습니다.') {
+            // 서버에서 성공 응답을 받으면 필드 업데이트
+            address_nameDisplay.textContent = newAddressName.value;
+            addressDisplay.textContent = newAddress.value;
+
+            // 입력 필드 숨기기 및 수정 버튼 표시
+            newAddressName.style.display = 'none';
+            newAddress.style.display = 'none';
+
+            address_nameDisplay.style.display = 'inline';
+            addressDisplay.style.display = 'inline';
+            document.getElementById('default_address').style.display = 'inline';
+
+            if(!default_editBtn){
+                // 저장 버튼 숨기기 및 수정 버튼 표시
+                document.getElementById('btn_save_' + id).style.display = 'none';
+                document.getElementById('btn_edit_' + id).style.display = 'inline';
+            }
+
+        } else {
+            alert('주소 수정에 실패했습니다.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('주소 수정 중 오류가 발생했습니다.');
+    });
+}

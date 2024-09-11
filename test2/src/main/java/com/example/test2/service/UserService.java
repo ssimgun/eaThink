@@ -131,4 +131,15 @@ public class UserService {
             return false;
         }
     }
+
+    public void updateUserAddress(HttpSession session, String address, Model model){
+        Users userSession = (Users) session.getAttribute("loggedInUser");
+
+        Users users = userRepository.findById(userSession.getId()).orElse(null);
+        if(users!=null){
+            users.setAddress(address);
+            userRepository.save(users);
+            model.addAttribute("loggedInUser",users);
+        }
+    }
 }

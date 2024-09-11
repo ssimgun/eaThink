@@ -72,16 +72,16 @@
     <!--        유저 정보 표시-->
     <!--<div class="flex-item nav-under">-->
 <!--    <#= 데이터가 있을 때>-->
-{{#loggedInUser}}
-    <ul class="links-under nav-under">
-        <li><a href="/edit">{{nickname}}</a></li>
-        <li><a href="/addresslist">{{address}}</a></li>
-        <li class="button-container">
-            <button type="button" href="/edit" style="padding-left: 20px; padding-right: 20px;">내 정보</button>
-            <button type="button" href="/addresslist">주소목록</button>
-        </li>
-    </ul>
-{{/loggedInUser}}
+    {{#loggedInUser}}
+        <ul class="links-under nav-under">
+            <li><a href="/myInfo/edit">{{nickname}}</a></li>
+            <li><a href="/myInfo/addressList">{{address}}</a></li>
+            <li class="button-container">
+                <a type="button" href="/myInfo/edit" style="padding-left: 20px; padding-right: 20px;">내 정보<</a>
+                <a type="button" href="/myInfo/addressList">주소목록</a>
+            </li>
+        </ul>
+    {{/loggedInUser}}
 
 <!--    <^ = 데이터가 없을 때>-->
 <!--{{^loggedInUser}}
