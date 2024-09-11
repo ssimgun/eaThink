@@ -1,6 +1,8 @@
 package com.example.test2.controller;
 
+import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
+import com.example.test2.service.AddressService;
 import com.example.test2.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AddressService addressService;
 
     @PostMapping("/login")
     public String userlogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request, Model model){
@@ -52,7 +56,8 @@ public class LoginController {
 
         if(loggedInUser != null){
             log.info("home : {}", loggedInUser.toString());
-            model.addAttribute("loggedInUser", loggedInUser);
+            addressService.showAddressList(session, model);
+            log.info("address : {}", model.getAttribute("address"));
             return "intensify/maintest";
         }else {
             log.info("session이 널 입니다.");

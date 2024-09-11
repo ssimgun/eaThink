@@ -26,13 +26,16 @@ public class Address {
     @JsonBackReference
     private Users users;
 
+    @Transient
+    private boolean isDefault;
+
     @Override
     public String toString() {
         return "address{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", address_name='" + address_name + '\'' +
-                ", users='" + users + '\'' +
+                "아이디=" + id +
+                ", 주소='" + address + '\'' +
+                ", 주소 별칭='" + address_name + '\'' +
+                ", 유저 아이디='" + users + '\'' +
                 '}';
     }
 }

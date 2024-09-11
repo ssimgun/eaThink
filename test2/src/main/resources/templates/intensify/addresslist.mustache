@@ -3,10 +3,86 @@
 <!-- 주소 목록 필드 -->
 <section id="main" class="wrapper">
     <div class="inner">
+        <header class="align-center"><h1>나의 주소 목록</h1>
+        </header>
+        <div class="table-wrapper">
+            <table class="alt">
+                <thead>
+                <tr>
+                    <th>주소 별칭</th>
+                    <th>주소</th>
+                    <th style="width:25%">선택</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#addresses}}
+                    <tr id="address-row-{{id}}">
+                        <td>
+                            <!-- 주소 별칭 입력 -->
+                            <input type="text" class="form-control" id="address_name_input_{{id}}" name="address_name"
+                                   placeholder="1~10자 영문, 한글, 숫자만 사용" pattern="[A-Za-z0-9가-힣]{1,10}"
+                                   style="display:none;"
+                                   onclick="checkNewAddressNameInput({{id}})"
+                                   value="{{address_name}}" title="1~10자 영문, 한글, 숫자만 사용" required>
+                            <div id="new_address_nameMessage_{{id}}" style="padding-top:10px"></div>
+                            <!-- 적합성 유효 메시지 표시 -->
+                            <span id="address_name_display_{{id}}">{{address_name}}</span>
+                            {{#isDefault}}
+                                <span id="default_address" style="color: green; font-weight: bold;">(기본 주소)</span>
+                            {{/isDefault}}
+                        </td>
+                        <td>
+                            <!-- 주소 입력 -->
+                            <input type="text" id="address_input_{{id}}" value="{{address}}" style="display:none;"
+                                   onclick="sample3_execDaumPostcode({{id}})" readonly>
+                            <div id="new_addressMessage_{{id}}" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
+                            <span id="address_display_{{id}}">{{address}}</span>
+                        </td>
+                        {{#isDefault}}
+                            <td>
+                                <div class="button-group"
+                                     style="width:100%; text-align:center; display:flex; gap: 10px;">
+                                    <button id="default_btn_edit_{{id}}" onclick="editAddress({{id}})"
+                                            style="background-color:#2bb3d7">수정
+                                    </button>
+                                    <button id="default_btn_save_{{id}}" onclick="saveDefaultAddress({{id}})"
+                                            style="background-color:#21AB72;">저장
+                                    </button>
+                                </div>
+                            </td>
+                        {{/isDefault}}
+                        {{^isDefault}}
+                            <td>
+                                <div class="button-group"
+                                     style="width:100%; text-align:center; display:flex; gap: 10px;">
+                                    <button id="btn_edit_{{id}}" onclick="editAddress({{id}})"
+                                            style="background-color:#2bb3d7">수정
+                                    </button>
+                                    <button id="btn_save_{{id}}" onclick="saveAddress({{id}})"
+                                            style="background-color:#21AB72; display:none;">저장
+                                    </button>
+                                    <button id="btn_delete" onclick="deleteAddress({{id}})">삭제</button>
+                                </div>
+                            </td>
+                        {{/isDefault}}
+                    </tr>
+                {{/addresses}}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                 style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+                 alt="접기 버튼">
+        </div>
+        <hr>
         <header class="align-center"><h1>주소 추가하기</h1>
         </header>
-        <form method="post" action="/myInfo/addAddress">
-            <input type="hidden" name="id" value="{{address.id}}">
+        <form method="post" action="/myInfo/addAddress" id="addressForm">
+            {{#addresses}}
+                <input type="hidden" id="userId" value="{{#users}}{{id}}{{/users}}">
+            {{/addresses}}
 
             <!-- 주소입력 -->
             <label for="address" class="form-label">주소 입력</label>
@@ -17,7 +93,7 @@
                     <div id="addressMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
                 </div>
                 <div class="3u$ 12u$(small)">
-                    <input type="button" onclick="sample3_execDaumPostcode()" value="주소찾기" class="fit">
+                    <input type="button" onclick="execDaumPostcode()" value="주소찾기" class="fit">
                 </div>
             </div>
 
@@ -34,42 +110,28 @@
                 <button type="submit" class="button special big" id="submitButton">추가하기</button>
             </div>
         </form>
-
         <hr>
-        <header class="align-center"><h1>나의 주소 목록</h1>
-        </header>
-        <div class="table-wrapper">
-            <table class="alt">
-                <thead>
-                <tr>
-                    <th>주소 별칭</th>
-                    <th>주소</th>
-                    <th style="width:25%">선택</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#address}}
-                    <tr>
-                        <td>{{address_name}}</td>
-                        <td>{{address}}</td>
-                        <td>
-                            <div class="button-group" style="width:100%; text-align:center; display:flex;  gap: 10px;">
-                                <button class="btn edit" onclick="editAddress()" style="background-color:#2bb3d7">수정</button>
-                                <button class="btn delete" onclick="deleteAddress()">삭제</button>
-                            </div>
-                        </td>
-                    </tr>
-                {{/address}}
-                </tbody>
-            </table>
+        <h2 style="color:#f6755e; text-align:center;">주의사항</h2>
+        <div class="row" style="padding= 0px 70px;">
+            <div class="6u 12u$(small)">
+                <h4 class="title_style">나의 주소 목록</h4>
+                <ul>
+                    <li>기본 주소지 변경시 첫번째 줄에서 변경 바랍니다.</li>
+                    <li>주소 선택은 주소 별칭 또는 주소를 눌러주세요.</li>
+                    <li>선택한 주소의 반경(500m)으로 추천 시스템이 적용됩니다.</li>
+                </ul>
+            </div>
+            <div class="6u$ 12u$(small)">
+                <h4 class="title_style">주소 추가하기</h4>
+                <ul>
+                    <li>주소 추가는 최대 6개까지 가능합니다.</li>
+                    <li>기본 주소지(1개) + 추가 주소지(5개)</li>
+                    <li>주소 별칭 양식 : 1~10자 영문, 한글, 숫자만 사용 가능합니다.</li>
+                    <li>주소 입력 양식 : '서울특별시' 주소만 가능합니다.</li>
+                </ul>
+            </div>
         </div>
-
-
-        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
-                 style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
-                 alt="접기 버튼">
-        </div>
+        <h3 style="color:#f6755e; text-align:center;">위 양식과 불일치하면 수정 및 주소추가가 불가하오니 유의바랍니다!</h3>
     </div>
 </section>
 
@@ -99,4 +161,10 @@
 <script src="/assets/js/addressList.js"></script>
 
 </body>
+<style>
+    .title_style{
+        border-bottom:1px solid;
+        padding-bottom:1px;
+    }
+</style>
 </html>
