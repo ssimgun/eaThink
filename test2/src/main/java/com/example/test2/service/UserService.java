@@ -6,12 +6,15 @@ import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
 import com.example.test2.repository.AddressRepository;
 import com.example.test2.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -49,41 +52,37 @@ public class UserService {
 
 //  회원정보 수정
     @Transactional
-    public void editUser(@PathVariable Integer id, Model model) {
+    public void editUser(Integer id, Model model) {
         Users users = userRepository.findById(id).orElse(null);
-        Address address = addressRepository.findById(users.getId()).orElse(null);
 
         model.addAttribute("users", users);
-        model.addAttribute("address", address);
 
-        if (users != null) {
-            Integer genderVal = users.getGender();
-            // 성별에 따라 Boolean 값 설정
-            boolean isMale = (genderVal != null && genderVal == 0);
-            boolean isFemale = (genderVal != null && genderVal == 1);
+        Integer genderVal = users.getGender();
+        // 성별에 따라 Boolean 값 설정
+        boolean isMale = (genderVal != null && genderVal == 0);
+        boolean isFemale = (genderVal != null && genderVal == 1);
 
-            // 모델에 성별 정보 추가
-            model.addAttribute("isMale", isMale);
-            model.addAttribute("isFemale", isFemale);
-        }
+        // 모델에 성별 정보 추가
+        model.addAttribute("isMale", isMale);
+        model.addAttribute("isFemale", isFemale);
 
-        if(users != null){
-            Integer agesVal = users.getAges();
-            boolean teenager = (agesVal != null && agesVal == 1);
-            boolean twenties = (agesVal != null && agesVal == 2);
-            boolean thirties = (agesVal != null && agesVal == 3);
-            boolean forties = (agesVal != null && agesVal == 4);
-            boolean fifties = (agesVal != null && agesVal == 5);
-            boolean sixties = (agesVal != null && agesVal == 6);
+        Integer agesVal = users.getAges();
+        boolean teenager = (agesVal != null && agesVal == 1);
+        boolean twenties = (agesVal != null && agesVal == 2);
+        boolean thirties = (agesVal != null && agesVal == 3);
+        boolean forties = (agesVal != null && agesVal == 4);
+        boolean fifties = (agesVal != null && agesVal == 5);
+        boolean sixties = (agesVal != null && agesVal == 6);
 
-            model.addAttribute("teenager", teenager);
-            model.addAttribute("twenties", twenties);
-            model.addAttribute("thirties", thirties);
-            model.addAttribute("forties", forties);
-            model.addAttribute("fifties", fifties);
-            model.addAttribute("sixties", sixties);
-        }
+        model.addAttribute("teenager", teenager);
+        model.addAttribute("twenties", twenties);
+        model.addAttribute("thirties", thirties);
+        model.addAttribute("forties", forties);
+        model.addAttribute("fifties", fifties);
+        model.addAttribute("sixties", sixties);
     }
+
+
 
     @Transactional
     public void updateUser(UsersForm usersform) {
@@ -132,6 +131,4 @@ public class UserService {
             return false;
         }
     }
-
-
 }

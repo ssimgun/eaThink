@@ -2380,10 +2380,6 @@ table tfoot {
     border-top: solid 2px #dee1e3;
 }
 
-table.alt {
-    border-collapse: separate;
-}
-
 table.alt tbody tr td {
     border: solid 1px #dee1e3;
     border-left-width: 0;

@@ -1,7 +1,13 @@
 package com.example.test2.controller;
 
+import com.example.test2.dto.AddressForm;
+import com.example.test2.entity.Address;
+import com.example.test2.repository.AddressRepository;
+import com.example.test2.service.AddressService;
 import com.example.test2.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +23,10 @@ import java.util.Map;
 public class UsersRestController {
     @Autowired
     UserService userService;
+    @Autowired
+    AddressService addressService;
+    @Autowired
+    AddressRepository addressRepository;
 
     @PostMapping("/check-id")
     public  Map<String, Boolean> checkId(@RequestBody Map<String, String> payload){
@@ -56,6 +66,33 @@ public class UsersRestController {
             return ResponseEntity.ok("탈퇴가 완료되었습니다.");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("탈퇴 과정에서 오류가 발생했습니다.");
+        }
+    }
+
+    @PostMapping("/delete-address")
+    public ResponseEntity<String> deleteAddress(@RequestBody Map<String, Integer> payload){
+        Integer id = payload.get("Id");
+        boolean deleted = addressService.deleteAddressById(id);
+
+        if (deleted){
+            return ResponseEntity.ok("삭제가 완료되었습니다");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("탈퇴 과정에서 오류가 발생했습니다");
+        }
+    }
+
+    @PostMapping("/update-address")
+    public ResponseEntity<String> updateAddress(@RequestBody Map<String, String> payload, HttpSession session){
+        Integer id = Integer.valueOf(payload.get("id"));
+        String address_name = payload.get("address_name");
+        String address = payload.get("address");
+
+        boolean updated = addressService.updateAddressById(id, address_name, address, session);
+
+        if(updated){
+            return ResponseEntity.ok("수정이 완료되었습니다.");
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 과정에 오류가 발생하였습니다,");
         }
     }
 }
