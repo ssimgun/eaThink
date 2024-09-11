@@ -26,6 +26,9 @@ public class Address {
     @JsonBackReference
     private Users users;
 
+    @Transient
+    private boolean isDefault;
+
     @Override
     public String toString() {
         return "address{" +

@@ -82,44 +82,13 @@
                     </div>
                 </div>
             </div>
+        <input type="hidden" name="address" value="{{address}}">
 
-            <!-- 주소입력 -->
-            <hr>
-            <label for="address" class="form-label">주소 입력</label>
-            <div class="row uniform" style="margin-bottom:20px">
-                <div class="9u 12u$(small)">
-                    <input class="form-control me-2" type="text" name="address"
-                           value="{{address}}" id="address" placeholder="주소" readonly>
-                    <div id="addressMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
-                </div>
-                <div class="3u$ 12u$(small)">
-                    <input type="button" onclick="sample3_execDaumPostcode()" value="주소찾기" class="fit">
-                </div>
-            </div>
-        {{/users}}
-
-        <!-- 별칭 -->
-        {{#address}}
-            <div class="12u$(small)" style="margin-bottom:20px">
-                <label for="InputAlias" class="form-label">주소 별칭</label>
-                <input type="text" class="form-control" id="address_name" name="address_name"
-                       placeholder="1~10자 영문, 한글, 숫자만 사용" value="{{address_name}}"
-                       pattern="[A-Za-z0-9가-힣]{1,10}" title="1~10자 영문, 한글, 숫자만 사용" required>
-                <div id="address_nameMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
-            </div>
-        {{/address}}
-
-        <div id="wrap"
-             style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
-                 style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
-                 alt="접기 버튼">
-        </div>
         <div style="text-align: center; margin-top:100px">
             <button type="submit" class="button special big" id="submitButton">수정하기</button>
-            <button type="button" onclick="deleteUser({{users.id}})" class="button special big" id="deleteButton" style="background-color:#FF6347;">탈퇴하기</button>
+            <button type="button" onclick="deleteUser({{id}})" class="button special big" id="deleteButton" style="background-color:#FF6347;">탈퇴하기</button>
         </div>
-
+        {{/users}}
     </form>
     </div>
 </section>
