@@ -26,6 +26,8 @@ public class UsersRestController {
     UserService userService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    AddressRepository addressRepository;
 
     @PostMapping("/check-id")
     public Map<String, Boolean> checkId(@RequestBody Map<String, String> payload) {
@@ -111,5 +113,19 @@ public class UsersRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("수정 과정에 오류가 발생하였습니다,");
         }
     }
+
+    @PostMapping("/selectAddress")
+    public ResponseEntity<String> selectAddress(@RequestBody Map<String, Integer> payload, HttpSession session, Model model){
+        Integer addressId = payload.get("id");
+
+        boolean selected = userService.selectAddress(addressId, session, model);;
+
+        if (selected){
+            return ResponseEntity.ok("선택 완료");
+        }else{
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("선택 과정에 오류가 발생하였습니다.");
+        }
+    }
+
 
 }

@@ -142,4 +142,32 @@ public class UserService {
             model.addAttribute("loggedInUser",users);
         }
     }
+
+    public boolean selectAddress(Integer AddressId, HttpSession session, Model model){
+        Users userSession = (Users) session.getAttribute("loggedInUser");
+        Address select = addressRepository.findById(AddressId).orElse(null);
+
+        if(userSession != null && select != null){
+            Users users = userRepository.findById(userSession.getId()).orElse(null);
+
+            if(users != null){
+                users.setAddress(select.getAddress());
+                userRepository.save(users);
+
+                List<Address> selected = users.getAddressList();
+                Address address1 = selected.stream()
+                        .filter(a -> a.getId().equals(AddressId))
+                        .findFirst()
+                        .orElse(null);
+
+                model.addAttribute("loggedInUser",users);
+                session.setAttribute("selectAddress",address1);
+                log.info(address1.toString());
+            }
+
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

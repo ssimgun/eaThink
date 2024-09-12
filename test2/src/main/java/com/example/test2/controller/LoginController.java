@@ -53,10 +53,12 @@ public class LoginController {
     public String home(HttpSession session, Model model){
         log.info("session check : {}",session.getAttribute("loggedInUser"));
         Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+        Address address = (Address) session.getAttribute("selectAddress");
 
         if(loggedInUser != null){
             log.info("home : {}", loggedInUser.toString());
             addressService.showAddressList(session, model);
+            model.addAttribute("selectAddress", address);
             log.info("address : {}", model.getAttribute("address"));
             return "intensify/maintest";
         }else {
