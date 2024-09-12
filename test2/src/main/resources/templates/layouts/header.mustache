@@ -84,10 +84,36 @@
     <!--    <#= 데이터가 있을 때>-->
     {{#loggedInUser}}
         <ul class="links-under nav-under">
-            <li><a href="/myInfo/edit">{{nickname}}</a></li>
-            <li><a href="/myInfo/addressList">{{address}}</a></li>
+            <li style="border-bottom : 1px solid; padding-bottom: 10px;">{{nickname}}님 반갑습니다!</li>
+            <li>
+                <div class="dropdown-myAddresses">
+                    <div>
+                        나의 주소
+                    </div>
+                    <div class="dropdown">
+                        {{#selectAddress}}
+                            <button class="dropbtn" onclick="dropdown()">
+                                <span class="dropbtn_content">{{address_name}}</span>
+                                <input type="hidden" value="{{address}}">
+                            </button>
+                        {{/selectAddress}}
+                        {{^selectAddress}}
+                            <button class="dropbtn" onclick="dropdown()">
+                                <span class="dropbtn_content">주소 선택</span>
+                            </button>
+                        {{/selectAddress}}
+                        <div class="dropdown-content">
+                            {{#addresses}}
+                                <div class="myAddress" onclick="selectAddress('{{address_name}}','{{id}}')">
+                                    {{address_name}}<br>({{address}})
+                                </div>
+                            {{/addresses}}
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li class="button-container">
-                <a type="button" href="/myInfo/edit" style="padding-left: 20px; padding-right: 20px;">내 정보<</a>
+                <a type="button" href="/myInfo/edit">내 정보</a>
                 <a type="button" href="/myInfo/addressList">주소목록</a>
             </li>
         </ul>
