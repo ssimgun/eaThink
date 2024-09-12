@@ -63,3 +63,76 @@
 	});
 
 })(jQuery);
+
+
+// 사이드 바 js
+const dropbtn = document.querySelector('.dropbtn');
+const dropdownContent = document.querySelector('.dropdown-content');
+const dropbtnContent = document.querySelector('.dropbtn_content');
+
+// 드롭다운 토글 함수
+function dropdown() {
+    dropdownContent.classList.toggle('show');
+    if(dropbtn.style.background === ''){
+        dropbtn.style.background = 'antiquewhite';
+    } else{
+        dropbtn.style.background = '';
+    }
+}
+
+// 주소 선택 함수
+function selectAddress(address_name,id) {
+    dropbtnContent.style.color = '#252525';
+    dropbtn.style.borderColor = '#fcfcfc';
+    dropbtn.style.background = '';
+    dropdownContent.classList.remove('show');
+
+    updateUserAddress(id);
+    dropbtn.innerHTML = address_name;
+}
+
+// 드롭다운 버튼 클릭 이벤트 핸들러 설정
+if (dropbtn) {
+    dropbtn.onclick = dropdown;
+}
+
+// 드롭다운 외부 클릭 시 닫기
+window.onclick = (e) => {
+    if (!e.target.matches('.dropbtn')) {
+        const dropdowns = document.getElementsByClassName('dropdown-content');
+        Array.from(dropdowns).forEach(dropdown => {
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        });
+    }
+};
+
+function updateUserAddress(id){
+    fetch('/selectAddress',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            id : id
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('서버 응답 없음');
+        }
+        return response.text();  // 응답 본문을 텍스트로 읽기
+    })
+    .then(message => {
+        console.log(message);  // 서버에서 반환한 텍스트 메시지를 콘솔에 출력
+        if (message.includes("선택 완료")) {
+            console.log('주소 선택 성공');
+        } else {
+            console.log('선택 오류:', message);  // 오류 메시지를 출력
+        }
+    })
+    .catch(error => {
+        console.error('오류:', error);
+    });
+}

@@ -37,10 +37,14 @@ public class EditController {
     @GetMapping("/edit")
     public String edit(HttpSession session, Model model) {
         Users userSession = (Users) session.getAttribute("loggedInUser");  // 세션에서 사용자 정보 가져오기
+        Address selectAddress = (Address) session.getAttribute("selectAddress");
+
         model.addAttribute("loggedInUser", userSession);
+        model.addAttribute("selectAddress", selectAddress);
+
         if (userSession != null) {
             userService.editUser(userSession.getId(), model);  // 사용자 ID를 이용하여 모델 업데이트
-
+            addressService.showAddressList(session, model);
             return "intensify/edit";
         } else {
             // 사용자가 세션에 없으면 로그인 페이지로 리다이렉트
@@ -54,7 +58,7 @@ public class EditController {
         userService.updateUser(usersform);
         log.info("아이디값 : " + usersform.getId());
 
-        return "redirect:/main";
+        return "redirect:/myInfo/edit";
     }
 
     //    주소 목록 페이지 이동
@@ -71,6 +75,7 @@ public class EditController {
     @PostMapping("/addAddress")
     public String addAddress(HttpSession session, AddressForm addressForm){
         Users userSession = (Users) session.getAttribute("loggedInUser");
+
         addressService.addAddress(userSession , addressForm);
 
         return "redirect:/myInfo/addressList";
