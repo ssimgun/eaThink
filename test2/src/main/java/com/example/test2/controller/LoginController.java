@@ -2,8 +2,10 @@ package com.example.test2.controller;
 
 import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
+import com.example.test2.entity.Weather_data;
 import com.example.test2.service.AddressService;
 import com.example.test2.service.UserService;
+import com.example.test2.service.weatherAPIConnect;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,8 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private weatherAPIConnect weatherAPIConnect;
 
     @PostMapping("/login")
     public String userlogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request, Model model){
@@ -39,6 +43,7 @@ public class LoginController {
             log.info(session.getAttribute("loggedInUser").toString());
 
             model.addAttribute("loggedInUser", users);
+
             return "/home";
         }else{
             model.addAttribute("error", "일치하는 로그인 정보가 없습니다.");
@@ -53,6 +58,10 @@ public class LoginController {
     public String home(HttpSession session, Model model){
         log.info("session check : {}",session.getAttribute("loggedInUser"));
         Users loggedInUser = (Users) session.getAttribute("loggedInUser");
+
+        // 날시 데이터 가져오기
+        Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
+//        model.addAttribute("weather",weather_data);
 
         if(loggedInUser != null){
             log.info("home : {}", loggedInUser.toString());

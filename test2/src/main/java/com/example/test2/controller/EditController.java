@@ -4,10 +4,12 @@ import com.example.test2.dto.AddressForm;
 import com.example.test2.dto.UsersForm;
 import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
+import com.example.test2.entity.Weather_data;
 import com.example.test2.repository.AddressRepository;
 import com.example.test2.repository.UserRepository;
 import com.example.test2.service.AddressService;
 import com.example.test2.service.UserService;
+import com.example.test2.service.weatherAPIConnect;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +34,16 @@ public class EditController {
     UserRepository userRepository;
     @Autowired
     AddressService addressService;
+    @Autowired
+    weatherAPIConnect weatherAPIConnect;
 
     //    회원정보 수정 페이지 이동
     @GetMapping("/edit")
     public String edit(HttpSession session, Model model) {
         Users userSession = (Users) session.getAttribute("loggedInUser");  // 세션에서 사용자 정보 가져오기
         model.addAttribute("loggedInUser", userSession);
+        Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
+
         if (userSession != null) {
             userService.editUser(userSession.getId(), model);  // 사용자 ID를 이용하여 모델 업데이트
 
@@ -60,6 +66,8 @@ public class EditController {
     //    주소 목록 페이지 이동
     @GetMapping("/addressList")
     public String addressList(HttpSession session, Model model) {
+        Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
+
         if (session != null){
             addressService.showAddressList(session, model);
             return "intensify/addressList";

@@ -3396,3 +3396,22 @@ body.is-loading #banner .content {
 .dropdown-content.show{
   display : block;
 }
+
+/* 날씨 정보 css */
+.weather-info {
+    position: relative;
+    display: inline-block;
+}
+
+.weather-info .details {
+    display: none;
+    position: absolute;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1;
+}
+
+.weather-info:hover .details {
+    display: block;
+}
