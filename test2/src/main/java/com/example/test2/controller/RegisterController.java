@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-//  리포지토리 가져오기
+    //  리포지토리 가져오기
     @Autowired
     private UserService userService;
 
-//  회원가입 버튼 클릭시 작동
+    //  회원가입 버튼 클릭시 작동
     @PostMapping("/add")
     public String register(UsersForm usersform, AddressForm addressForm){
         userService.registerUser(usersform, addressForm);
@@ -25,7 +25,7 @@ public class RegisterController {
     }
 
 
-//  회원정보 수정 완료 버튼 클릭시
+    //  회원정보 수정 완료 버튼 클릭시
     @PostMapping("/update")
     public String update(UsersForm usersform){
         userService.updateUser(usersform);

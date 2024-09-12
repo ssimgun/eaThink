@@ -21,13 +21,26 @@
     <link rel="stylesheet" href="/assets/css/kakaomap.css"/>
 </head>
 
+<!-- 네이버 지도 호출 스크립트-->
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=dl1k0ms7ds"></script>
+
 <body>
 
 <!-- Header -->
 <header id="header">
     <nav class="left"><a href="#menu">
         <span>Menu</span></a>
-        <span>날씨 표시</span>
+        {{#weather}}
+            <div class="weather-info">
+                <span>"{{t1h}}도"</span>
+                <div class="details">
+                    <p> 위치 : {{firstName}} {{secondName}}</p>
+                    <p> 기온 : {{t1h}}</p>
+                    <p> 습도 : {{reh}}%</p>
+                    <p> 강수량 : {{rn1}}</p>
+                </div>
+            </div>
+        {{/weather}}
     </nav>
 
     <a href="/home" class="logo">식사를 합시다</a>
@@ -49,7 +62,7 @@
         <li><a href="/home">홈페이지</a></li>
         <li><a href="#one">채팅</a></li>
         <li><a href="#three">게임</a></li>
-        <li><a href="elements.html">나의 음식 취향</a></li>
+        <li><a href="/survey/foods">나의 음식 취향</a></li>
     </ul>
 
     {{^loggedInUser}}
@@ -59,9 +72,9 @@
     {{/loggedInUser}}
 
     {{#loggedInUser}}
-    <ul class="actions vertical">
-        <li><a href="/login/logout" class="button fit" id="side-logout-btn">로그아웃</a></li>
-    </ul>
+        <ul class="actions vertical">
+            <li><a href="/logout" class="button fit" id="side-logout-btn">로그아웃</a></li>
+        </ul>
     {{/loggedInUser}}
 
     <!--개인 프로필 추가하기 -->
@@ -70,6 +83,7 @@
 
     <!--        유저 정보 표시-->
     <!--<div class="flex-item nav-under">-->
+<ul class="links-under nav-under">
     {{#loggedInUser}}
         <ul class="links-under nav-under">
             <li style="border-bottom : 1px solid; padding-bottom: 10px;">{{nickname}}님 반갑습니다!</li>

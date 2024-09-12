@@ -4,10 +4,12 @@ import com.example.test2.dto.AddressForm;
 import com.example.test2.dto.UsersForm;
 import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
+import com.example.test2.entity.Weather_data;
 import com.example.test2.repository.AddressRepository;
 import com.example.test2.repository.UserRepository;
 import com.example.test2.service.AddressService;
 import com.example.test2.service.UserService;
+import com.example.test2.service.weatherAPIConnect;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class EditController {
     UserRepository userRepository;
     @Autowired
     AddressService addressService;
+    @Autowired
+    weatherAPIConnect weatherAPIConnect;
 
     //    회원정보 수정 페이지 이동
     @GetMapping("/edit")
@@ -40,6 +44,8 @@ public class EditController {
         Address selectAddress = (Address) session.getAttribute("selectAddress");
 
         model.addAttribute("loggedInUser", userSession);
+        Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
+
         model.addAttribute("selectAddress", selectAddress);
 
         if (userSession != null) {
@@ -64,6 +70,8 @@ public class EditController {
     //    주소 목록 페이지 이동
     @GetMapping("/addressList")
     public String addressList(HttpSession session, Model model) {
+        Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
+
         if (session != null){
             addressService.showAddressList(session, model);
             return "intensify/addressList";
