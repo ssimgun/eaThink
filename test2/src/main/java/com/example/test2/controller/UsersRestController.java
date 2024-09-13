@@ -26,8 +26,6 @@ public class UsersRestController {
     UserService userService;
     @Autowired
     AddressService addressService;
-    @Autowired
-    AddressRepository addressRepository;
 
     @PostMapping("/check-id")
     public Map<String, Boolean> checkId(@RequestBody Map<String, String> payload) {

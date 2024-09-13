@@ -63,7 +63,7 @@ public class AddressService {
 
     public void showAddressList(HttpSession session, Model model){
         Users usersSession = (Users) session.getAttribute("loggedInUser");
-        model.addAttribute("loggedInUser", usersSession);
+        Address selectAddress = (Address) session.getAttribute("selectAddress");
 
         if (usersSession != null) {
             Users users = userRepository.findById(usersSession.getId()).orElse(null);
@@ -78,10 +78,14 @@ public class AddressService {
                             .orElse(null);
                     addresses.forEach(address -> address.setDefault(address.getId().equals(minId)));
                 }
-
-                model.addAttribute("address", addresses);
+                log.info(users.toString());
+                log.info(addresses.toString());
+                model.addAttribute("loggedInUser", users);
+                model.addAttribute("addresses", addresses);
+                model.addAttribute("selectAddress", selectAddress);
 
             }
         }
     }
+
 }
