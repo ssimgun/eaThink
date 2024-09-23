@@ -89,6 +89,8 @@ function selectAddress(address_name,id) {
 
     updateUserAddress(id);
     dropbtn.innerHTML = address_name;
+
+
 }
 
 // 드롭다운 버튼 클릭 이벤트 핸들러 설정
@@ -127,6 +129,7 @@ function updateUserAddress(id){
     .then(message => {
         console.log(message);  // 서버에서 반환한 텍스트 메시지를 콘솔에 출력
         if (message.includes("선택 완료")) {
+
             console.log('주소 선택 성공');
         } else {
             console.log('선택 오류:', message);  // 오류 메시지를 출력
@@ -135,4 +138,40 @@ function updateUserAddress(id){
     .catch(error => {
         console.error('오류:', error);
     });
+}
+
+//    날씨 이미지에 마우스를 가져다 대면 상세정보 띄우기
+document.addEventListener('DOMContentLoaded', function() {
+    const weatherInfo = document.getElementById('weatherInfo');
+    const detailsInfo = document.getElementById('weatherDetails');
+
+    // 마우스를 weather-info 요소에 올리면 details 요소를 보이게 함
+    weatherInfo.addEventListener('mouseenter', function() {
+        detailsInfo.style.display = 'block';
+    });
+
+    // 마우스를 weather-info 요소에서 벗어나면 details 요소를 숨김
+    weatherInfo.addEventListener('mouseleave', function() {
+        detailsInfo.style.display = 'none';
+    });
+});
+
+//    주소 목록 변경시 날씨 정보 업데이트
+// id를 통해 요소를 선택
+const weatherInfoImage = document.getElementById('weather-info-image');
+const weatherDetailsImage = document.getElementById('weather-details-image');
+const weatherDetailsDiv = document.getElementById('weather-details-div');
+
+function updateWeatherInfo(){
+    weatherInfoImage.src = "/images/weather_{{weatherImageName}}.png"
+    weatherInfoImage.alt = "{{weatherImageName}}"
+    weatherDetailsImage.src = "/images/weather_{{weatherImageName}}.png"
+    weatherDetailsImage.alt = "{{weatherImageName}}"
+
+    weatherDetailsDiv.innerHTML = `
+       <p> 현재 {{secondName}}의 날씨</p>
+       <p> 기온 : {{t1h}}도</p>
+       <p> 습도 : {{reh}}%</p>
+       <p> 강수량 : {{rn1}}</p>
+    `;
 }

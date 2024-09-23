@@ -2,9 +2,11 @@ package com.example.test2.controller;
 
 import com.example.test2.dto.AddressForm;
 import com.example.test2.entity.Address;
+import com.example.test2.entity.Weather_data;
 import com.example.test2.repository.AddressRepository;
 import com.example.test2.service.AddressService;
 import com.example.test2.service.UserService;
+import com.example.test2.service.weatherAPIConnect;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -26,6 +28,8 @@ public class UsersRestController {
     UserService userService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    weatherAPIConnect weatherAPIConnect;
 
     @PostMapping("/check-id")
     public Map<String, Boolean> checkId(@RequestBody Map<String, String> payload) {
@@ -117,6 +121,7 @@ public class UsersRestController {
         Integer addressId = payload.get("id");
 
         boolean selected = userService.selectAddress(addressId, session, model);;
+        weatherAPIConnect.getUserWeather(session, model);
 
         if (selected){
             return ResponseEntity.ok("선택 완료");
