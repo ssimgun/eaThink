@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -209,6 +210,7 @@ public class weatherAPIConnect {
     }
 
     //session 에 있는 회원 정보의 주소를 가지고
+    @GetMapping("/get-userWeather")
     public Weather_data getUserWeather(HttpSession session, Model model){
         Users users = (Users) session.getAttribute("loggedInUser");
         String second_address;
@@ -219,10 +221,33 @@ public class weatherAPIConnect {
         } else{
             second_address = "종로구";
         }
+
         Weather_data weather_data = weather_dataRepository.findBySecondName(second_address);
+
+        // sky + pty 정보에 따른 이미지 변경
+        String weatherImageName = weather_data.getPty();
+        String skyValue = weather_data.getSky();
+        if(weatherImageName.equals("0")){
+            switch (skyValue){
+                case "1":
+                    weatherImageName = "sun";
+                    break;
+                case "3":
+                    weatherImageName = "weather";
+                    break;
+                case "4":
+                    weatherImageName = "cloudy";
+                    break;
+            }
+        }
+
+
+        model.addAttribute("weatherImageName", weatherImageName);
+        model.addAttribute("weather", weather_data);
+
+        log.info("이미지 이름 : " + weatherImageName);
         log.info("선택된 주소 : "  + weather_data.toString());
 
-        model.addAttribute("weather", weather_data);
         return weather_data;
     }
 }

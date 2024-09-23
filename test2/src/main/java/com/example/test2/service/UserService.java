@@ -161,6 +161,7 @@ public class UserService {
                         .orElse(null);
 
                 model.addAttribute("loggedInUser",users);
+                session.setAttribute("loggedInUser",users);
                 session.setAttribute("selectAddress",address1);
                 log.info(address1.toString());
             }
