@@ -1,0 +1,123 @@
+{{>layouts/header}}
+
+<style>
+    .flex {
+        display: flex; /* 플렉스 컨테이너 */
+        gap: 20px; /* 아이템 간격 */
+        flex-wrap: wrap; /* 아이템 줄바꿈 */
+        justify-content: center; /* 중앙 정렬 */
+    }
+
+</style>
+
+<form method="post" action="/survey/submit">
+
+    <section id="Western" class="wrapper style1 special">
+        <div class="inner flex flex-3">
+            <!-- 한식 선택 -->
+            {{#Western}}
+                <div class="food-item">
+                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+
+                </div>
+            {{/Western}}
+        </div>
+    </section>
+
+
+    <section id="Cafe" class="wrapper">
+        <div class="inner flex flex-3">
+            <!-- 중식 선택 -->
+            {{#Cafe}}
+                <div class="food-item">
+                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Cafe}}
+        </div>
+    </section>
+
+
+    <section id="Korea" class="wrapper style1 special">
+        <div class="inner flex flex-3">
+            <!-- 일식 선택 -->
+            {{#Korea}}
+                <div class="food-item">
+                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Korea}}
+        </div>
+    </section>
+
+    <section id="Meat" class="wrapper">
+        <div class="inner flex flex-3">
+            <!-- 양식 선택 -->
+            {{#Meat}}
+                <div class="food-item">
+                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Meat}}
+        </div>
+    </section>
+
+
+    <section id="Worlds" class="wrapper style1 special">
+        <div class="inner flex flex-3">
+            <!-- 일식 선택 -->
+            {{#Worlds}}
+                <div class="food-item">
+                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Worlds}}
+        </div>
+    </section>
+
+    <section id="Night" class="wrapper">
+        <div class="inner flex flex-3">
+            <!-- 양식 선택 -->
+            {{#Night}}
+                <div class="food-item">
+                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Night}}
+        </div>
+    </section>
+
+
+    <section id="Night" class="wrapper">
+        <div class="inner flex flex-3">
+            <button class="submit-button" type="submit">저장</button>
+        </div>
+    </section>
+</form>
+
+{{>layouts/footer}}

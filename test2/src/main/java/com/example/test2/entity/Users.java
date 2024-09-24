@@ -47,6 +47,7 @@ public class Users {
     @JsonManagedReference
     private List<Address> addressList = new ArrayList<>();
 
+
     @Override
     public String toString() {
         return "Users{" +

@@ -3471,3 +3471,132 @@ body.is-loading #banner .content {
 
 
 }
+
+/* 설문조사 선택 화면 */
+
+.flex-selectsurvey {
+    display: -ms-flexbox;
+    -ms-flex-wrap: nowrap;
+    -ms-flex-pack: justify;
+    -ms-flex-align: stretch;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    justify-content: space-evenly;
+    -moz-align-items: stretch;
+    -webkit-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+}
+
+@media screen and (max-width: 980px) {
+.flex-selectsurvey {
+    display: -ms-flexbox;
+    -ms-flex-wrap: nowrap;
+    -ms-flex-pack: justify;
+    -ms-flex-align: stretch;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    justify-content: center;
+    -moz-align-items: stretch;
+    -webkit-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+    }
+}
+
+
+.wrapper-selectsurvey {
+    padding: 6em 0 4em 0;
+}
+
+.wrapper-selectsurvey h1, .wrapper-selectsurvey h2, .wrapper-selectsurvey h3, .wrapper-selectsurvey h4, .wrapper-selectsurvey h5 {
+    color: #25a2c3;
+}
+
+.wrapper-selectsurvey.style1 {
+    background: #ca604d;
+    color: #fcdcd6;
+    margin: 50px 0 50px 0;
+}
+
+.wrapper-selectsurvey.style1 h1,
+.wrapper-selectsurvey.style1 h2,
+.wrapper-selectsurvey.style1 h3,
+.wrapper-selectsurvey.style1 h4,
+.wrapper-selectsurvey.style1 h5 {
+    color: #fff;
+}
+
+.wrapper-selectsurvey.style1 cite.author {
+    color: #fff;
+}
+
+.inner-selectsurvey {
+    margin: 0 auto;
+    max-width: 65em;
+    font-size: x-large;
+}
+
+@media screen and (max-width: 1280px) {
+
+    .inner-selectsurvey {
+        max-width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 980px) {
+
+    .inner-selectsurvey {
+        max-width: 70%;
+    }
+
+}
+
+@media screen and (max-width: 736px) {
+
+    .inner-selectsurvey {
+        max-width: 85%;
+    }
+
+}
+
+/* 설문 이미지 스타일 */
+.food-item {
+    width: 200px; /* 각 아이템의 너비 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    margin-bottom: 2em;
+}
+
+.food-item img {
+    width: 100%; /* 이미지의 너비 */
+    border-radius: 8px; /* 이미지 테두리 둥글게 */
+}
+
+.range-slider {
+    width: 100%; /* 슬라이더의 너비 */
+    margin-top: 10px; /* 슬라이더 위 여백 */
+}
+
+.nameTag {
+    font-size: inherit;
+    margin: none;
+}
