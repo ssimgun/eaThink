@@ -81,14 +81,17 @@ function dropdown() {
 }
 
 // 주소 선택 함수
-function selectAddress(address_name,id) {
+function selectAddress(address_name,id,address) {
     dropbtnContent.style.color = '#252525';
     dropbtn.style.borderColor = '#fcfcfc';
     dropbtn.style.background = '';
     dropdownContent.classList.remove('show');
 
-    updateUserAddress(id);
-    dropbtn.innerHTML = address_name;
+    if(confirm(address_name+'주소로 변경하시겠습니까?')){
+        updateUserAddress(id);
+        initGeocoder(address);
+        dropbtn.innerHTML = address_name;
+    }
 
 
 }
@@ -129,7 +132,7 @@ function updateUserAddress(id){
     .then(message => {
         console.log(message);  // 서버에서 반환한 텍스트 메시지를 콘솔에 출력
         if (message.includes("선택 완료")) {
-
+            window.location.href='/home';
             console.log('주소 선택 성공');
         } else {
             console.log('선택 오류:', message);  // 오류 메시지를 출력
@@ -156,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-//    주소 목록 변경시 날씨 정보 업데이트
+// 주소 목록 변경시 날씨 정보 업데이트
 // id를 통해 요소를 선택
 const weatherInfoImage = document.getElementById('weather-info-image');
 const weatherDetailsImage = document.getElementById('weather-details-image');
@@ -175,3 +178,92 @@ function updateWeatherInfo(){
        <p> 강수량 : {{rn1}}</p>
     `;
 }
+
+// 네이버 지도 스크립트
+document.addEventListener('DOMContentLoaded', function() {
+    function getCoordinates(address) {
+        $.ajax({
+            url: "https://api.vworld.kr/req/address?",
+            type: "GET",
+            dataType: "jsonp",
+            data: {
+                service: "address",
+                request: "GetCoord",
+                version: "2.0",
+                crs: "EPSG:4326",
+                type: "ROAD",
+                address: address,
+                format: "json",
+                errorformat: "json",
+                key: "0301B7A8-5706-38A7-859E-0434C70ACD7C"
+            },
+            success: function(result) {
+                console.log(result);
+
+                if (result.response.status === 'OK') {
+                    var data = result.response.result;
+
+                    var x = data.point.x;
+                    var y = data.point.y;
+
+                    console.log(x, y);
+
+                    var position = new naver.maps.LatLng(y, x);
+                    var map = new naver.maps.Map('map', {
+                        center: position,
+                        zoom: 14
+                    });
+
+                    var markerOptions = {
+                        position: position,
+                        map: map,
+                        icon:{
+                            url:'./images/chick.png',
+                            origin : new naver.maps.Point(0,0),
+                            anchor : new naver.maps.Point(29,0)
+                        }
+                    };
+
+                    var marker = new naver.maps.Marker(markerOptions);
+
+                    var infowindow = new naver.maps.InfoWindow({
+                        content: '<div style="padding:10px; background-color: white; color: black;">나의 위치</div>',
+                    });
+
+                    // 마커 hover 이벤트 추가
+                    naver.maps.Event.addListener(marker, 'mouseover', function() {
+                        infowindow.open(map, marker.getPosition());
+                    });
+
+                    naver.maps.Event.addListener(marker, 'mouseout', function() {
+                        infowindow.close();
+                    });
+                } else {
+                    console.error('좌표를 찾을 수 없습니다.');
+                    alert('요청하신 주소를 지도에서 찾을 수 없습니다. 기본 주소로 재요청합니다.');
+
+                    var firstAddressElement = document.querySelector('.myAddress');
+                    if (firstAddressElement) {
+                           address = firstAddressElement.textContent.split('(')[1].replace(')', '').trim();
+                    } else {
+                        address = '서울 중구 세종대로 110 서울특별시청'; // 기본 주소 설정
+                    }
+
+                    getCoordinates(address);
+                }
+            },
+            error: function(error) {
+                console.error('AJAX 요청 실패:', error);
+            }
+        });
+    }
+
+    var addressEle = document.getElementById('addressHidden');
+    var address = addressEle ? addressEle.value : null; // addressEle가 존재하는지 체크
+
+    if (!address) {
+        address = '서울 중구 세종대로 110 서울특별시청'; // 기본 주소 설정
+    }
+
+    getCoordinates(address); // 처음 주소로 좌표 요청
+});

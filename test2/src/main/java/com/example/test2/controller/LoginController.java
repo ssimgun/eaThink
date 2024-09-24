@@ -41,8 +41,8 @@ public class LoginController {
             //user 인증 선공 시 세션에 사용자 정보 저장
             session.setAttribute("loggedInUser", users);
             log.info(session.getAttribute("loggedInUser").toString());
-
             model.addAttribute("loggedInUser", users);
+            addressService.showAddressList(session, model);
 
             return "/home";
         }else{

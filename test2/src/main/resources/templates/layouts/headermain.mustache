@@ -112,14 +112,9 @@
                                 <input id="addressHidden" type="hidden" value="{{address}}">
                             </button>
                         {{/selectAddress}}
-                        {{^selectAddress}}
-                            <button class="dropbtn" onclick="dropdown()">
-                                <span class="dropbtn_content">주소 선택</span>
-                            </button>
-                        {{/selectAddress}}
                         <div class="dropdown-content">
                             {{#addresses}}
-                                <div class="myAddress" onclick="selectAddress('{{address_name}}','{{id}}')">
+                                <div class="myAddress" onclick="selectAddress('{{address_name}}','{{id}}','{{address}}')">
                                     {{address_name}}<br>({{address}})
                                 </div>
                             {{/addresses}}
