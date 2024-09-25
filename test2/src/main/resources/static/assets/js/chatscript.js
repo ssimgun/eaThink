@@ -16,8 +16,18 @@ const createChatLi = (message, className, isHTML = false) => {
   chatLi.classList.add("chat", className);
   const chatContent = className === "outgoing" 
     ? `<p></p>` 
-    : `<span class="material-symbols-outlined">robot_2</span><p></p>`;
+    : `<span class="material-symbols-outlined robot-icon">robot_2</span><p></p>`;
   chatLi.innerHTML = chatContent;
+
+  // 아이콘 배경색을 모드에 따라 설정
+   if (className === "incoming") {
+       const robotIcon = chatLi.querySelector(".robot-icon");
+       if (currentEndpoint === '/chat_recommend/') {
+           robotIcon.style.backgroundColor = "#f6755e"; // 추천 모드 배경색
+       } else if (currentEndpoint === '/chat_knowledge/') {
+           robotIcon.style.backgroundColor = "#1a8d40"; // 지식 모드 배경색
+       }
+   }
 
    if (isHTML) {
       chatLi.querySelector("p").innerHTML = message; // HTML로 처리
