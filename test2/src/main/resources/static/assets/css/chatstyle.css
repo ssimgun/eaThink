@@ -1,6 +1,55 @@
 /* Import Google font - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
+#select-chatbot{
+    background: #f6755e;
+    text-align: center;
+    color: white;
+    padding: 1em 1em 0.5em 1em;
+    top: 0;
+    position: sticky;
+    .flex{
+        padding:0.5em;
+        border-bottom: solid;
+        h2{
+            color:white;
+            margin:0;
+        }
+        span{
+            cursor:pointer;
+        }
+    }
+    .btn-container button{
+        background:white;
+        color:black;
+        width:49%
+    }
+    .btn-container button:hover{
+        background:antiquewhite;
+    }
+}
+
+.btn-container {
+    max-height: 100px; /* 최대 높이 설정 */
+    overflow: hidden; /* 내용이 넘치면 숨김 */
+    transition: max-height 0.3s ease, opacity 0.3s ease; /* 전환 효과 추가 */
+    p{
+        padding: 10px 0px;
+        font-size: larger;
+    }
+}
+
+.btn-container.hidden {
+    max-height: 0; /* 숨길 때 최대 높이를 0으로 설정 */
+    opacity: 0; /* 숨길 때 투명도 0 */
+    visibility: hidden; /* 숨길 때 보이지 않도록 설정 */
+}
+
+.btn-container.visible {
+    visibility: visible; /* 보일 때 보이도록 설정 */
+    opacity: 1; /* 보일 때 투명도 1 */
+}
+
 #chatbot-container{
  position : relative;
  width:100%;
@@ -87,7 +136,7 @@ header h2 {
 .chatbot .chatbox {
   overflow-y: auto;
   height: 700px;
-  padding: 30px 20px 100px;
+  padding: 0;
 }
 
 .chatbot :where(.chatbox, textarea)::-webkit-scrollbar {
@@ -107,11 +156,12 @@ header h2 {
 .chatbox .chat {
   display: flex;
   list-style: none;
+  margin: 1em 0em;
 }
 
 .chatbox .outgoing {
-  margin: 20px 0;
   justify-content: flex-end;
+  padding-right: 1em;
 }
 
 .chatbox .incoming span {
@@ -121,10 +171,9 @@ header h2 {
   cursor: default;
   text-align: center;
   line-height: 32px;
-  align-self: flex-end;
   background: #8e6d58;
   border-radius: 4px;
-  margin: 0 10px 7px 0;
+  margin: 17px 10px;
 }
 
 .chatbox .chat p {
@@ -169,7 +218,7 @@ header h2 {
   outline: none;
   resize: none;
   max-height: 180px;
-  padding: 15px 15px 15px 0;
+  padding: 15px;
   font-size: 0.95rem;
 }
 
@@ -215,3 +264,4 @@ header h2 {
     display: block;
   }
 }
+

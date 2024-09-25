@@ -1764,8 +1764,13 @@ a:hover {
     text-decoration: none;
 }
 
-strong, b {
-    color: #727a82;
+b {
+    color: #1a8d40;
+    font-weight: 700;
+}
+
+strong {
+    color: #f6755e;
     font-weight: 700;
 }
 
@@ -1774,7 +1779,8 @@ em, i {
 }
 
 p {
-    margin: 0 0 2em 0;
+    margin: 0;
+    height: fit-content;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -2720,7 +2726,7 @@ button:disabled,
 }
 
 .wrapper.style1 {
-    background: #ca604d;
+    background: #f6755e;
     color: #fcdcd6;
 }
 
