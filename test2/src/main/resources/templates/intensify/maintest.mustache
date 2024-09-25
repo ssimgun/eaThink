@@ -23,10 +23,21 @@
     <div class="inner flex flex-3">
         <div id="chatbot-container">
             <div class="chatbot">
+                <div id="select-chatbot">
+                    <div class="flex flex-3">
+                        <h2>챗봇</h2>
+                        <span class="material-symbols-outlined" id="maximize">keyboard_arrow_up</span>
+                    </div>
+                    <div class="btn-container" id="btn-container">
+                        <p>이용하실 챗봇 유형을 선택해주세요!</p>
+                        <button type="button" id="recommend">어떤 음식을 먹을까?</button>
+                        <button type="button" id="knowledge">이 음식을 알고싶어!</button>
+                    </div>
+                </div>
                 <ul class="chatbox">
                     <li class="chat incoming">
-                        <span class="material-symbols-outlined">smart_toy</span>
-                        <p>안녕하세요👋 <br>힘들어도 식사는 맛있게 하시와요</p>
+                        <span class="material-symbols-outlined" id="robot-icon">robot_2</span>
+                        <p>안녕하세요👋 <br>챗봇 유형을 먼저 선택해주세요!</p>
                     </li>
                 </ul>
                 <div class="chat-input">

@@ -1,95 +1,88 @@
-//
-////네이버 지도 스크립트
-//
-//var mapOptions = {
-//    center: new naver.maps.LatLng(37.3595704, 127.105399),
-//    zoom: 10,
-//    mapTypeId: naver.maps.MapTypeId.NORMAL
-//};
-//
-//var map = new naver.maps.Map('map', mapOptions);
-//
-//var infowindow = new naver.maps.InfoWindow();
-//
-//function onSuccessGeolocation(position) {
-//    var location = new naver.maps.LatLng(position.coords.latitude,
-//                                         position.coords.longitude);
-//
-//    map.setCenter(location); // 얻은 좌표를 지도의 중심으로 설정합니다.
-//    map.setZoom(10); // 지도의 줌 레벨을 변경합니다.
-//
-//    infowindow.setContent('<div style="padding:20px;">' + '내 위치' + '</div>');
-//
-//    infowindow.open(map, location);
-//    console.log('Coordinates: ' + location.toString());
-//}
-//
-//function onErrorGeolocation() {
-//    var center = map.getCenter();
-//
-//    infowindow.setContent('<div style="padding:20px;">' +
-//        '<h5 style="margin-bottom:5px;color:#f00;">Geolocation failed!</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
-//
-//    infowindow.open(map, center);
-//}
-//
-//$(window).on("load", function() {
-//    if (navigator.geolocation) {
-//        /**
-//         * navigator.geolocation 은 Chrome 50 버젼 이후로 HTTP 환경에서 사용이 Deprecate 되어 HTTPS 환경에서만 사용 가능 합니다.
-//         * http://localhost 에서는 사용이 가능하며, 테스트 목적으로, Chrome 의 바로가기를 만들어서 아래와 같이 설정하면 접속은 가능합니다.
-//         * chrome.exe --unsafely-treat-insecure-origin-as-secure="http://example.com"
-//         */
-//        navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
-//    } else {
-//        var center = map.getCenter();
-//        infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>');
-//        infowindow.open(map, center);
-//    }
-//});
+// 네이버 지도 스크립트
+document.addEventListener('DOMContentLoaded', function() {
+    function getCoordinates(address) {
+        $.ajax({
+            url: "https://api.vworld.kr/req/address?",
+            type: "GET",
+            dataType: "jsonp",
+            data: {
+                service: "address",
+                request: "GetCoord",
+                version: "2.0",
+                crs: "EPSG:4326",
+                type: "ROAD",
+                address: address,
+                format: "json",
+                errorformat: "json",
+                key: "0301B7A8-5706-38A7-859E-0434C70ACD7C"
+            },
+            success: function(result) {
+                console.log(result);
 
-// 건태 테스트 코드
+                if (result.response.status === 'OK') {
+                    var data = result.response.result;
 
-var map = new naver.maps.Map("map", {
-        center: new naver.maps.LatLng(37.5666103, 126.9783882),
-        zoom: 16
-    }),
-    infoWindow = null;
+                    var x = data.point.x;
+                    var y = data.point.y;
 
-function initGeocoder() {
-    var latlng = map.getCenter();
-    var utmk = naver.maps.TransCoord.fromLatLngToUTMK(latlng); // 위/경도 -> UTMK
-    var tm128 = naver.maps.TransCoord.fromUTMKToTM128(utmk);   // UTMK -> TM128
-    var naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128); // TM128 -> NAVER
+                    console.log(x, y);
 
-    infoWindow = new naver.maps.InfoWindow({
-        content: ''
-    });
+                    var position = new naver.maps.LatLng(y, x);
+                    var map = new naver.maps.Map('map', {
+                        center: position,
+                        zoom: 14
+                    });
 
-    map.addListener('click', function(e) {
-        var latlng = e.coord,
-            utmk = naver.maps.TransCoord.fromLatLngToUTMK(latlng),
-            tm128 = naver.maps.TransCoord.fromUTMKToTM128(utmk),
-            naverCoord = naver.maps.TransCoord.fromTM128ToNaver(tm128);
+                    var markerOptions = {
+                        position: position,
+                        map: map,
+                        icon:{
+                            url:'./images/chick.png',
+                            origin : new naver.maps.Point(0,0),
+                            anchor : new naver.maps.Point(17,0)
+                        }
+                    };
 
-        utmk.x = parseFloat(utmk.x.toFixed(1));
-        utmk.y = parseFloat(utmk.y.toFixed(1));
+                    var marker = new naver.maps.Marker(markerOptions);
 
-        infoWindow.setContent([
-            '<div style="padding:10px;width:380px;font-size:14px;line-height:20px;">',
-            '<strong>LatLng</strong> : '+ '좌 클릭 지점 위/경도 좌표' +'<br />',
-            '<strong>UTMK</strong> : '+ '위/경도 좌표를 UTMK 좌표로 변환한 값' +'<br />',
-            '<strong>TM128</strong> : '+ '변환된 UTMK 좌표를 TM128 좌표로 변환한 값' +'<br />',
-            '<strong>NAVER</strong> : '+ '변환된 TM128 좌표를 NAVER 좌표로 변환한 값' +'<br />',
-            '</div>'
-        ].join(''));
+                    var infowindow = new naver.maps.InfoWindow({
+                        content: '<div style="padding:10px; background-color: white; color: black;">나의 위치</div>',
+                    });
 
-        infoWindow.open(map, latlng);
-        console.log('LatLng: ' + latlng.toString());
-        console.log('UTMK: ' + utmk.toString());
-        console.log('TM128: ' + tm128.toString());
-        console.log('NAVER: ' + naverCoord.toString());
-    });
-}
+                    // 마커 hover 이벤트 추가
+                    naver.maps.Event.addListener(marker, 'mouseover', function() {
+                        infowindow.open(map, marker.getPosition());
+                    });
 
-naver.maps.onJSContentLoaded = initGeocoder;
+                    naver.maps.Event.addListener(marker, 'mouseout', function() {
+                        infowindow.close();
+                    });
+                } else {
+                    console.error('좌표를 찾을 수 없습니다.');
+                    alert('요청하신 주소를 지도에서 찾을 수 없습니다. 기본 주소로 재요청합니다.');
+
+                    var firstAddressElement = document.querySelector('.myAddress');
+                    if (firstAddressElement) {
+                           address = firstAddressElement.textContent.split('(')[1].replace(')', '').trim();
+                    } else {
+                        address = '서울 중구 세종대로 110 서울특별시청'; // 기본 주소 설정
+                    }
+
+                    getCoordinates(address);
+                }
+            },
+            error: function(error) {
+                console.error('AJAX 요청 실패:', error);
+            }
+        });
+    }
+
+    var addressEle = document.getElementById('addressHidden');
+    var address = addressEle ? addressEle.value : null; // addressEle가 존재하는지 체크
+
+    if (!address) {
+        address = '서울 중구 세종대로 110 서울특별시청'; // 기본 주소 설정
+    }
+
+    getCoordinates(address); // 처음 주소로 좌표 요청
+});

@@ -63,13 +63,16 @@ public class AddressService {
 
     public void showAddressList(HttpSession session, Model model){
         Users usersSession = (Users) session.getAttribute("loggedInUser");
-        Address selectAddress = (Address) session.getAttribute("selectAddress");
 
         if (usersSession != null) {
             Users users = userRepository.findById(usersSession.getId()).orElse(null);
             log.info(users.toString());
             if (users != null) {
                 List<Address> addresses = users.getAddressList();
+                Address selectAddress = addresses.stream()
+                        .filter(address -> address.getAddress().equals(users.getAddress())) // 조건 수정 필요
+                        .findFirst()
+                        .orElse(null);
 
                 if(!addresses.isEmpty()){
                     Integer minId = addresses.stream()
@@ -78,8 +81,8 @@ public class AddressService {
                             .orElse(null);
                     addresses.forEach(address -> address.setDefault(address.getId().equals(minId)));
                 }
-                log.info(users.toString());
-                log.info(addresses.toString());
+                log.info("selectAddress :" + selectAddress.toString());
+                session.setAttribute("selectAddress",selectAddress);
                 model.addAttribute("loggedInUser", users);
                 model.addAttribute("addresses", addresses);
                 model.addAttribute("selectAddress", selectAddress);

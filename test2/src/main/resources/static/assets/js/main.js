@@ -81,14 +81,17 @@ function dropdown() {
 }
 
 // 주소 선택 함수
-function selectAddress(address_name,id) {
+function selectAddress(address_name,id,address) {
     dropbtnContent.style.color = '#252525';
     dropbtn.style.borderColor = '#fcfcfc';
     dropbtn.style.background = '';
     dropdownContent.classList.remove('show');
 
-    updateUserAddress(id);
-    dropbtn.innerHTML = address_name;
+    if(confirm(address_name+'주소로 변경하시겠습니까?')){
+        updateUserAddress(id);
+        initGeocoder(address);
+        dropbtn.innerHTML = address_name;
+    }
 
 
 }
@@ -129,7 +132,7 @@ function updateUserAddress(id){
     .then(message => {
         console.log(message);  // 서버에서 반환한 텍스트 메시지를 콘솔에 출력
         if (message.includes("선택 완료")) {
-
+            window.location.href='/home';
             console.log('주소 선택 성공');
         } else {
             console.log('선택 오류:', message);  // 오류 메시지를 출력
@@ -156,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-//    주소 목록 변경시 날씨 정보 업데이트
+// 주소 목록 변경시 날씨 정보 업데이트
 // id를 통해 요소를 선택
 const weatherInfoImage = document.getElementById('weather-info-image');
 const weatherDetailsImage = document.getElementById('weather-details-image');
@@ -175,3 +178,5 @@ function updateWeatherInfo(){
        <p> 강수량 : {{rn1}}</p>
     `;
 }
+
+

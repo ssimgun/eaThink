@@ -8,18 +8,48 @@ let userMessage = null; // 사용자 메시지를 저장하기 위한 변수
 const inputInitHeight = chatInput.scrollHeight; // 입력창의 초기 높이
 
 // API URL
-const API_URL = `http://127.0.0.1:8000/chat/`; // FastAPI 엔드포인트
+const API_URL = `http://127.0.0.1:8000`; // FastAPI 엔드포인트
+let currentEndpoint = '';
 
-const createChatLi = (message, className) => {
+const createChatLi = (message, className, isHTML = false) => {
   const chatLi = document.createElement("li");
   chatLi.classList.add("chat", className);
   const chatContent = className === "outgoing" 
     ? `<p></p>` 
-    : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+    : `<span class="material-symbols-outlined robot-icon">robot_2</span><p></p>`;
   chatLi.innerHTML = chatContent;
-  chatLi.querySelector("p").textContent = message;
+
+  // 아이콘 배경색을 모드에 따라 설정
+   if (className === "incoming") {
+       const robotIcon = chatLi.querySelector(".robot-icon");
+       if (currentEndpoint === '/chat_recommend/') {
+           robotIcon.style.backgroundColor = "#f6755e"; // 추천 모드 배경색
+       } else if (currentEndpoint === '/chat_knowledge/') {
+           robotIcon.style.backgroundColor = "#1a8d40"; // 지식 모드 배경색
+       }
+   }
+
+   if (isHTML) {
+      chatLi.querySelector("p").innerHTML = message; // HTML로 처리
+    } else {
+      chatLi.querySelector("p").textContent = message; // 일반 텍스트
+    }
+
   return chatLi;
 }
+
+const recommendBtn = document.getElementById("recommend");
+const knowledgeBtn = document.getElementById("knowledge");
+
+recommendBtn.addEventListener("click", () => {
+    currentEndpoint = '/chat_recommend/';
+    chatbox.appendChild(createChatLi("<strong>추천</strong> 모드를 선택하셨습니다!", "incoming", true));
+});
+
+knowledgeBtn.addEventListener("click", () => {
+    currentEndpoint = '/chat_knowledge/';
+    chatbox.appendChild(createChatLi("<b>지식</b> 모드를 선택하셨습니다!", "incoming", true));
+});
 
 const generateResponse = async (chatElement) => {
   const messageElement = chatElement.querySelector("p");
@@ -36,9 +66,9 @@ const generateResponse = async (chatElement) => {
 
   // POST 요청 보내기
   try {
-    const response = await fetch(API_URL, requestOptions);
+    const response = await fetch(API_URL+currentEndpoint, requestOptions);
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "서버 오류");
+    if (!response.ok) throw new Error(data.error || "챗봇 유형을 선택해주세요!");
 
     // 챗봇 응답을 메시지 요소에 업데이트
     messageElement.textContent = data.bot_output; // FastAPI의 응답에 맞게 수정
@@ -90,3 +120,19 @@ sendChatBtn.addEventListener("click", handleChat);
 // 챗봇 열기/닫기 이벤트 리스너 (주석 처리된 부분 복원)
 // closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
 // chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+
+var maximizeBtn = document.getElementById('maximize');
+var btnContainer = document.getElementById("btn-container");
+
+maximizeBtn.addEventListener("click", () => {
+    const isHidden = btnContainer.classList.toggle("hidden"); // btn-container 숨기기
+
+    if (isHidden) {
+        btnContainer.classList.remove("visible"); // 숨길 때 visible 클래스 제거
+    } else {
+        btnContainer.classList.add("visible"); // 보일 때 visible 클래스 추가
+    }
+
+    // 아이콘 변경
+    maximizeBtn.textContent = isHidden ? "keyboard_arrow_down" : "keyboard_arrow_up";
+});
