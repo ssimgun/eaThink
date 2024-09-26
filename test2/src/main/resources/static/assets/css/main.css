@@ -3585,6 +3585,11 @@ body.is-loading #banner .content {
 
 }
 
+.inner-map{
+    max-width:65%;
+    margin: 0 auto;
+}
+
 /* 설문 이미지 스타일 */
 .food-item {
     width: 200px; /* 각 아이템의 너비 */
