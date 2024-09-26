@@ -1,8 +1,10 @@
 package com.example.test2.controller;
 
+import com.example.test2.entity.SurveyFood;
 import com.example.test2.entity.Weather_data;
 import com.example.test2.repository.AddressRepository;
 import com.example.test2.repository.UserRepository;
+import com.example.test2.service.MenuRecommendationService;
 import com.example.test2.service.UserService;
 import com.example.test2.service.weatherAPIConnect;
 import jakarta.servlet.http.HttpSession;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -24,6 +28,8 @@ public class mainController {
     private AddressRepository addressRepository;
     @Autowired
     private weatherAPIConnect weatherAPIConnect;
+    @Autowired
+    private MenuRecommendationService menuRecommendationService;
 
 //    메인 화면 이동
     @GetMapping("/main")
@@ -31,6 +37,7 @@ public class mainController {
         Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
 //        session.setAttribute("weather", weather_data);
 //        model.addAttribute("weather", weather_data);
+
         return "intensify/maintest";
     }
 
