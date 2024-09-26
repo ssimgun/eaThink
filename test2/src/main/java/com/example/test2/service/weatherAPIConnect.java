@@ -242,6 +242,8 @@ public class weatherAPIConnect {
         }
 
 
+        session.setAttribute("weatherImageName", weatherImageName);
+        session.setAttribute("weather", weather_data);
         model.addAttribute("weatherImageName", weatherImageName);
         model.addAttribute("weather", weather_data);
 

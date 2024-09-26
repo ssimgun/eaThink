@@ -5,6 +5,7 @@ import com.example.test2.entity.*;
 import com.example.test2.repository.SurveyFoodRepository;
 import com.example.test2.repository.UserFoodPreferenceRepository;
 import com.example.test2.service.AddressService;
+import com.example.test2.service.MenuRecommendationService;
 import com.example.test2.service.SurveyFoodService;
 import com.example.test2.service.weatherAPIConnect;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -32,6 +33,8 @@ public class SurveyFoodController {
     UserFoodPreferenceRepository userFoodPreferenceRepository;
     @Autowired
     AddressService addressService;
+    @Autowired
+    private MenuRecommendationService menuRecommendationService;
 
     // 나의 음식 취향 선택 시 간편 설문 || 전체 설문 선택
     @GetMapping("/surveySelect")
@@ -193,6 +196,22 @@ public class SurveyFoodController {
         service.savePreference(userId, preferencesMap);
 
         return "redirect:/home";
+    }
+
+    @ResponseBody
+    @GetMapping("/recommendation")
+    public SurveyFood getRecommendation(HttpSession session){
+        // 랜덤 음식 추천
+        List<SurveyFood> personalFoodScore = menuRecommendationService.getMenuRecommendationScore(session);
+        log.info("personalFoodScore" + personalFoodScore);
+        List<SurveyFood> finalFoodScore = menuRecommendationService.getScoreByweather(session, personalFoodScore);
+        log.info("finalFoodScore" + finalFoodScore);
+        List<SurveyFood> randomizedList = menuRecommendationService.randomTop(finalFoodScore);
+        log.info("randomizedList" + randomizedList);
+        SurveyFood getRecommendation = menuRecommendationService.getRecommendation(randomizedList);
+        log.info("getRecommendation" + getRecommendation);
+
+        return getRecommendation;
     }
 
 }

@@ -147,6 +147,7 @@ function updateUserAddress(id){
 document.addEventListener('DOMContentLoaded', function() {
     const weatherInfo = document.getElementById('weatherInfo');
     const detailsInfo = document.getElementById('weatherDetails');
+    fetchRecommendation();
 
     // 마우스를 weather-info 요소에 올리면 details 요소를 보이게 함
     weatherInfo.addEventListener('mouseenter', function() {
@@ -179,4 +180,23 @@ function updateWeatherInfo(){
     `;
 }
 
+function fetchRecommendation(){
+    fetch('/survey/recommendation')
+        .then(response => response.json())
+        .then(data => {
+            // 추천 음식 이름 업데이트
+            document.getElementById("food-name").textContent = data.name;
+        })
+        .catch(error => console.error("Error: ", error));
+}
 
+// 페이지 로드 시 추천 음식 가져오기
+//document.addEventListener("DomContentLoaded", function(){
+//
+//})
+
+// "새로 고침" 버튼 클릭 시 추천 음식 가져오기
+document.getElementById("refresh-button").addEventListener("click", function(event){
+    event.preventDefault(); // 기본 링크 클릭 동작 방지
+    fetchRecommendation();
+})

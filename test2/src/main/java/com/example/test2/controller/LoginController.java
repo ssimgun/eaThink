@@ -1,9 +1,11 @@
 package com.example.test2.controller;
 
 import com.example.test2.entity.Address;
+import com.example.test2.entity.SurveyFood;
 import com.example.test2.entity.Users;
 import com.example.test2.entity.Weather_data;
 import com.example.test2.service.AddressService;
+import com.example.test2.service.MenuRecommendationService;
 import com.example.test2.service.UserService;
 import com.example.test2.service.weatherAPIConnect;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 public class LoginController {
@@ -26,6 +30,8 @@ public class LoginController {
     private AddressService addressService;
     @Autowired
     private weatherAPIConnect weatherAPIConnect;
+    @Autowired
+    private MenuRecommendationService menuRecommendationService;
 
     @PostMapping("/login")
     public String userlogin(@RequestParam String userId, @RequestParam String password, HttpServletRequest request, Model model){
@@ -69,6 +75,17 @@ public class LoginController {
             addressService.showAddressList(session, model);
             model.addAttribute("selectAddress", address);
             log.info("address : {}", model.getAttribute("address"));
+
+//            List<SurveyFood> personalFoodScore = menuRecommendationService.getMenuRecommendationScore(session);
+//            log.info("personalFoodScore" + personalFoodScore);
+//            List<SurveyFood> finalFoodScore = menuRecommendationService.getScoreByweather(session, personalFoodScore);
+//            log.info("finalFoodScore" + finalFoodScore);
+//            List<SurveyFood> randomizedList = menuRecommendationService.randomTop5(finalFoodScore);
+//            log.info("randomizedList" + randomizedList);
+//            SurveyFood getRecommendation = menuRecommendationService.getRecommendation(randomizedList);
+//            log.info("getRecommendation" + getRecommendation);
+//
+//            model.addAttribute("getRecommendation", getRecommendation);
             return "intensify/maintest";
         }else {
             log.info("session이 널 입니다.");
