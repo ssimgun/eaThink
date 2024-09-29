@@ -186,6 +186,7 @@ function fetchRecommendation(){
         .then(data => {
             // 추천 음식 이름 업데이트
             document.getElementById("food-name").textContent = data.name;
+            document.getElementById("recommendationImage").src = `/images/foods/${data.food_id}.png`;
         })
         .catch(error => console.error("Error: ", error));
 }

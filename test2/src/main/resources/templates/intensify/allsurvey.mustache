@@ -17,7 +17,7 @@
         <div class="inner flex flex-3">
             {{#allfoods}}
                 <div class="food-item">
-                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
                     <input type="range" min="0" max="10" class="range-slider"
@@ -29,5 +29,10 @@
         </div>
     </section>
 
+    <section id="Night" class="wrapper">
+        <div class="inner flex flex-3">
+            <button class="submit-button" type="submit">저장</button>
+        </div>
+    </section>
 
 {{>layouts/footer}}
