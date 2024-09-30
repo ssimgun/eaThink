@@ -199,4 +199,4 @@ function fetchRecommendation(){
 document.getElementById("refresh-button").addEventListener("click", function(event){
     event.preventDefault(); // 기본 링크 클릭 동작 방지
     fetchRecommendation();
-})
+});
