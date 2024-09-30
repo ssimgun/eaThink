@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>let x,y,map;</script>
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/chatstyle.css">
     <link rel="stylesheet" href="/assets/css/navermap.css"/>
@@ -23,12 +24,12 @@
 
 <!-- Header -->
 <header id="header">
-<!--    사이드바 버튼-->
+<!-- 사이드바 버튼-->
     <nav class="left"><a href="#menu">
         <span>Menu</span></a>
     </nav>
 
-<!--    날씨 정보 칸-->
+<!-- 날씨 정보 칸-->
     <nav class="image">
         <div class="weather-info" id="weatherInfo">
         <span><img class="weather-image" id="weather-info-image"
@@ -54,10 +55,10 @@
     </nav>
     {{/weather}}
 
-<!--    페이지 명-->
+<!-- 페이지 명 -->
     <a href="/home" class="logo">식사를 합시다</a>
 
-<!--    로그인 버튼-->
+<!-- 로그인 버튼 -->
     {{^loggedInUser}}
         <nav class="right">
             <a href="/loginpage" class="button alt" id="nav-login-btn">로그인</a>
@@ -91,12 +92,6 @@
         </ul>
     {{/loggedInUser}}
 
-    <!--개인 프로필 추가하기 -->
-    <!--로그인 했을 때만 띄어야 함-->
-    <!--    날씨 데이터 표시-->
-
-    <!--        유저 정보 표시-->
-    <!--<div class="flex-item nav-under">-->
     {{#loggedInUser}}
         <ul class="links-under nav-under">
             <li style="border-bottom : 1px solid; padding-bottom: 10px;">{{nickname}}님 반갑습니다!</li>
@@ -128,16 +123,4 @@
             </li>
         </ul>
     {{/loggedInUser}}
-
-    <!--  비로그인 시 띄워줄 사이드바 언더  -->
-        <!--{{^loggedInUser}}-->
-    <!--    <ul class="links-under nav-under">-->
-    <!--        <li><a href="내정보">닉네임</a></li>-->
-    <!--        <li class="button-container">-->
-    <!--            <button href="주소목록">내 정보</button>-->
-    <!--            <button href="주소목록">주소목록</button>-->
-    <!--        </li>-->
-    <!--    </ul>-->
-        <!--{{/loggedInUser}}-->
-    <!--</div>-->
 </nav>

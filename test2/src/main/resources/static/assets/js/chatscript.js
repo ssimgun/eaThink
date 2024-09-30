@@ -72,6 +72,10 @@ const generateResponse = async (chatElement) => {
 
     // 챗봇 응답을 메시지 요소에 업데이트
     messageElement.textContent = data.bot_output; // FastAPI의 응답에 맞게 수정
+    const restaurantName = getNameFromChatbot(); // 챗봇 응답 후 해당 음식점 이름 추출
+    if (restaurantName) {
+        fetchRestaurantByName(restaurantName); // 추출한 음식점 이름으로 비동기 요청 후 마커 생성
+    }
   } catch (error) {
     messageElement.classList.add("error");
     messageElement.textContent = error.message;
@@ -115,11 +119,10 @@ chatInput.addEventListener("keydown", (e) => {
 });
 
 // 버튼 클릭으로 메시지 전송
-sendChatBtn.addEventListener("click", handleChat);
+sendChatBtn.addEventListener("click", () => {
+    handleChat();
+});
 
-// 챗봇 열기/닫기 이벤트 리스너 (주석 처리된 부분 복원)
-// closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-// chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 
 var maximizeBtn = document.getElementById('maximize');
 var btnContainer = document.getElementById("btn-container");
@@ -136,3 +139,131 @@ maximizeBtn.addEventListener("click", () => {
     // 아이콘 변경
     maximizeBtn.textContent = isHidden ? "keyboard_arrow_down" : "keyboard_arrow_up";
 });
+
+// 거리 계산 함수
+function calculateDistance(current_x, current_y, data_x, data_y) {
+    const toRadians = (degrees) => degrees * (Math.PI / 180);
+    const earthRadius = 6371e3; // 지구의 반지름 (미터)
+
+    const lat1Rad = toRadians(current_x);
+    const lat2Rad = toRadians(data_x);
+    const deltaLatRad = toRadians(data_x - current_x);
+    const deltaLngRad = toRadians(data_y - current_y);
+
+    const a = Math.sin(deltaLatRad / 2) * Math.sin(deltaLatRad / 2) +
+           Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+           Math.sin(deltaLngRad / 2) * Math.sin(deltaLngRad / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = earthRadius * c; // 결과를 미터로 변환
+    return 500 >= distance;
+}
+
+// 챗봇 출력값에서 음식점 이름 추출
+function getNameFromChatbot(){
+    const chatbotOutputElement = document.querySelector("#chatbot-container > div > ul > .chat.incoming:last-child > p");
+    let restaurantName;
+    if(chatbotOutputElement){
+        var chatbotOutput = chatbotOutputElement.textContent; // 출력 텍스트 가져오기
+        var lines = chatbotOutput.split('\n'); // 줄바꿈 기준으로 나누기
+        restaurantName = lines[0]; // 첫 번째 줄이 음식적 이름
+
+    } else{
+        console.error('출력 요소를 찾을 수 없습니다. ')
+
+    }
+    return restaurantName;
+}
+
+// 추출한 음식점 이름로 데이터베이스에 조회 => 해당 음식점이름에 해당하는 음식점 row 를 List 로 반환
+function fetchRestaurantByName(restaurantName){
+    if(!restaurantName) return;
+
+    $.ajax({
+        url:'/nameToRestaurant',
+        method: 'GET',
+        data:{name:restaurantName},
+        success: function(restaurants){
+            restaurants.forEach(function(restaurant){
+                var food_x = restaurant.x;
+                var food_y = restaurant.y;
+
+                // 현재 위치와 음식점 위치 계산
+                if(calculateDistance(x, y, food_x, food_y)){
+                    var position = new naver.maps.LatLng(food_y, food_x);
+
+                    // 음식점 마커 옵션
+                    var foodMarkerOptions = {
+                        position: position,
+                        map: map,
+                        icon: {
+                            url: './images/marker/restaurant_marker.png',
+                            origin: new naver.maps.Point(0, 0),
+                            anchor: new naver.maps.Point(17, 0)
+                        }
+                    };
+
+                    // 마커에 마우스 올려놓을시 음식점 이름 표시
+                    var foodInfo = new naver.maps.InfoWindow({
+                        content: `<div style="padding:10px; background-color: white; color: black;">${restaurant.name}</div>`
+                    });
+
+                    // 음식점 마커 생성
+                    var restaurantMarker = new naver.maps.Marker(foodMarkerOptions);
+
+                    // 마커에 마우스 hover => 음식점 이름
+                    naver.maps.Event.addListener(restaurantMarker, 'mouseover', function(){
+                        foodInfo.open(map, restaurantMarker.getPosition());
+                    });
+
+                    // 마커에서 마우스 벗어날시 해제
+                    naver.maps.Event.addListener(restaurantMarker, 'mouseout', function() {
+                        foodInfo.close();
+                    });
+
+                    // 음식점 정보 반영
+                    const restaurantContainer = document.querySelector('.restaurant-container');
+                    const restaurantElement = document.createElement('div');
+                    restaurantElement.classList.add('restaurant-info',`restaurant-${restaurant.id}`,'hidden');
+                    restaurantElement.innerHTML = `
+                        <h2>${restaurant.name}</h2>
+                        <figure>
+                            <blockquote>${restaurant.number_address}</blockquote>
+                            <footer>
+                                ${restaurant.road_address}
+                            </footer>
+                        </figure>
+                    `;
+                    restaurantContainer.appendChild(restaurantElement);
+
+                    // 마지막으로 열린 음식점 요소 저장
+                    let lastOpenedRestaurantElement = null;
+
+                    // 해당음식점 마커 클릭시 음식점 정보 나타내기
+                    naver.maps.Event.addListener(restaurantMarker, 'click', function() {
+                        // 이전에 열려 있던 음식점 요소가 있으면 숨김
+                        if (lastOpenedRestaurantElement && lastOpenedRestaurantElement !== restaurantElement){
+                            lastOpenedRestaurantElement.classList.add('hidden');
+                            lastOpenedRestaurantElement.classList.remove('visible');
+                        }
+
+                        // 현재 클릭한 음식점 요소 표시
+                        if (restaurantElement) {
+                            restaurantElement.classList.remove('hidden');
+                            restaurantElement.classList.add('visible'); // 추가
+                            lastOpenedRestaurantElement = restaurantElement; // 현재 음식점 요소 저장
+                        } else {
+                            console.error('해당 음식점 요소를 찾을 수 없습니다:', restaurant.id); // 오류 메시지
+                        }
+                    });
+
+                }else{
+                    console.log('반경안에 없음');
+                }
+            });
+        },
+        error:function(error){
+            console.error('데이터 조회 실패', error);
+        }
+    });
+}

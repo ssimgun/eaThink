@@ -12,7 +12,7 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository resturantRepository;
 
-    public List<Restaurant> getRestaurantsByCategory(String name){
+    public List<Restaurant> getRestaurantsByName(String name){
         return resturantRepository.findByName(name);
     }
 }

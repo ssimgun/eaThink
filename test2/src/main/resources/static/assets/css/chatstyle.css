@@ -268,3 +268,16 @@ header h2 {
   }
 }
 
+  .restaurant-info.hidden{
+    max-height : 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 2s ease, opacity 2s ease;
+}
+
+  .restaurant-info.visible{
+    max-height : max-content;
+    visibility:visible;
+    opacity:1;
+    transition: max-height 2s ease, opacity 2s ease;
+}
