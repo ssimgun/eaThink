@@ -6,6 +6,9 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>let x,y,map;</script>
+    <script>
+        const loggedInUser = {{#loggedInUser}} true {{/loggedInUser}}{{^loggedInUser}} false {{/loggedInUser}};
+    </script>
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/chatstyle.css">
     <link rel="stylesheet" href="/assets/css/navermap.css"/>
@@ -40,7 +43,7 @@
 
     <nav class="left">
     <div class="weather-details" id="weatherDetails">
-        <p><img class="weather-image" id="weather-details-image"
+    <p><img class="weather-image" id="weather-details-image"
             src="/images/weather_{{weatherImageName}}.png"
             alt="{{weatherImageName}}"
             style="width: -webkit-fill-available;"></p>
@@ -76,8 +79,8 @@
     <ul class="links">
         <li><a href="/home">홈페이지</a></li>
         <li><a href="#one">채팅</a></li>
-        <li><a href="#three">게임</a></li>
-        <li><a href="/survey/surveySelect">나의 음식 취향</a></li>
+        <li><a href="/survey/surveySelect" id="food-preference-link">
+            나의 음식 취향</a></li>
     </ul>
 
     {{^loggedInUser}}

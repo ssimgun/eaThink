@@ -87,7 +87,7 @@ function selectAddress(address_name,id,address) {
     dropbtn.style.background = '';
     dropdownContent.classList.remove('show');
 
-    if(confirm(address_name+'주소로 변경하시겠습니까?')){
+    if(confirm(address_name+' 주소로 변경하시겠습니까?')){
         updateUserAddress(id);
         initGeocoder(address);
         dropbtn.innerHTML = address_name;
@@ -186,17 +186,58 @@ function fetchRecommendation(){
         .then(data => {
             // 추천 음식 이름 업데이트
             document.getElementById("food-name").textContent = data.name;
+            document.getElementById("recommendationImage").src = `/images/foods/${data.food_id}.png`;
         })
         .catch(error => console.error("Error: ", error));
 }
 
-// 페이지 로드 시 추천 음식 가져오기
-//document.addEventListener("DomContentLoaded", function(){
-//
-//})
 
 // "새로 고침" 버튼 클릭 시 추천 음식 가져오기
 document.getElementById("refresh-button").addEventListener("click", function(event){
     event.preventDefault(); // 기본 링크 클릭 동작 방지
     fetchRecommendation();
 });
+
+// 비로그인 시 설문페이지 진입 x
+document.getElementById("food-preference-link").addEventListener("click", function(event){
+    if(!loggedInUser){
+        event.preventDefault();
+        alert("개인의 취향을 반영하는 설문으로 \n로그인이 필요한 서비스 입니다.");
+    } else {
+        // 로그인이 되어 있으면 페이지 이동
+        window.location.href="/survey/surveySelect";
+    }
+
+})
+
+/* 전체 설문 페이지 세션 별 스크롤*/
+function scrollLeftCustom(sectionId){
+    const container = document.querySelector(`#${sectionId} .foodContainer`);
+    const scrollAmount = getScrollAmount(); // 스크롤할 거리
+
+    container.scrollBy({
+        top: 0,
+        left: -scrollAmount, //왼쪽 이동 거리
+        behavior: 'smooth'
+    });
+}
+
+function scrollRightCustom(sectionId){
+    const container = document.querySelector(`#${sectionId} .foodContainer`);
+    const scrollAmount = getScrollAmount(); // 스크롤할 거리
+
+    container.scrollBy({
+        top: 0,
+        left: scrollAmount, //오른쪽 이동 거리
+        behavior: 'smooth'
+    });
+}
+
+function getScrollAmount(){
+    if(window.matchMedia("(max-width: 930px)").matches){
+        // 화면 크기가 736px 이하일 때는 한 div 씩 이동
+        return 320;
+    } else{
+        return 640;
+    }
+}

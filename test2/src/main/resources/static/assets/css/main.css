@@ -3112,6 +3112,14 @@ body {
     padding: 0;
 }
 
+#banner h3 {
+    font-size: 2em;
+    color: #002047;
+    line-height: 1em;
+    margin: 0 0 1.5em 0;
+    padding: 0;
+}
+
 #banner p {
     font-size: 1.25em;
     margin-bottom: 1.75em;

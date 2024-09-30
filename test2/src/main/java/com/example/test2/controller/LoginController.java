@@ -74,6 +74,7 @@ public class LoginController {
             log.info("home : {}", loggedInUser.toString());
             addressService.showAddressList(session, model);
             model.addAttribute("selectAddress", address);
+            model.addAttribute("loggedInUser", loggedInUser);
             log.info("address : {}", model.getAttribute("address"));
 
 //            List<SurveyFood> personalFoodScore = menuRecommendationService.getMenuRecommendationScore(session);

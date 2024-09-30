@@ -1,6 +1,5 @@
 package com.example.test2.controller;
 
-import com.example.test2.dto.UserFoodPreferenceForm;
 import com.example.test2.entity.*;
 import com.example.test2.repository.SurveyFoodRepository;
 import com.example.test2.repository.UserFoodPreferenceRepository;
@@ -8,7 +7,6 @@ import com.example.test2.service.AddressService;
 import com.example.test2.service.MenuRecommendationService;
 import com.example.test2.service.SurveyFoodService;
 import com.example.test2.service.weatherAPIConnect;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +45,11 @@ public class SurveyFoodController {
         //사용자 session 에서 유저 아이디 가져오기
         model.addAttribute("loggedInUser", loggedInUser);
 
-        if(loggedInUser != null){
+        if (loggedInUser != null) {
             addressService.showAddressList(session, model);
             model.addAttribute("selectAddress", address);
             return "intensify/selectsurvey";
-        }else {
+        } else {
             log.info("session이 널 입니다.");
             model.addAttribute("error", "로그인 후 사용 가능한 서비스입니다.");
             return "redirect:/main";
@@ -69,10 +67,10 @@ public class SurveyFoodController {
         //사용자 session 에서 유저 아이디 가져오기
         model.addAttribute("loggedInUser", loggedInUser);
 
-        if(loggedInUser != null){
+        if (loggedInUser != null) {
             addressService.showAddressList(session, model);
             model.addAttribute("selectAddress", address);
-        }else {
+        } else {
             log.info("session이 널 입니다.");
             return "redirect:/main";
         }
@@ -135,14 +133,15 @@ public class SurveyFoodController {
         //사용자 session 에서 유저 아이디 가져오기
         model.addAttribute("loggedInUser", loggedInUser);
 
-        if(loggedInUser != null){
+        if (loggedInUser != null) {
             addressService.showAddressList(session, model);
             model.addAttribute("selectAddress", address);
-        }else {
+        } else {
             log.info("session이 널 입니다.");
             return "redirect:/main";
         }
 
+        //사용자 session 에서 유저 아이디 가져오기
         Integer userId = loggedInUser.getId();
 
         log.info("현재 로그인된 유저 아이디(번호) : " + loggedInUser.getId());
@@ -160,16 +159,36 @@ public class SurveyFoodController {
 
 
         // 카테고리별 음식 랜점 추출
-        List<SurveyFood> allFoods = surveyFoodRepository.findAll();
+        List<SurveyFood> FoodsWestern = service.findByType(SurveyFood.FoodType.valueOf("양식"));
+        List<SurveyFood> FoodsCafe = service.findByType(SurveyFood.FoodType.valueOf("카페_디저트"));
+        List<SurveyFood> FoodsKorea = service.findByType(SurveyFood.FoodType.valueOf("한식"));
+        List<SurveyFood> FoodsMeat = service.findByType(SurveyFood.FoodType.valueOf("고기_구이"));
+        List<SurveyFood> FoodsWorlds = service.findByType(SurveyFood.FoodType.valueOf("일식_중식_세계음식"));
+        List<SurveyFood> FoodsNight = service.findByType(SurveyFood.FoodType.valueOf("나이트라이프"));
+
+        // 모든 음식 리스트 통합
+        List<SurveyFood> allFoods = new ArrayList<>();
+        allFoods.addAll(FoodsWestern);
+        allFoods.addAll(FoodsCafe);
+        allFoods.addAll(FoodsKorea);
+        allFoods.addAll(FoodsMeat);
+        allFoods.addAll(FoodsWorlds);
+        allFoods.addAll(FoodsNight);
 
         //카테고리별 음식 리스트에 선호도 점수를 매핑
         service.mapPreferences(allFoods, preferenceMap);
 
         //모델에 추가
-        model.addAttribute("allfoods", allFoods);
-
+        model.addAttribute("Western", FoodsWestern);
+        model.addAttribute("Cafe", FoodsCafe);
+        model.addAttribute("Korea", FoodsKorea);
+        model.addAttribute("Meat", FoodsMeat);
+        model.addAttribute("Worlds", FoodsWorlds);
+        model.addAttribute("Night", FoodsNight);
 //        model.addAttribute("allFoods", allRandomFoods);
+
         return "intensify/allsurvey";
+
     }
 
 
@@ -189,9 +208,6 @@ public class SurveyFoodController {
 
             preferencesMap.put(foodId, preferenceValue);
 
-//            UserFoodPreferencedId userFoodPreferencedId = new UserFoodPreferencedId(userId, foodId);
-//            UserFoodPreferences userFoodPreferences = new UserFoodPreferences(userFoodPreferencedId, new Users(userId), new SurveyFood(foodId), preferenceValue);
-
         }
         service.savePreference(userId, preferencesMap);
 
@@ -200,7 +216,7 @@ public class SurveyFoodController {
 
     @ResponseBody
     @GetMapping("/recommendation")
-    public SurveyFood getRecommendation(HttpSession session){
+    public SurveyFood getRecommendation(HttpSession session) {
         // 랜덤 음식 추천
         List<SurveyFood> personalFoodScore = menuRecommendationService.getMenuRecommendationScore(session);
         log.info("personalFoodScore" + personalFoodScore);

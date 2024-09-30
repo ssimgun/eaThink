@@ -4,8 +4,42 @@
     .flex {
         display: flex; /* 플렉스 컨테이너 */
         gap: 20px; /* 아이템 간격 */
-        flex-wrap: wrap; /* 아이템 줄바꿈 */
-        justify-content: center; /* 중앙 정렬 */
+        overflow-x: hidden;
+        white-space: nowrap;
+        padding: 10px;
+    }
+    @media screen and (max-width: 980px) {
+            .flex {
+            display: flex; /* 플렉스 컨테이너 */
+            gap: 20px; /* 아이템 간격 */
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px;
+            webkit-flex-wrap: unset;
+            flex-wrap: unset;
+        }
+    }
+
+    .food-item {
+        min-width: 300px;
+        text-align: center;
+        margin-bottom: 2em;
+        display: inline-block;
+    }
+
+    .scroll-button {
+        background-color: #000000;
+        color: white;
+        border: none;
+        padding: 1px 20px;
+        cursor: pointer;
+        margin: 5px;
+        font-family: "NanumSquareNeoH", sans-serif;
+        font-size: larger;
+    }
+
+    .wrapper{
+        text-align: center;
     }
 
 </style>
@@ -13,11 +47,11 @@
 
 <form method="post" action="/survey/submit">
 
-    <section class="wrapper style1 special">
-        <div class="inner flex flex-3">
-            {{#allfoods}}
+    <section id="Western" class="wrapper style1 special">
+        <div class="inner flex flex-3 foodContainer">
+            {{#Western}}
                 <div class="food-item">
-                    <img src="https://via.placeholder.com/200" alt="음식 이미지 1">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
                     <input type="range" min="0" max="10" class="range-slider"
@@ -25,9 +59,106 @@
                            name="{{food_id}}">
 
                 </div>
-            {{/allfoods}}
+            {{/Western}}
         </div>
+        <button class="scroll-button" type="button" onclick="scrollLeftCustom('Western')"><</button>
+        <button class="scroll-button" type="button" onclick="scrollRightCustom('Western')">></button>
     </section>
 
+
+    <section id="Cafe" class="wrapper">
+        <div class="inner flex flex-3 foodContainer">
+            {{#Cafe}}
+                <div class="food-item">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Cafe}}
+        </div>
+        <button class="scroll-button" type="button" onclick="scrollLeftCustom('Cafe')"><</button>
+        <button class="scroll-button" type="button" onclick="scrollRightCustom('Cafe')">></button>
+    </section>
+
+
+    <section id="Korea" class="wrapper style1 special">
+        <div class="inner flex flex-3 foodContainer">
+            {{#Korea}}
+                <div class="food-item">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Korea}}
+        </div>
+        <button class="scroll-button" type="button" onclick="scrollLeftCustom('Korea')"><</button>
+        <button class="scroll-button" type="button" onclick="scrollRightCustom('Korea')">></button>
+    </section>
+
+    <section id="Meat" class="wrapper">
+        <div class="inner flex flex-3 foodContainer">
+            {{#Meat}}
+                <div class="food-item">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Meat}}
+        </div>
+        <button class="scroll-button" type="button" onclick="scrollLeftCustom('Meat')"><</button>
+        <button class="scroll-button" type="button" onclick="scrollRightCustom('Meat')">></button>
+    </section>
+
+
+    <section id="Worlds" class="wrapper style1 special">
+        <div class="inner flex flex-3 foodContainer">
+            {{#Worlds}}
+                <div class="food-item">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Worlds}}
+        </div>
+        <button class="scroll-button" type="button" onclick="scrollLeftCustom('Worlds')"><</button>
+        <button class="scroll-button" type="button" onclick="scrollRightCustom('Worlds')">></button>
+    </section>
+
+    <section id="Night" class="wrapper">
+        <div class="inner flex flex-3 foodContainer">
+            {{#Night}}
+                <div class="food-item">
+                    <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
+                    <h3 class="nameTag">{{name}}</h3>
+                    <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
+                    <input type="range" min="0" max="10" class="range-slider"
+                           value={{preference}}
+                           name="{{food_id}}">
+                </div>
+            {{/Night}}
+        </div>
+        <button class="scroll-button" type="button" onclick="scrollLeftCustom('Night')"><</button>
+        <button class="scroll-button" type="button" onclick="scrollRightCustom('Night')">></button>
+    </section>
+
+
+    <section id="" class="wrapper">
+        <div class="inner flex flex-3">
+            <button class="submit-button" type="submit">저장</button>
+        </div>
+    </section>
+</form>
 
 {{>layouts/footer}}
