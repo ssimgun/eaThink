@@ -10,6 +10,9 @@
     <meta charset="utf-8">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        const loggedInUser = {{# loggedInUser}} true {{/loggedInUser}}{{^ loggedInUser}} false {{/loggedInUser}};
+    </script>
     <link rel="stylesheet" href="/assets/css/main.css">
     <!--    <link rel="stylesheet" href="/assets/css/chatstyle.css">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,8 +79,9 @@
         <li><a href="/home">홈페이지</a></li>
         <li><a href="/edit">내정보</a></li>
         <li><a href="#one">채팅</a></li>
-        <li><a href="#three">게임</a></li>
-        <li><a href="/survey/surveySelect">나의 음식 취향</a></li>
+        <!--        <li><a href="#three">게임</a></li>-->
+        <li><a href="/survey/surveySelect" id="food-preference-link">
+            나의 음식 취향</a></li>
     </ul>
 
     {{^loggedInUser}}

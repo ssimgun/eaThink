@@ -136,3 +136,28 @@ maximizeBtn.addEventListener("click", () => {
     // 아이콘 변경
     maximizeBtn.textContent = isHidden ? "keyboard_arrow_down" : "keyboard_arrow_up";
 });
+
+// 추천 메뉴에서 -> 바로 챗봇으로 검색하기
+
+document.getElementById("search-button").addEventListener("click", function(event){
+    event.preventDefault();  // 기본 링크 동작 막기
+
+    // food-name의 텍스트 가져오기
+    const recommendedFood = document.getElementById("food-name").textContent;
+
+    document.getElementById("recommend").click();
+
+    // 메시지 입력칸에 텍스트 자동 추가
+    const messageInput = document.querySelector(".chat-input textarea");
+    messageInput.value = `${recommendedFood}`
+
+    // 메시지 바로 전송
+    document.getElementById("send-btn").click();
+
+    // 챗봇 위치로 스크롤 이동
+    document.getElementById("chatbot-container").scrollIntoView({
+       behavior: 'smooth'
+    });
+
+
+});
