@@ -47,6 +47,7 @@
   background-color :rgb(194, 194, 194)
 }
 
+
 .dropdown-content div{
   display : block;
   text-decoration : none;
@@ -3567,7 +3568,7 @@ body.is-loading #banner .content {
 .inner-selectsurvey {
     margin: 0 auto;
     max-width: 65em;
-    font-size: x-large;
+
 }
 
 @media screen and (max-width: 1280px) {
