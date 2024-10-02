@@ -1692,7 +1692,7 @@ body.is-loading *, body.is-loading *:before, body.is-loading *:after {
 @media screen and (max-width: 980px) {
 
     .inner {
-        max-width: 70%;
+        max-width: 85%;
     }
 
 }
@@ -2356,6 +2356,7 @@ ul.actions.fit li {
 
 ul.actions.fit li > * {
     margin-bottom: 0;
+
 }
 
 ul.actions.fit.small {
@@ -2386,6 +2387,7 @@ ul.actions.fit.small li {
 
     ul.actions li > * {
         width: 100%;
+        padding:0;
         margin: 0 !important;
     }
 
@@ -2400,7 +2402,6 @@ ul.actions.fit.small li {
     ul.actions.small li:first-child {
         padding-top: 0;
     }
-
 }
 
 dl {
@@ -3618,4 +3619,23 @@ body.is-loading #banner .content {
 .nameTag {
     font-size: inherit;
     margin: none;
+}
+
+/* 화면 축소 시 지도 크기 축소 */
+@media screen and (max-width: 738px){
+    #two .item-center{
+        height : 500px
+    }
+}
+
+@media screen and (max-width: 680px){
+    #two .item-center{
+        height : 400px
+    }
+}
+
+@media screen and (max-width: 480px){
+    #two .item-center{
+        height : 300px
+    }
 }
