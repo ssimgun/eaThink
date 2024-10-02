@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     map = new naver.maps.Map('map', {
                         center: centerPosition,
-                        zoom: 16
+                        zoom: 15
                     });
 
                     var markerOptions = {

@@ -22,7 +22,8 @@
     .btn-container button{
         background:white;
         color:black;
-        width:49%
+        width:49%;
+        padding:unset;
     }
     .btn-container button:hover{
         background:antiquewhite;
@@ -240,23 +241,79 @@ header h2 {
   visibility: visible;
 }
 
-@media (max-width: 490px) {
-  .chatbot-toggler {
-    right: 20px;
-    bottom: 20px;
+#recommendationImage{
+    width:350px;
+    height:350px;
+}
+
+/*크기별 css 적용*/
+@media screen and (max-width: 1024px) {
+  .chatbot .chatbox{
+    height:50em;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #select-chatbot{
+    font-size:1.2em;
   }
 
-  .chatbot {
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    border-radius: 0;
-    width: 100%;
+  .chatbot .chatbox{
+    height:47em;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  #select-chatbot{
+    font-size:1em;
+  }
+  .chatbot .chatbox{
+    height:44em;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  #select-chatbot{
+    font-size:1em;
   }
 
+  .chatbot .chatbox{
+    height:41em;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  #select-chatbot {
+    font-size:0.85em;
+  }
+
+  .chatbot .chat-input {
+    padding: 5px 10px;
+  }
+
+  .chatbot header span {
+    display: block;
+  }
+
+  .chatbot .chatbox{
+    height:38em;
+  }
+
+  .chatbox .incoming p{
+    font-size:0.85em;
+  }
+
+  .chatbox .chat p{
+    font-size:0.85em;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  #select-chatbot {
+    font-size:0.9em;
+  }
   .chatbot .chatbox {
-    height: 30em;
-    padding: 25px 15px 100px;
+    height:28em;
   }
 
   .chatbot .chat-input {
@@ -266,8 +323,28 @@ header h2 {
   .chatbot header span {
     display: block;
   }
+
+  #recommendationImage{
+    width:250px;
+    height:250px;
+  }
 }
 
+@media screen and (max-width: 360px) {
+  .chatbot .chatbox {
+    height:32em;
+  }
+}
+
+@media screen and (max-width: 344px) {
+  #select-chatbot {
+    font-size:0.7em;
+  }
+
+  .btn-container button {
+    font-size:1em;
+  }
+}
   .restaurant-info.hidden{
     max-height : 0;
     opacity: 0;
