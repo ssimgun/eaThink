@@ -2264,7 +2264,7 @@ ul {
 }
 
 ul li {
-    padding-left: 0.5em;
+    padding-left: 0em;
 }
 
 ul.alt {
@@ -2309,7 +2309,7 @@ ul.actions {
 
 ul.actions li {
     display: inline-block;
-    padding: 0 1em 0 0;
+    padding: 0;
     vertical-align: middle;
 }
 
@@ -2357,7 +2357,7 @@ ul.actions.fit li {
 
 ul.actions.fit li > * {
     margin-bottom: 0;
-
+    padding :0;
 }
 
 ul.actions.fit.small {
