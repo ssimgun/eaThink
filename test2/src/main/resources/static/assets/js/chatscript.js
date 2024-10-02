@@ -191,13 +191,13 @@ function fetchRestaurantByName(restaurantName){
                 // 현재 위치와 음식점 위치 계산
                 if(calculateDistance(x, y, food_x, food_y)){
                     var position = new naver.maps.LatLng(food_y, food_x);
-
+                    var restaurant_marker = './images/marker/restaurant.png';
                     // 음식점 마커 옵션
                     var foodMarkerOptions = {
                         position: position,
                         map: map,
                         icon: {
-                            url: './images/marker/restaurant_marker.png',
+                            url: restaurant_marker,
                             origin: new naver.maps.Point(0, 0),
                             anchor: new naver.maps.Point(17, 0)
                         }
