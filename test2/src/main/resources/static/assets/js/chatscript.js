@@ -97,7 +97,7 @@ const handleChat = () => {
   chatbox.scrollTo(0, chatbox.scrollHeight);
 
   setTimeout(() => {
-    const incomingChatLi = createChatLi("잠시만 기다려주시오...", "incoming");
+    const incomingChatLi = createChatLi("잠시만 기다려주세요...", "incoming");
     chatbox.appendChild(incomingChatLi);
     chatbox.scrollTo(0, chatbox.scrollHeight);
     generateResponse(incomingChatLi);
@@ -156,7 +156,7 @@ function calculateDistance(current_x, current_y, data_x, data_y) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     const distance = earthRadius * c; // 결과를 미터로 변환
-    return 500 >= distance;
+    return distance;
 }
 
 // 챗봇 출력값에서 음식점 이름 추출
@@ -179,25 +179,40 @@ function getNameFromChatbot(){
 function fetchRestaurantByName(restaurantName){
     if(!restaurantName) return;
 
+    const restaurant_marker = './images/marker/restaurant.png';
+    const cafe_marker = './images/marker/cafe.png';
+    const drink_marker = './images/marker/drink.png';
+    const cluster_marker = './images/marker/cluster.png';
+    let marker_category;
+
+    var markers = [];
     $.ajax({
         url:'/nameToRestaurant',
         method: 'GET',
         data:{name:restaurantName},
         success: function(restaurants){
             restaurants.forEach(function(restaurant){
+                console.log(restaurant);
                 var food_x = restaurant.x;
                 var food_y = restaurant.y;
+                if(restaurant.category === '감성주점' || restaurant.category === '정종_대포집_소주방' || restaurant.category === '호프_통닭' || restaurant.category === '라이브카페'){
+                    marker_category = drink_marker;
+                }else if(restaurant.category === '까페' || restaurant.category === '커피숍' || restaurant.category === '키즈카페'){
+                    marker_category = cafe_marker;
+                }else{
+                    marker_category = restaurant_marker;
+                }
 
                 // 현재 위치와 음식점 위치 계산
-                if(calculateDistance(x, y, food_x, food_y)){
+                if(calculateDistance(x, y, food_x, food_y) <= 500){
                     var position = new naver.maps.LatLng(food_y, food_x);
-                    var restaurant_marker = './images/marker/restaurant.png';
+
                     // 음식점 마커 옵션
                     var foodMarkerOptions = {
                         position: position,
                         map: map,
                         icon: {
-                            url: restaurant_marker,
+                            url: marker_category,
                             origin: new naver.maps.Point(0, 0),
                             anchor: new naver.maps.Point(17, 0)
                         }
@@ -227,12 +242,38 @@ function fetchRestaurantByName(restaurantName){
                     restaurantElement.classList.add('restaurant-info',`restaurant-${restaurant.id}`,'hidden');
                     restaurantElement.innerHTML = `
                         <h2>${restaurant.name}</h2>
-                        <figure>
-                            <blockquote>${restaurant.number_address}</blockquote>
-                            <footer>
-                                ${restaurant.road_address}
-                            </footer>
-                        </figure>
+                        <div class="tag_container">
+                            <div class="tag">
+                                <span class="material-symbols-outlined">looks_one</span>
+                                <p>${restaurant.tag1}</p>
+                            </div>
+                            <div class="tag">
+                                <span class="material-symbols-outlined">looks_two</span>
+                                <p>${restaurant.tag2}</p>
+                            </div>
+                            <div class="tag">
+                                <span class="material-symbols-outlined">looks_3</span>
+                                <p>${restaurant.tag3}</p>
+                            </div>
+                        </div>
+                        <div class="preference">
+                            <div class="preference_element">
+                                <span style="color:blue;" class="material-symbols-outlined">sentiment_excited</span>
+                                <p>${restaurant.positive_reviews}</p>
+                            </div>
+                            <div class="preference_element">
+                                <span style="color: red;" class="material-symbols-outlined">sentiment_sad</span>
+                                <p>${restaurant.negative_reviews}</p>
+                            </div>
+                        </div>
+                        <div class="info_container">
+                            <div class="revisit_3">
+                                <span>3회 이상 재방문 고객 : ${restaurant.revisit_above_3}</span>
+                            </div>
+                            <div class="final_score">
+                                <span>음식점 점수 : ${restaurant.final_score}</span>
+                            </div>
+                        </div>
                     `;
                     restaurantContainer.appendChild(restaurantElement);
 
@@ -256,6 +297,25 @@ function fetchRestaurantByName(restaurantName){
                             console.error('해당 음식점 요소를 찾을 수 없습니다:', restaurant.id); // 오류 메시지
                         }
                     });
+
+                    markers.push(restaurantMarker);
+
+                    var markerClustering = new MarkerClustering({
+                        minClusterSize: 2,
+                        maxZoom: 18,
+                        map: map,
+                        markers: markers,
+                        disableClickZoom: false,
+                        gridSize: 100,
+                        icons: [{
+                            url:cluster_marker,
+                            origin: new naver.maps.Point(0, 0),
+                            anchor: new naver.maps.Point(25, 0)
+                        }],
+                        stylingFunction: function(cluster_marker, count){
+                            $(cluster_marker.getElement()).find('div:first-child').text(count);
+                        }
+                    })
 
                 }else{
                     console.log('반경안에 없음');
