@@ -132,7 +132,7 @@ function updateUserAddress(id){
     .then(message => {
         console.log(message);  // 서버에서 반환한 텍스트 메시지를 콘솔에 출력
         if (message.includes("선택 완료")) {
-            window.location.href='/home';
+            window.location.href='/main';
             console.log('주소 선택 성공');
         } else {
             console.log('선택 오류:', message);  // 오류 메시지를 출력
@@ -202,10 +202,15 @@ document.getElementById("refresh-button").addEventListener("click", function(eve
 document.getElementById("food-preference-link").addEventListener("click", function(event){
     if(!loggedInUser){
         event.preventDefault();
-        alert("개인의 취향을 반영하는 설문으로 \n로그인이 필요한 서비스 입니다.");
+        var confirmation = confirm("개인의 취향을 반영하는 설문으로 \n로그인이 필요한 서비스 입니다. \n 로그인 페이지로 이동하시겠습니까?")
+        if(confirmation){
+            window.location.href = "/loginpage"
+        } else {
+            return;
+        }
     } else {
         // 로그인이 되어 있으면 페이지 이동
-        window.location.href="/survey/surveySelect";
+        window.location.href="/surveySelect";
     }
 
 })

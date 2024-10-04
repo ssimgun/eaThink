@@ -2,7 +2,6 @@ package com.example.test2.service;
 
 import com.example.test2.entity.Users;
 import com.example.test2.entity.Weather_data;
-import com.example.test2.repository.UserRepository;
 import com.example.test2.repository.Weather_dataRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -25,34 +24,29 @@ import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.List;
+/*
+* weatherAPIConnect : 날씨 데이터 조작 기능
+* 1. API 요청 URL 생성 메소드 : getWeatherURL => URL url
+* 2. URL 요청 메소드 : getWeatherDate => String
+* 3. 호출 데이터 정제 후 저장하기 : getUltraSrtFcst => Weather_data
+* 4. 회원 정보 주소의 날씨 값 가져오기 : "/get-userWeather" => Weather_data
+*
+*/
 
 @Slf4j
 @Service
 public class weatherAPIConnect {
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private Weather_dataRepository weather_dataRepository;
 
-    // API 요청 URL 생성 메소드 retrun => URL url
+    // 1. API 요청 URL 생성 메소드 : getWeatherURL => URL url
     public URL getWeatherURL(Weather_data weather_data) throws IOException {
-    // return URL ex)
-        // : https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtFcst
-        // ?pageNo=1&numOfRows=1000&dataType=json - 고정값
-        // &base_date=20210628&base_time=0630&nx=55&ny=127&authKey=4xxl_HhFRSScZfx4RWUkCw - 지역/시간에 따른 변경 값
-        // base_date, base_time = LocalDateTime.now()로 추출
-        // nx, ny = Weather_date 에 있는 정보에서 추출
-
         // API url
         String apiURL = "https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtFcst";
 
         // 요청날짜 변수
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime previousHour = now.minusHours(1);
-        // 입력 값에 맞도록 날짜 데이터 형식 변경(DateTimeFormatter.ofPattern)
-        // 출력 값 (ex. 날짜 : 20240912, 시간 0900)
         DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH00");
 
@@ -84,13 +78,10 @@ public class weatherAPIConnect {
         //완료된 요청 url 생성 httpURLConnection 객체 활용 api 요청
         URL url = new URL(urlBuilder.toString());
 
-        //test
-//        log.info("최종 url : " + url);
-
         return url;
     }
 
-    // URL 요청 메소드
+    // 2. URL 요청 메소드 : getWeatherDate => String
     public String getWeatherDate(URL url) throws IOException{
         // 입력 받은 url 을 HttpURLConnection 으로 연결하기
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -101,16 +92,15 @@ public class weatherAPIConnect {
         // 요청 속성 설정
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
+
         // 응답 코드 확인
         int responseCode = connection.getResponseCode();
-//        log.info("Response Code : " + responseCode);
 
         // 응답 코드가 성공일때 응답 데이터 읽기
         BufferedReader bufferedReader = null;
 
         // 응답 코드가 성공적일때
         if(responseCode == HttpURLConnection.HTTP_OK){
-            // inputStreamReder를 사용하여 응답 데이터를 읽음
             bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
         }else{
             bufferedReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
@@ -127,24 +117,20 @@ public class weatherAPIConnect {
         connection.disconnect();
 
         String result = stringBuilder.toString();
-//        log.info("요청결과 : " + result);
         return result;
 
     }
 
-    // 요청받아서 불러온 데이터 정제 후 저장하기
+    // 3. 호출 데이터 정제 후 저장하기 : getUltraSrtFcst => Weather_data
     public Weather_data getUltraSrtFcst(String result) throws ParseException {
         // API 반환 결과에서 필요데이터 추출
         Weather_data weather_data = new Weather_data();
 
-        // 가져올 시간 현재 Time 에서 시만 가져오기 (1200)
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH00");
         String targetFcstTime = now.format(formatterHour);
-//        log.info("FcstHour : " + targetFcstTime);
 
         try {
-//            1. 문자열 == result
 //            2. parser
             JSONParser jsonParser = new JSONParser();
 //            3. To Object
@@ -195,13 +181,6 @@ public class weatherAPIConnect {
 
                     }
                 }
-
-//            log.info("selectList : " + selectList);
-//            log.info("weather_data : " + weather_data.getSky());
-//            log.info("weather_data : " + weather_data.getPty());
-//            log.info("weather_data : " + weather_data.getReh());
-//            log.info("weather_data : " + weather_data.getRn1());
-//            log.info("weather_data : " + weather_data.getT1h());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -209,7 +188,7 @@ public class weatherAPIConnect {
         return weather_data;
     }
 
-    //session 에 있는 회원 정보의 주소를 가지고
+    // 4. 회원 정보 주소의 날씨 값 가져오기 : "/get-userWeather" => Weather_data
     @GetMapping("/get-userWeather")
     public Weather_data getUserWeather(HttpSession session, Model model){
         Users users = (Users) session.getAttribute("loggedInUser");
@@ -217,11 +196,9 @@ public class weatherAPIConnect {
         if(users != null) {
             String[] address = users.getAddress().split(" ");
             second_address = address[1];
-            log.info("회원의 주소 : " + second_address);
         } else{
             second_address = "종로구";
         }
-
         Weather_data weather_data = weather_dataRepository.findBySecondName(second_address);
 
         // sky + pty 정보에 따른 이미지 변경
@@ -246,9 +223,6 @@ public class weatherAPIConnect {
         session.setAttribute("weather", weather_data);
         model.addAttribute("weatherImageName", weatherImageName);
         model.addAttribute("weather", weather_data);
-
-        log.info("이미지 이름 : " + weatherImageName);
-        log.info("선택된 주소 : "  + weather_data.toString());
 
         return weather_data;
     }

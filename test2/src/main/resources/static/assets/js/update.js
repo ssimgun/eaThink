@@ -214,12 +214,27 @@ function deleteUser(id) {
         })
         .then(data => {
             alert("탈퇴가 완료되었습니다.");
-            window.location.href = "/main"; // 탈퇴 완료 후 이동할 페이지
+            window.location.href = "/logout"; // 탈퇴 완료 후 이동할 페이지
         })
         .catch(error => {
             console.error('Error:', error);
             alert("탈퇴 과정에서 오류가 발생했습니다.");
         });
+    } else {
+        // 사용자가 '아니오'를 클릭한 경우 아무 작업도 하지 않음
+        return;
+    }
+}
+
+function updateUser() {
+    // 사용자에게 확인을 요청하는 다이얼로그 표시
+    var confirmation = confirm("수정을 완료하시겠습니까?");
+
+    if (confirmation) {
+        // 사용자가 '예'를 클릭한 경우
+        document.getElementById("signupForm").submit();
+        window.location.href = "/main";
+        alert("수정이 완료 됐습니다.")
     } else {
         // 사용자가 '아니오'를 클릭한 경우 아무 작업도 하지 않음
         return;

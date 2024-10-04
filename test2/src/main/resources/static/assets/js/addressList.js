@@ -65,6 +65,7 @@ address_nameField.addEventListener("input", function () {
     validateForm();
 });
 
+// 주소 삭제
 function deleteAddress(id) {
     // 사용자에게 확인을 요청하는 다이얼로그 표시
     var confirmation = confirm("해당 주소를 삭제하시겠습니까?");
@@ -99,6 +100,7 @@ function deleteAddress(id) {
     }
 }
 
+// 주소 수정
 function editAddress(id) {
     var default_editBtn = document.getElementById("default_btn_edit_" + id); // 기본 주소지 수정 버튼
 
@@ -116,6 +118,7 @@ function editAddress(id) {
     }
 }
 
+// 주소 저장
 function saveAddress(id) {
     // 수정된 값을 가져옴
     var newAddressName = document.getElementById('address_name_input_' + id);

@@ -5,6 +5,7 @@ import com.example.test2.entity.Users;
 import com.example.test2.repository.UserRepository;
 import lombok.*;
 
+//* 유저 주소 정보 저장 DTO
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

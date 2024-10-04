@@ -2,38 +2,40 @@ package com.example.test2.service;
 
 import com.example.test2.entity.*;
 import com.example.test2.repository.SurveyFoodRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+/*
+*  MenuRecommendationService : 음식 추천 서비스
+*  1. 유저의 음식 설문 선호도 가져오기 : getMenuRecommendationScore => List<SurveyFood>
+*  2. 날씨 정보별 가중치 부여 : getScoreByweather => List<SurveyFood>
+*  3.  최종 선호도 점수에서 상위 점수 뽑기 : randomTop => List<SurveyFood>
+*  4. 상위 점수 음식 중 하나 추출 : getRecommendation => SurveyFood
+*/
+
 @Slf4j
 @Service
 public class MenuRecommendationService {
-    //음식 정보를 가져오기 위한 Repository
     @Autowired
     SurveyFoodRepository surveyFoodRepository;
-
     @Autowired
     SurveyFoodService surveyFoodService;
-
-    //날씨 정보를 가져오기 위한 Repository
     @Autowired
     weatherAPIConnect weatherAPIConnect;
 
+    // 1. 유저의 음식 설문 선호도 가져오기
     public List<SurveyFood> getMenuRecommendationScore(HttpSession session) {
         // 점수를 저장할 SurveyFood entity 가져오기
         List<SurveyFood> surveyFoodScore = surveyFoodRepository.findAll();
         List<SurveyFood> personalFoodScore = new ArrayList<>();
-
 
         // 유저의 선호도 점수 가져오기
         if (session.getAttribute("loggedInUser") != null) {
@@ -41,16 +43,14 @@ public class MenuRecommendationService {
             Integer userId = user.getId();
 
             // 유저 설문 값을 저장할 리스트
-
             if (userId != null) {
                 List<UserFoodPreferences> userFoodPreferences = surveyFoodService.findById_UserId(userId);
-
 
                 // 설문 음식 리스트에서 유저가 검사한 값이 있으면 유저 검사값 추가 아니면 '5'점
                 for (SurveyFood score : surveyFoodScore) {
                     score.setPreference(5); //기본 점수 5점
-
-                    for (UserFoodPreferences preferencess : userFoodPreferences) { //사용자가 응답한 점수가 있으면 점수 변경
+                    //사용자가 응답한 점수가 있으면 점수 변경
+                    for (UserFoodPreferences preferencess : userFoodPreferences) {
                         if (score.getFood_id() != null && score.getFood_id().equals(preferencess.getSurveyFood().getFood_id())) {
                             score.setPreference(preferencess.getPreference());
                         }
@@ -59,6 +59,7 @@ public class MenuRecommendationService {
                 }
             }
             return personalFoodScore;
+
         } else {
             for (SurveyFood score : surveyFoodScore) {
                 score.setPreference(5); //기본 점수 5점
@@ -69,6 +70,7 @@ public class MenuRecommendationService {
     }
 
 
+    // 2. 날씨 정보별 가중치 부여 : getScoreByweather => List<SurveyFood>
     public List<SurveyFood> getScoreByweather(HttpSession session, List<SurveyFood> personalFoodScore) {
         Weather_data weather_data = (Weather_data) session.getAttribute("weather");
 
@@ -82,7 +84,7 @@ public class MenuRecommendationService {
         List<String> lunchT = Arrays.asList("09", "10", "11","12", "13","14");
         List<String> DrinkT = Arrays.asList("18", "19","20", "21", "22");
 
-
+        //온도와 구름상태
         Integer pty = Integer.parseInt(weather_data.getPty());
         Integer t1h = Integer.parseInt(weather_data.getT1h());
 
@@ -106,10 +108,10 @@ public class MenuRecommendationService {
         List<String> drinks = Arrays.asList("소주", "막걸리/동동주", "포장마차", "실내포장마차", "사케", "맥주/호프", "와인", "바", "칵테일", "호텔바");
 
         List<SurveyFood> finalFoodScore = new ArrayList<>();
-        // 온도에 따른 가중치
-        Integer point = 5;
-        for (SurveyFood foodScore : personalFoodScore) {
 
+        // 온도에 따른 가중치
+        Integer point = 3;
+        for (SurveyFood foodScore : personalFoodScore) {
             foodScore.setWeatherScore(foodScore.getWeatherScore() == null ? 0 : foodScore.getWeatherScore());
 
             if (t1h > 24) {
@@ -171,6 +173,7 @@ public class MenuRecommendationService {
         return finalFoodScore;
     }
 
+    // 3. 최종 선호도 점수에서 상위 점수 뽑기 : randomTop
     public List<SurveyFood> randomTop(List<SurveyFood> finalFoodScore) {
         // getSumScore를 기준으로 내림차순 정렬
         finalFoodScore.sort(Comparator.comparingInt(SurveyFood::getSumScore).reversed());
@@ -185,13 +188,14 @@ public class MenuRecommendationService {
 
     }
 
-    public SurveyFood getRecommendation(List<SurveyFood> foodList) {
-        if (foodList.isEmpty()) {
+    // 4. 상위 점수 음식 중 하나 추출 : getRecommendation => SurveyFood
+    public SurveyFood getRecommendation(List<SurveyFood> topFood) {
+        if (topFood.isEmpty()) {
             return null; // 리스트가 비어있는 경우 null 반환
         }
 
         Random random = new Random();
-        return foodList.get(random.nextInt(foodList.size())); // 랜덤으로 하나의 음식 선택
+        return topFood.get(random.nextInt(topFood.size())); // 랜덤으로 하나의 음식 선택
     }
 
 }

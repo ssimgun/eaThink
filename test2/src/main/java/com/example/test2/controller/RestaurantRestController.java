@@ -10,16 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/*
+ * RestaurantRestController - Mapping List : 음식점 목록
+ * 1.해당 식당의 정보 가져오기 : /nameToRestaurant
+ */
+
+
 @Slf4j
 @RestController
 public class RestaurantRestController {
     @Autowired
     private RestaurantService restaurantService;
 
+    // 1.  해당 식당의 정보 가져오기
     @GetMapping("/nameToRestaurant")
-    public List<Restaurant> getRestaurants(@RequestParam String name){
+    public List<Restaurant> getRestaurants(@RequestParam String name) {
         List<Restaurant> restaurant = restaurantService.getRestaurantsByName(name);
-        log.info(restaurant.toString());
         return restaurant;
     }
 }

@@ -37,7 +37,7 @@
     <nav class="image">
         <div class="weather-info" id="weatherInfo">
         <span><img class="weather-image"
-                   src="/images/weather_{{weatherImageName}}.png"
+                   src="/images/weather/weather_{{weatherImageName}}.png"
                    alt="{{weatherImageName}}"></span>
         </div>
     </nav>
@@ -58,7 +58,7 @@
     {{/weather}}
 
     <!--    페이지 명-->
-    <a href="/home" class="logo">식사를 합시다</a>
+    <a href="/main" class="logo">식사를 합시다</a>
 
     <!--    로그인 버튼-->
     {{^loggedInUser}}
@@ -76,11 +76,11 @@
 <!-- Menu -->
 <nav id="menu" class="">
     <ul class="links">
-        <li><a href="/home">홈페이지</a></li>
+        <li><a href="/main">홈페이지</a></li>
         <li><a href="/edit">내정보</a></li>
         <li><a href="#one">채팅</a></li>
         <!--        <li><a href="#three">게임</a></li>-->
-        <li><a href="/survey/surveySelect" id="food-preference-link">
+        <li><a href="/surveySelect" id="food-preference-link">
             나의 음식 취향</a></li>
     </ul>
 

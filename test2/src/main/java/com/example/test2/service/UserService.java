@@ -4,6 +4,7 @@ import com.example.test2.dto.AddressForm;
 import com.example.test2.dto.UsersForm;
 import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
+import com.example.test2.entity.Weather_data;
 import com.example.test2.repository.AddressRepository;
 import com.example.test2.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +25,13 @@ public class UserService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private  AddressService addressService;
+
+    @Autowired
+    private weatherAPIConnect weatherAPIConnect;
+
 
 //    로그인 시 회원 정보 있는지 확인
     public Users authenticate(String userId, String password){
@@ -163,12 +171,21 @@ public class UserService {
                 model.addAttribute("loggedInUser",users);
                 session.setAttribute("loggedInUser",users);
                 session.setAttribute("selectAddress",address1);
-                log.info(address1.toString());
             }
 
             return true;
         }else{
             return false;
         }
+    }
+
+    public void setUserSessionInfo(HttpSession session, Model model){
+        // 세션에서 사용자 정보와 주소 정보 가져오기
+        Users userSession = (Users) session.getAttribute("loggedInUser");
+        addressService.showAddressList(session, model);
+
+        // 날씨 정보 가져와서 모델에 추가
+        Weather_data weather_data = weatherAPIConnect.getUserWeather(session, model);
+        model.addAttribute("weatherData", weather_data);
     }
 }

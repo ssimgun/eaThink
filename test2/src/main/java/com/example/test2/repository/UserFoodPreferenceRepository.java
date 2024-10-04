@@ -10,7 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface UserFoodPreferenceRepository extends JpaRepository<UserFoodPreferences, UserFoodPreferencedId> {
-
     List<UserFoodPreferences> findById_UserId(Integer userId);
-//    List<UserFoodPreferences> findByUserFoodPreferencedId(UserFoodPreferencedId userFoodPreferencedId);
 }

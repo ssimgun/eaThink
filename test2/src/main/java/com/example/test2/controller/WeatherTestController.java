@@ -7,28 +7,32 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+
+/*
+ * WeatherTestController - Mapping List : 날씨 데이터 컨트롤
+ * 1. 정각마다 서울시 구별 날씨 정보 업데이트 : getWeather()
+ */
 
 @Slf4j
 @Controller
 public class WeatherTestController {
     @Autowired
     private Weather_dataRepository Weather_dataRepository;
-
     @Autowired
     private weatherAPIConnect weahterAPIConnect;
 
+    // 1. 정각마다 주소지별 날씨 정보 업데이트
+    // 매시각 정각에 업데이트
     @Scheduled(cron = "0 0 */1 * * *")
     public String getWeather() throws Exception {
 
-//        Weather_data weather_data = Weather_dataRepository.findById("1168000000").orElse(null);
+        // DB에 등록된 주소 정보 가져오기
         List<Weather_data> weather_datas = Weather_dataRepository.findAll();
 
+        // 날씨 API load Time
         long start_time = System.currentTimeMillis();
 
         for(Weather_data weather_data : weather_datas) {
@@ -42,13 +46,9 @@ public class WeatherTestController {
             weather_data.setRn1(weather.getRn1());
             weather_data.setT1h(weather.getT1h());
 
-//            log.info("weather 객체 정보 : " + weather_data.toString());
-
+//            DB에 주소별 날씨 정보 등록
             Weather_dataRepository.save(weather_data);
-//            log.info("날씨 데이터 업데이트 : " + weather_data.getID());
         }
-//
-
 
         log.info("날씨 데이터 업데이트 완료");
         long end_time = System.currentTimeMillis();
@@ -56,20 +56,5 @@ public class WeatherTestController {
 
         return null;
     }
-
-//    @GetMapping("/weather")
-//    public List<Weather_data> getWeather(@RequestBody Weather_data weather_data) {
-//        long start_time = System.currentTimeMillis();
-//
-////      List<Weather_data> weather_data
-////        api 연결을 통해 서비스 단 연결해서 데이터 가져올 부분
-//
-//        log.debug("날씨 조회 중");
-//        long end_time = System.currentTimeMillis();
-//        log.debug("러닝타임 : " + ((end_time - start_time) / 1000));
-//
-//        return weather_data;
-//    }
-
 
 }

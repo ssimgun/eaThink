@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+//* 유저 정보 저장 DTO
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

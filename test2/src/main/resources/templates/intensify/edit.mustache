@@ -85,7 +85,7 @@
         <input type="hidden" name="address" value="{{address}}">
 
         <div style="text-align: center; margin-top:100px">
-            <button type="submit" class="button special big" id="submitButton">수정하기</button>
+            <button type="button" onclick="updateUser()" class="button special big" id="submitButton">수정하기</button>
             <button type="button" onclick="deleteUser({{id}})" class="button special big" id="deleteButton" style="background-color:#FF6347;">탈퇴하기</button>
         </div>
         {{/users}}

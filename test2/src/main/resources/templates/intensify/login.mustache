@@ -1,11 +1,22 @@
 {{>layouts/header}}
 
 <section id="one" class="wrapper">
+    <!--로그인 정보 불일치 시 생성 error -->
+    {{#error}}
+        <section id="two" class="wrapper" style="display:flex;">
+            <div class="inner">
+                <h3 style="color: red;"> {{error}}</h3>
+            </div>
+        </section>
+    {{/error}}
+
     <div class="inner flex flex-3" style="display: flex;
         flex-direction: column;
         align-items: center;">
         <header class="align-center"><h1>로그인</h1>
         </header>
+
+
 
         <div class="form_container" style="width:60%">
             <form method="post" action="/login" style="text-align: center;">
@@ -26,6 +37,8 @@
         </div>
     </div>
 </section>
+
+
 
 
 <!-- Scripts -->

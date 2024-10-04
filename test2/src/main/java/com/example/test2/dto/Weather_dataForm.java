@@ -3,6 +3,7 @@ package com.example.test2.dto;
 import com.example.test2.entity.Weather_data;
 import lombok.*;
 
+// 날씨 정보 DTO
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
