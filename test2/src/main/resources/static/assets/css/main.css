@@ -1834,8 +1834,7 @@ sup {
 }
 
 blockquote {
-    font-style: italic;
-    margin: 0 0 2em 0;
+    margin: 0 0 1em 0;
 }
 
 cite {
@@ -3304,14 +3303,6 @@ body.is-loading #banner .content {
 
 @media screen and (max-width: 980px) {
 
-    #two blockquote br {
-        display: none;
-    }
-
-}
-
-@media screen and (max-width: 980px) {
-
     #three {
         text-align: center;
     }
@@ -3637,5 +3628,184 @@ body.is-loading #banner .content {
 @media screen and (max-width: 480px){
     #two .item-center{
         height : 300px
+    }
+}
+
+/* 음식점 정보 css*/
+.tag_container{
+    font-size:1em;
+    margin:1em 0;
+    padding: 0 20%;
+    .tag{
+        display:flex;
+        gap:0.3em;
+        span{
+            font-size:2em
+        }
+        p{
+            padding-top:3px;
+        }
+    }
+}
+
+.preference{
+    display:inline-flex;
+    gap:6em;
+    padding: 0 11%;
+    .preference_element{
+        display:flex;
+        gap:1em;
+        span{
+            font-size:4em;
+            padding-top: 9px;
+        }
+        p{
+            font-size: xxx-large;
+            font-family:'NanumSquareNeoH';
+        }
+    }
+}
+
+.info_container{
+    display:inline-flex;
+    gap:6em;
+    padding:1em 15%;
+}
+
+/*크기별 css 적용*/
+@media screen and (max-width: 1024px) {
+
+}
+
+@media screen and (max-width: 820px) {
+
+}
+
+@media screen and (max-width: 430px) {
+    .preference{
+        display: inline-flex;
+        gap:1em;
+        .preference_element{
+            gap:0;
+        }
+    }
+
+    .info_container{
+        display:inline-flex;
+        gap:1em;
+        padding:2em 3%;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .preference{
+        display: inline-flex;
+        gap:1em;
+        .preference_element{
+            gap:0;
+        }
+    }
+
+    .info_container{
+        display:inline-flex;
+        gap:1em;
+        padding:1em 3%;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .preference{
+        display: inline-flex;
+        gap:1em;
+        .preference_element{
+            gap:0;
+        }
+    }
+
+    .info_container{
+        display:inline-flex;
+        gap:1em;
+        padding:1em 3%;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .preference{
+        display: inline-flex;
+        gap:1em;
+        .preference_element{
+            gap:0;
+        }
+    }
+
+    .info_container{
+        display:inline-flex;
+        gap:1em;
+        padding:1em 3%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .tag_container{
+        font-size:1em;
+        margin:1em 0;
+        padding: 0 10%;
+        .tag{
+            display:flex;
+            gap:0.3em;
+            span{
+                font-size:2em
+            }
+            p{
+                padding-top:3px;
+            }
+        }
+    }
+
+    .preference{
+        display: inline-flex;
+        gap:1em;
+        .preference_element{
+            gap:0;
+        }
+    }
+
+    .info_container{
+        display:inline-flex;
+        gap:1em;
+        padding:1em 3%;
+    }
+}
+
+@media screen and (max-width: 344px) {
+    .tag_container{
+        font-size:1em;
+        margin:1em 0;
+        padding: 0 10%;
+        .tag{
+            display:flex;
+            gap:0.3em;
+            span{
+                font-size:2em
+            }
+            p{
+                padding-top:3px;
+            }
+        }
+    }
+
+    .preference{
+        display: inline-flex;
+        gap:1em;
+        padding:0;
+        .preference_element{
+            gap:0;
+        }
+    }
+
+    .info_container{
+        display:inline-flex;
+        gap:1em;
+        padding:1em 0%;
     }
 }
