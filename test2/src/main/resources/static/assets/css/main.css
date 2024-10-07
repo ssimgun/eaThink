@@ -3685,6 +3685,20 @@ body.is-loading #banner .content {
     margin: none;
 }
 
+@media screen and (max-width:980){
+    .nameTag {
+        font-size : 0.9em;
+        margin: none;
+    }
+}
+
+@media screen and (max-width:778){
+    .nameTag {
+        font-size : 0.8em;
+        margin: none;
+    }
+}
+
 /* 화면 축소 시 지도 크기 축소 */
 @media screen and (max-width: 738px){
     #two .item-center{

@@ -35,7 +35,7 @@ public class SurveyFood {
     private Integer sumScore; //최종 추천 점수
 
     public enum FoodType {
-        양식, 카페_디저트, 한식, 고기_구이, 일식_중식_세계음식, 나이트라이프
+        양식, 카페_디저트, 한식, 고기_구이, 일식_중식_세계음식, 나이트라이프, 요리수준
     }
 
 }

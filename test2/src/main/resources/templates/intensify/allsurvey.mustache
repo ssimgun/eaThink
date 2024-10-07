@@ -1,6 +1,20 @@
 {{>layouts/header}}
-{{>layouts/nav}}
 
+<style>
+    input[type="checkbox"] + label, input[type="radio"] + label {
+      text-decoration: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 1em;
+      font-weight: 300;
+      padding-left: 2.4em;
+      padding-right: 0.75em;
+      position: relative;
+  }
+</style>
+
+{{>layouts/nav}}
 
 <form method="post" action="/survey/submit">
 
@@ -108,6 +122,22 @@
         </div>
         <button class="scroll-button" type="button" onclick="scrollLeftCustom('Night')"><</button>
         <button class="scroll-button" type="button" onclick="scrollRightCustom('Night')">></button>
+    </section>
+
+    <section id="Worlds" class="wrapper style1 special">
+        <h2> 설문에 참여해 주셔서 감사합니다.</h2>
+        <h4> 마지막으로 스스로 생각하는 요리 수준에 대해 선택해주세요 </h4>
+
+        {{#요리수준}}
+            <input type="radio" id="level1" name="{{food_id}}" value="1">
+            <label for="level1"> 연습생 </label>
+            <input type="radio" id="level2" name="{{food_id}}" value="2">
+            <label for="level2"> 초급 </label>
+            <input type="radio" id="level3" name="{{food_id}}" value="3">
+            <label for="level3"> 중급 </label>
+            <input type="radio" id="level4" name="{{food_id}}" value="4">
+            <label for="level4"> 고급 </label>
+        {{/요리수준}}
     </section>
 
 
