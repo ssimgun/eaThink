@@ -47,7 +47,6 @@
   background-color :rgb(194, 194, 194)
 }
 
-
 .dropdown-content div{
   display : block;
   text-decoration : none;
@@ -92,7 +91,14 @@
 }
 
 
+/*
+	Intensify by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
+
 /* Reset */
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -3417,9 +3423,8 @@ body.is-loading #banner .content {
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
     width: 20%;
     font-size: large;
+
 }
-
-
 
 /*.weather-info:hover .details {
     display: block;
@@ -3469,24 +3474,9 @@ body.is-loading #banner .content {
         align-items: center;
     }
 
-}
 
-@media screen and (max-width: 560px) {
-    #header .weather-details {
-        display: none;
-        position: fixed;
-        background: #f9f9f9;
-        border: 1px solid #ddd;
-        padding: 10px;
-        z-index: 1;
-        left: 50%;
-        right: 1em;
-        top: 3em;
-        border-radius: 10%;
-        box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
-        width: auto;
-        font-size: medium;
-    }
+
+}
 
 /* 설문조사 선택 화면 */
 
@@ -3568,7 +3558,7 @@ body.is-loading #banner .content {
 .inner-selectsurvey {
     margin: 0 auto;
     max-width: 65em;
-
+    font-size: x-large;
 }
 
 @media screen and (max-width: 1280px) {
