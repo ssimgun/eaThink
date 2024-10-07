@@ -3,7 +3,6 @@ const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
-
 let userMessage = null; // 사용자 메시지를 저장하기 위한 변수
 const inputInitHeight = chatInput.scrollHeight; // 입력창의 초기 높이
 
@@ -166,7 +165,9 @@ function getNameFromChatbot(){
     if(chatbotOutputElement){
         var chatbotOutput = chatbotOutputElement.textContent; // 출력 텍스트 가져오기
         var lines = chatbotOutput.split('\n'); // 줄바꿈 기준으로 나누기
-        restaurantName = lines[0]; // 첫 번째 줄이 음식적 이름
+        var test = lines[0].split(' ')[0] // 테스트
+        console.log(test); // 테스트
+        restaurantName = test; // 첫 번째 줄이 음식적 이름
 
     } else{
         console.error('출력 요소를 찾을 수 없습니다. ')
@@ -271,7 +272,9 @@ function fetchRestaurantByName(restaurantName){
                                 <span>3회 이상 재방문 고객 : ${restaurant.revisit_above_3}</span>
                             </div>
                             <div class="final_score">
-                                <span>음식점 점수 : ${restaurant.final_score}</span>
+                                <span>음식점 점수 : ${restaurant.final_score}
+                                     <span class="material-symbols-outlined">help</span>
+                                </span>
                             </div>
                         </div>
                     `;

@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     x = item.x;
                     y = item.y;
+
                     var centerPosition = new naver.maps.LatLng(y, x);
 
                     map = new naver.maps.Map('map', {
