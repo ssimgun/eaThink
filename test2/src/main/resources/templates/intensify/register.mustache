@@ -1,20 +1,5 @@
-<!DOCTYPE HTML>
+{{>layouts/header}}
 
-<html>
-<head>
-    <title>Have a good meal</title>
-    <meta charset="utf-8">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-
-</head>
 <style>
     @media screen and (max-width: 980px) {
     #header nav.right {
@@ -27,21 +12,18 @@
     margin-top: 5px;
     height: 2em;
     line-height: 2em;
-}
     }
+   }
+    #header #menu-nav{
+    display : none;
+    }
+
+    #header nav.right{
+    display : none;
+    }
+
 </style>
 <body>
-
-<!-- Header -->
-<header id="header">
-    <a href="/main" class="logo">식사를 합시다</a>
-    <nav class="right">
-        <a href="/loginpage" class="button alt" id="nav-login-btn">로그인</a>
-    </nav>
-<!--    <nav class="right">-->
-<!--        <a href="/logout" class="button alt" id="nav-logout-btn" style="display: none;">로그아웃</a>-->
-<!--    </nav>-->
-</header>
 
 <!-- 회원가입 필드 -->
 <section id="main" class="wrapper">
@@ -158,3 +140,4 @@
 </section>
 
 {{>layouts/footer}}
+{{>layouts/scripts}}

@@ -1,0 +1,62 @@
+
+<!-- Menu -->
+<nav id="menu" class="">
+    <ul class="links">
+        <li><a href="/main">홈페이지</a></li>
+        <li><a href="#one">채팅</a></li>
+        <!--        <li><a href="#three">게임</a></li>-->
+        <li><a href="/surveySelect" id="food-preference-link">
+            나의 음식 취향</a></li>
+    </ul>
+
+    {{^loggedInUser}}
+        <ul class="actions vertical">
+            <li><a href="/loginpage" class="button fit" id="side-login-btn">로그인</a></li>
+        </ul>
+    {{/loggedInUser}}
+
+    {{#loggedInUser}}
+        <ul class="actions vertical">
+            <li><a href="/logout" class="button fit" id="side-logout-btn">로그아웃</a></li>
+        </ul>
+    {{/loggedInUser}}
+
+
+    {{#loggedInUser}}
+        <ul class="links-under nav-under">
+            <li style="border-bottom : 1px solid; padding-bottom: 10px;">{{nickname}}님 반갑습니다!</li>
+            <li>
+                <div class="dropdown-myAddresses">
+                    <div>
+                        나의 주소
+                    </div>
+                    <div class="dropdown">
+                        {{#selectAddress}}
+                            <button class="dropbtn" onclick="dropdown()">
+                                <span class="dropbtn_content">{{address_name}}</span>
+                                <input id="addressHidden" type="hidden" value="{{address}}">
+                            </button>
+                        {{/selectAddress}}
+                        {{^selectAddress}}
+                            <button class="dropbtn" onclick="dropdown()">
+                                <span class="dropbtn_content">주소 선택</span>
+                            </button>
+                        {{/selectAddress}}
+                        <div class="dropdown-content">
+                            {{#addresses}}
+                                <div class="myAddress" onclick="selectAddress('{{address_name}}','{{id}}')">
+                                    {{address_name}}<br>({{address}})
+                                </div>
+                            {{/addresses}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="button-container">
+                <a type="button" href="/myInfo/edit">내 정보</a>
+                <a type="button" href="/myInfo/addressList">주소목록</a>
+            </li>
+        </ul>
+    {{/loggedInUser}}
+
+</nav>

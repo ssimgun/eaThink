@@ -1,56 +1,13 @@
 {{>layouts/header}}
-
-<style>
-    .flex {
-        display: flex; /* 플렉스 컨테이너 */
-        gap: 20px; /* 아이템 간격 */
-        overflow-x: hidden;
-        white-space: nowrap;
-        padding: 10px;
-    }
-    @media screen and (max-width: 980px) {
-            .flex {
-            display: flex; /* 플렉스 컨테이너 */
-            gap: 20px; /* 아이템 간격 */
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px;
-            webkit-flex-wrap: unset;
-            flex-wrap: unset;
-        }
-    }
-
-    .food-item {
-        min-width: 300px;
-        text-align: center;
-        margin-bottom: 2em;
-        display: inline-block;
-    }
-
-    .scroll-button {
-        background-color: #000000;
-        color: white;
-        border: none;
-        padding: 1px 20px;
-        cursor: pointer;
-        margin: 5px;
-        font-family: "NanumSquareNeoH", sans-serif;
-        font-size: larger;
-    }
-
-    .wrapper{
-        text-align: center;
-    }
-
-</style>
+{{>layouts/nav}}
 
 
 <form method="post" action="/survey/submit">
 
     <section id="Western" class="wrapper style1 special">
-        <div class="inner flex flex-3 foodContainer">
+        <div class="inner flex-allsurvey flex-3 foodContainer">
             {{#양식}}
-                <div class="food-item">
+                <div class="food-item-allsurvey">
                     <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
@@ -67,9 +24,9 @@
 
 
     <section id="Cafe" class="wrapper">
-        <div class="inner flex flex-3 foodContainer">
+        <div class="inner flex-allsurvey flex-3 foodContainer">
             {{#카페_디저트}}
-                <div class="food-item">
+                <div class="food-item-allsurvey">
                     <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
@@ -85,9 +42,9 @@
 
 
     <section id="Korea" class="wrapper style1 special">
-        <div class="inner flex flex-3 foodContainer">
+        <div class="inner flex-allsurvey flex-3 foodContainer">
             {{#한식}}
-                <div class="food-item">
+                <div class="food-item-allsurvey">
                     <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
@@ -102,9 +59,9 @@
     </section>
 
     <section id="Meat" class="wrapper">
-        <div class="inner flex flex-3 foodContainer">
+        <div class="inner flex-allsurvey flex-3 foodContainer">
             {{#고기_구이}}
-                <div class="food-item">
+                <div class="food-item-allsurvey">
                     <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
@@ -120,9 +77,9 @@
 
 
     <section id="Worlds" class="wrapper style1 special">
-        <div class="inner flex flex-3 foodContainer">
+        <div class="inner flex-allsurvey flex-3 foodContainer">
             {{#일식_중식_세계음식}}
-                <div class="food-item">
+                <div class="food-item-allsurvey">
                     <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
@@ -137,9 +94,9 @@
     </section>
 
     <section id="Night" class="wrapper">
-        <div class="inner flex flex-3 foodContainer">
+        <div class="inner flex-allsurvey flex-3 foodContainer">
             {{#나이트라이프}}
-                <div class="food-item">
+                <div class="food-item-allsurvey">
                     <img src="/images/foods/{{food_id}}.png" alt="{{name}}" loading="lazy">
                     <h3 class="nameTag">{{name}}</h3>
                     <!--            <input type="range" min="0" max="10" value="5" class="range-slider">-->
@@ -155,7 +112,7 @@
 
 
     <section id="" class="wrapper">
-        <div class="inner flex flex-3"
+        <div class="inner flex-allsurvey flex-3"
              style="    align-items: center;
                         justify-content: center">
             <button class="submit-button" type="submit">저장</button>
@@ -163,4 +120,4 @@
     </section>
 </form>
 
-{{>layouts/footer}}
+{{>layouts/scripts}}

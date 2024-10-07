@@ -54,7 +54,7 @@ public class mainController {
         if (loggedInUser != null) {
             addressService.showAddressList(session, model);
         }
-        return "intensify/maintest";
+        return "intensify/main";
     }
 
     // 2. 로그인 페이지로 이동
