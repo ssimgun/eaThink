@@ -80,9 +80,9 @@ public class MenuRecommendationService {
         DateTimeFormatter formatterT = DateTimeFormatter.ofPattern("HH");
         String formattedDateTimeM = today.format(formatterM);
         String formattedDateTimeT = today.format(formatterT);
-        List<String> brunchT = Arrays.asList("15", "16", "17");
-        List<String> lunchT = Arrays.asList("09", "10", "11","12", "13","14");
-        List<String> DrinkT = Arrays.asList("18", "19","20", "21", "22");
+        List<String> brunchT = Arrays.asList("14","15", "16");
+        List<String> lunchT = Arrays.asList("09", "10", "11","12", "13");
+        List<String> DrinkT = Arrays.asList("20", "21", "22");
 
         //온도와 구름상태
         Integer pty = Integer.parseInt(weather_data.getPty());
@@ -103,8 +103,8 @@ public class MenuRecommendationService {
         List<String> winterFoods = Arrays.asList("회", "해물탕/해물요리/꽃게", "쌀국수", "사케", "칵테일", "바", "씨푸드", "동남아음식", "와인", "스테이크하우스");
 
         //Time
-        List<String> brunch = Arrays.asList("베이커리/제과점", "카페/커피숍", "컵케익", "도넛", "브런치", "간식/디저트", "카페테리아/식당", "애견카페", "북카페");
-        List<String> lunch = Arrays.asList("패스트푸드", "돈가스", "한정식", "설렁탕/곰탕/도가니탕", "칼국수/국수/우동/쫄면", "찌개/전골/국/탕", "비빔밥/돌솥밥/쌈밥", "해장국/국밥", "순대국", "감자탕", "순두부");
+        List<String> brunch = Arrays.asList("베이커리/제과점", "카페/커피숍", "컵케익", "도넛", "브런치", "간식/디저트", "카페테리아/식당");
+        List<String> lunch = Arrays.asList("돈가스", "한정식", "설렁탕/곰탕/도가니탕", "칼국수/국수/우동/쫄면", "찌개/전골/국/탕", "비빔밥/돌솥밥/쌈밥", "해장국/국밥", "순대국", "감자탕", "순두부");
         List<String> drinks = Arrays.asList("소주", "막걸리/동동주", "포장마차", "실내포장마차", "사케", "맥주/호프", "와인", "바", "칵테일", "호텔바");
 
         List<SurveyFood> finalFoodScore = new ArrayList<>();

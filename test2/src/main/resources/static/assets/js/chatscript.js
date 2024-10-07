@@ -1,6 +1,7 @@
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".chatbox");
+const chatscroll = document.querySelector(".chat-scroll");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 let userMessage = null; // 사용자 메시지를 저장하기 위한 변수
@@ -43,11 +44,23 @@ const knowledgeBtn = document.getElementById("knowledge");
 recommendBtn.addEventListener("click", () => {
     currentEndpoint = '/chat_recommend/';
     chatbox.appendChild(createChatLi("<strong>추천</strong> 모드를 선택하셨습니다!", "incoming", true));
+    maximizeBtn.click();
+    chatbox.scrollTo(0, chatbox.scrollHeight);
+    chatscroll.scrollIntoView({
+           behavior: 'smooth'
+    });
+
 });
 
 knowledgeBtn.addEventListener("click", () => {
     currentEndpoint = '/chat_knowledge/';
     chatbox.appendChild(createChatLi("<b>지식</b> 모드를 선택하셨습니다!", "incoming", true));
+    maximizeBtn.click();
+    chatbox.scrollTo(0, chatbox.scrollHeight);
+    chatboxContain.scrollTo(0, chatboxContain.scrollHeight);
+    chatscroll.scrollIntoView({
+           behavior: 'smooth'
+    });
 });
 
 const generateResponse = async (chatElement) => {
@@ -349,9 +362,8 @@ document.getElementById("search-button").addEventListener("click", function(even
     document.getElementById("send-btn").click();
 
     // 챗봇 위치로 스크롤 이동
-    document.getElementById("chatbot-container").scrollIntoView({
+    document.querySelector(".chat-scroll").scrollIntoView({
        behavior: 'smooth'
     });
-
 
 });

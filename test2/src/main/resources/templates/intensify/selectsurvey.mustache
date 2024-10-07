@@ -1,4 +1,5 @@
 {{>layouts/header}}
+{{>layouts/nav}}
 
 
 <section class="wrapper-selectsurvey style1 special">
@@ -6,24 +7,25 @@
         <ul style="list-style: none;">
             <li>본 설문은 사용자의 취향을 반영하여 식당 및 메뉴 추천을 하기 위한 설문입니다!</li>
             <li>가볍게 생각나는대로 음식에 대한 자신의 선호도를 표시해주세요</li>
+            <p> </p>
             <h4>!설문이 끝난 뒤 반드시 저장버튼을 눌러주세요!</h4>
         </ul>
     </div>
 </section>
 
-<section id="Western" class="wrapper-selectsurvey">
-    <div class="inner-selectsurvey flex-selectsurvey flex-3">
-        <a href="/survey/randomSurvey" class="button scrolly" style="margin:10px">랜덤 설문</a>
-        <a href="/survey/allSurvey" class="button scrolly" style="margin:10px">전체 설문</a>
-    </div>
+<section id="" class="wrapper-selectsurvey">
+    <ul class="button-survey">
+        <li><a href="/survey/randomSurvey" class="button scrolly">랜덤 설문</a></li>
+        <li><a href="/survey/allSurvey" class="button scrolly" style="background-color: #21AB72;">전체 설문</a></li>
+    </ul>
 </section>
+
 
 <section class="wrapper-selectsurvey style1 special">
     <div class="inner-selectsurvey flex-selectsurvey flex-3">
         <ul style="list-style: none;">
             <li>전체 설문은 6개 카테고리의 태그들이 총 73개로 이루어져있습니다</li>
             <li>랜덤 설문은 이 중에서 24개의 태그들만 이루어져있습니다</li>
-
         </ul>
     </div>
 </section>
