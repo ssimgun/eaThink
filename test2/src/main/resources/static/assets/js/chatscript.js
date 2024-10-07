@@ -61,7 +61,7 @@ const generateResponse = async (chatElement) => {
         "Content-Type": "application/json",
         "X-API-Key": "MY_API_KEY"
      },
-    body: JSON.stringify({ user_input: userMessage }),  // FastAPI에 맞게 수정
+    body: JSON.stringify({ user_input: userMessage, x:x, y:y }),  // FastAPI에 맞게 수정
   }
 
   // POST 요청 보내기

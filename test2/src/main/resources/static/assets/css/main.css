@@ -3417,8 +3417,9 @@ body.is-loading #banner .content {
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
     width: 20%;
     font-size: large;
-
 }
+
+
 
 /*.weather-info:hover .details {
     display: block;
@@ -3468,9 +3469,24 @@ body.is-loading #banner .content {
         align-items: center;
     }
 
-
-
 }
+
+@media screen and (max-width: 560px) {
+    #header .weather-details {
+        display: none;
+        position: fixed;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 10px;
+        z-index: 1;
+        left: 50%;
+        right: 1em;
+        top: 3em;
+        border-radius: 10%;
+        box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
+        width: auto;
+        font-size: medium;
+    }
 
 /* 설문조사 선택 화면 */
 
