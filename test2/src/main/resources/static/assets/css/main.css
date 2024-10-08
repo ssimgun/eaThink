@@ -3473,9 +3473,24 @@ body.is-loading #banner .content {
         justify-content: center;
         align-items: center;
     }
+}
 
-
-
+@media screen and (max-width: 560px) {
+    #header .weather-details {
+        display: none;
+        position: fixed;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 10px;
+        z-index: 1;
+        left: 50%;
+        right: 1em;
+        top: 3em;
+        border-radius: 10%;
+        box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
+        width: auto;
+        font-size: medium;
+    }
 }
 
 /* 설문조사 선택 화면 */
@@ -3503,32 +3518,6 @@ body.is-loading #banner .content {
     align-items: stretch;
 }
 
-@media screen and (max-width: 980px) {
-.flex-selectsurvey {
-    display: -ms-flexbox;
-    -ms-flex-wrap: nowrap;
-    -ms-flex-pack: justify;
-    -ms-flex-align: stretch;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
-    display: flex;
-    -moz-flex-wrap: nowrap;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -moz-justify-content: space-between;
-    -webkit-justify-content: space-between;
-    -ms-justify-content: space-between;
-    justify-content: center;
-    -moz-align-items: stretch;
-    -webkit-align-items: stretch;
-    -ms-align-items: stretch;
-    align-items: stretch;
-    }
-}
-
-
 .wrapper-selectsurvey {
     padding: 6em 0 4em 0;
 }
@@ -3540,7 +3529,6 @@ body.is-loading #banner .content {
 .wrapper-selectsurvey.style1 {
     background: #ca604d;
     color: #fcdcd6;
-    margin: 50px 0 50px 0;
 }
 
 .wrapper-selectsurvey.style1 h1,
@@ -3575,6 +3563,39 @@ body.is-loading #banner .content {
         max-width: 70%;
     }
 
+    .inner-selectsurvey ul li{
+        padding-left: 0em;
+        font: initial;
+    }
+
+    .flex-selectsurvey {
+        display: -ms-flexbox;
+        -ms-flex-wrap: nowrap;
+        -ms-flex-pack: justify;
+        -ms-flex-align: stretch;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: flex;
+        -moz-flex-wrap: nowrap;
+        -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+        -moz-justify-content: space-between;
+        -webkit-justify-content: space-between;
+        -ms-justify-content: space-between;
+        justify-content: center;
+        -moz-align-items: stretch;
+        -webkit-align-items: stretch;
+        -ms-align-items: stretch;
+        align-items: stretch;
+        }
+
+    .wrapper-selectsurvey.style1 {
+        margin: 0px 0 0px 0;
+    }
+
+
 }
 
 @media screen and (max-width: 736px) {
@@ -3583,12 +3604,36 @@ body.is-loading #banner .content {
         max-width: 85%;
     }
 
+    .inner-selectsurvey ul h4 {
+        font-size: 0.5em;
+    }
+
 }
 
-.inner-map{
-    max-width:65%;
-    margin: 0 auto;
+.button-survey{
+    cursor: default;
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
 }
+
+@media screen and (max-width: 480px) {
+    .button-survey{
+        cursor: default;
+        list-style: none;
+        padding-left: 0;
+        display: block;
+        text-align: center;
+    }
+
+    .button-survey li {
+        padding-top: 1em;
+    }
+}
+
 
 /* 설문 이미지 스타일 */
 .food-item {
@@ -3597,10 +3642,38 @@ body.is-loading #banner .content {
     margin-bottom: 2em;
 }
 
+
+
 .food-item img {
     width: 100%; /* 이미지의 너비 */
     border-radius: 8px; /* 이미지 테두리 둥글게 */
 }
+
+@media screen and (max-width: 980px){
+    .food-item{
+        width: 150px; /* 각 아이템의 너비 */
+        text-align: center; /* 텍스트 가운데 정렬 */
+        margin-bottom: 2em;
+    }
+}
+
+@media screen and (max-width: 776px){
+    .food-item{
+        width: 140px; /* 각 아이템의 너비 */
+        text-align: center; /* 텍스트 가운데 정렬 */
+        margin-bottom: 2em;
+    }
+}
+
+
+@media screen and (max-width: 447px){
+    .food-item{
+        width: 130px; /* 각 아이템의 너비 */
+        text-align: center; /* 텍스트 가운데 정렬 */
+        margin-bottom: 2em;
+    }
+}
+
 
 .range-slider {
     width: 100%; /* 슬라이더의 너비 */
@@ -3610,6 +3683,20 @@ body.is-loading #banner .content {
 .nameTag {
     font-size: inherit;
     margin: none;
+}
+
+@media screen and (max-width:980){
+    .nameTag {
+        font-size : 0.9em;
+        margin: none;
+    }
+}
+
+@media screen and (max-width:778){
+    .nameTag {
+        font-size : 0.8em;
+        margin: none;
+    }
 }
 
 /* 화면 축소 시 지도 크기 축소 */
@@ -3901,7 +3988,7 @@ body.is-loading #banner .content {
         .flex-allsurvey {
         display: flex; /* 플렉스 컨테이너 */
         gap: 20px; /* 아이템 간격 */
-        overflow-x: auto;
+        overflow-x: hidden;
         white-space: nowrap;
         padding: 10px;
         webkit-flex-wrap: unset;
@@ -3936,4 +4023,10 @@ body.is-loading #banner .content {
 .title_style{
     border-bottom:1px solid;
     padding-bottom:1px;
+}
+
+/* 음식점 정보 창*/
+.inner-map{
+    max-width:65%;
+    margin: 0 auto;
 }

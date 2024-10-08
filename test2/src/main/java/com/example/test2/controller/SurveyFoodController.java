@@ -57,7 +57,7 @@ public class SurveyFoodController {
         model.addAttribute("preferenceMap", preferenceMap);
 
         // 카테고리별 음식 랜덤 추출
-        String[] foodTypes = {"양식", "카페_디저트", "한식", "고기_구이", "일식_중식_세계음식", "나이트라이프"};
+        String[] foodTypes = {"양식", "카페_디저트", "한식", "고기_구이", "일식_중식_세계음식", "나이트라이프", "요리수준"};
         Map<String, List<SurveyFood>> foodsMap = new HashMap<>();
 
         for (String foodType : foodTypes) {
@@ -104,7 +104,7 @@ public class SurveyFoodController {
         }
         service.savePreference(userId, preferencesMap);
 
-        return "redirect:/home";
+        return "redirect:/main";
     }
 
     // 4. main 화면 음식 출력
