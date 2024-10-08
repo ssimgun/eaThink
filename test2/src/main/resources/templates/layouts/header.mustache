@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
         const loggedInUser = {{# loggedInUser}} true {{/loggedInUser}}{{^ loggedInUser}} false {{/loggedInUser}};
-        const user_id = {{# loggedInUser}} {{id}}{{/loggedInUser}}
+        const user_id = {{# loggedInUser}}{{id}}{{/loggedInUser}}{{^ loggedInUser}}0{{/loggedInUser}};
         let x,y,map;
     </script>
     <link rel="stylesheet" href="/assets/css/main.css">
