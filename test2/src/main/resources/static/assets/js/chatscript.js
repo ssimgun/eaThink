@@ -259,11 +259,11 @@ function fetchRestaurantByName(restaurantName){
                         </div>
                         <div class="preference">
                             <div class="preference_element">
-                                <span style="color:blue;" class="material-symbols-outlined">sentiment_excited</span>
+                                <span style="color:#4747cd;" class="material-symbols-outlined">sentiment_excited</span>
                                 <p>${restaurant.positive_reviews}</p>
                             </div>
                             <div class="preference_element">
-                                <span style="color: red;" class="material-symbols-outlined">sentiment_sad</span>
+                                <span style="color: #d01a1a;" class="material-symbols-outlined">sentiment_sad</span>
                                 <p>${restaurant.negative_reviews}</p>
                             </div>
                         </div>
@@ -273,12 +273,43 @@ function fetchRestaurantByName(restaurantName){
                             </div>
                             <div class="final_score">
                                 <span>음식점 점수 : ${restaurant.final_score}
-                                     <span class="material-symbols-outlined">help</span>
+                                     <span class="material-symbols-outlined" id="help_score">help</span>
                                 </span>
+                                <ul class="score-info" id="score_info">
+                                    점수 집계방법
+                                    <li style="opacity:0.6; font-size:0.8em">
+                                        네이버 리뷰를 바탕으로 집계되었습니다
+                                    </li>
+                                    <li>
+                                        <span class="material-symbols-outlined">
+                                        chevron_right
+                                        </span>재방문 횟수 3회 이상
+                                    </li>
+                                    <li>
+                                        <span class="material-symbols-outlined">
+                                        chevron_right
+                                        </span>긍정/부정 리뷰 기반
+                                    </li>
+                                    <li>
+                                        <span class="material-symbols-outlined">
+                                        chevron_right
+                                        </span>음식품질/가격/서비스/편의성/추천
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     `;
                     restaurantContainer.appendChild(restaurantElement);
+
+                    var help_score = document.getElementById('help_score');
+                    var scoreInfo = document.getElementById('score_info');
+                    help_score.addEventListener('mouseover', function() {
+                        scoreInfo.style.display = 'block'; // 정보 표시
+                    });
+
+                    help_score.addEventListener('mouseout', function(){
+                        scoreInfo.style.display = 'none';
+                    });
 
                     // 마지막으로 열린 음식점 요소 저장
                     let lastOpenedRestaurantElement = null;
