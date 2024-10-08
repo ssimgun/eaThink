@@ -80,6 +80,25 @@ public class SurveyFoodController {
 
         foodsMap.forEach(model::addAttribute);
 
+        List<SurveyFood> cookinglevel = foodsMap.get("요리수준");
+        if(cookinglevel != null && !cookinglevel.isEmpty()) {
+            // 요리 수준 값만 추출
+            List<Integer> cookinglevelPreferences = cookinglevel.stream()
+                    .map(SurveyFood::getPreference).toList();
+            // 요리수준 값 가져오기
+            Integer userCookingPreference = cookinglevelPreferences.get(cookinglevelPreferences.size() -1);
+
+            if(userCookingPreference.equals(1)){
+                model.addAttribute("level1", userCookingPreference);
+            } else if (userCookingPreference.equals(2)) {
+                model.addAttribute("level2", userCookingPreference);
+            } else if (userCookingPreference.equals(3)) {
+                model.addAttribute("level3", userCookingPreference);
+            } else if (userCookingPreference.equals(4)) {
+                model.addAttribute("level4", userCookingPreference);
+            }
+        }
+
         if ("random".equals(surveyType)) {
             return "intensify/randomsurvey";
         } else {

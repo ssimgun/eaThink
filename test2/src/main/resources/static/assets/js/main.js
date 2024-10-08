@@ -158,6 +158,39 @@ document.addEventListener('DOMContentLoaded', function() {
     weatherInfo.addEventListener('mouseleave', function() {
         detailsInfo.style.display = 'none';
     });
+
+     // 요리 수준 미 선택시 저장 비 활성화
+    const surveyForm = document.getElementById('surveyForm');
+    const surveyRadios = document.querySelectorAll('input[name="99"]');
+    const surveySubmit = document.getElementById('surveySubmit');
+
+    let isAnyChecked = Array.from(surveyRadios).some(radio => radio.checked);
+
+    surveySubmit.disabled = !isAnyChecked; // 체크된 라디오가 있으면 활성화
+
+    // 라디오 버튼의 상태가 변경되면 저장 버튼 활성화
+    surveyRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            surveySubmit.disabled = false; // 하나라도 선택되면 활성화
+        });
+    });
+
+    // 폼 제출 시 선택된 값이 없을 경우 제출을 막고 경고 메시지 표시
+    surveyForm.addEventListener("submit", function(event){
+        let isChecked = false;
+
+        surveyRadios.forEach(radio => {
+            if (radio.checked) {
+                isChecked = true;
+            }
+        });
+
+        if (!isChecked) {
+            event.preventDefault();
+            alert("요리 수준을 선택해주세요.");
+        }
+    });
+
 });
 
 // 주소 목록 변경시 날씨 정보 업데이트
