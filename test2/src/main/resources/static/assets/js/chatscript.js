@@ -82,13 +82,40 @@ const generateResponse = async (chatElement) => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "챗봇 유형을 선택해주세요!");
 
+    console.log(data.type);
+    console.log(data.bot_output);
+    if(data.type ==="음식점"){
     // 챗봇 응답을 메시지 요소에 업데이트
-    messageElement.textContent = data.bot_output; // FastAPI의 응답에 맞게 수정
-    const restaurantName = getNameFromChatbot(); // 챗봇 응답 후 해당 음식점 이름 추출
-    if (restaurantName) {
-        fetchRestaurantByName(restaurantName); // 추출한 음식점 이름으로 비동기 요청 후 마커 생성
-    }
-  } catch (error) {
+        messageElement.textContent = data.bot_output; // FastAPI의 응답에 맞게 수정
+        const restaurantName = getNameFromChatbot(); // 챗봇 응답 후 해당 음식점 이름 추출
+        if (restaurantName) {
+            fetchRestaurantByName(restaurantName); // 추출한 음식점 이름으로 비동기 요청 후 마커 생성
+        }
+    } else if (data.type === "레시피") {
+        const recipeData = data.bot_output;
+        const recipeName = recipeData.name;
+        const recipeImg = recipeData.img;
+        const recipeSummary = recipeData.summary;
+        const recipeAmount = recipeData.amount;
+        const recipeTime = recipeData.time;
+        const recipeDifficulty = recipeData.difficulty;
+        const recipeIngredients = recipeData.ingredients;
+        const recipeSteps = recipeData.recipe;
+
+        messageElement.innerHTML = `
+            <h2>${recipeName}</h2>
+            <img src="${recipeImg}" alt="${recipeName}" style="max-width:50%;">
+            <p><strong>요약:</strong> ${recipeSummary}</p>
+            <p><strong>분량:</strong> ${recipeAmount}</p>
+            <p><strong>조리 시간:</strong> ${recipeTime}</p>
+            <p><strong>난이도:</strong> ${recipeDifficulty}</p>
+            <p><strong>재료:</strong> ${recipeIngredients}</p>
+            <p><strong>조리법:</strong></p>
+            <p>${recipeSteps.replace(/\|/g, '<br><br>')}</p> `;
+     } else if (data.type === "분류불가"){
+            messageElement.textContent = data.bot_output;
+  }
+  catch (error) {
     messageElement.classList.add("error");
     messageElement.textContent = error.message;
   } finally {
@@ -170,6 +197,8 @@ function calculateDistance(current_x, current_y, data_x, data_y) {
     const distance = earthRadius * c; // 결과를 미터로 변환
     return distance;
 }
+
+
 
 // 챗봇 출력값에서 음식점 이름 추출
 function getNameFromChatbot(){
@@ -387,7 +416,7 @@ document.getElementById("search-button").addEventListener("click", function(even
 
     // 메시지 입력칸에 텍스트 자동 추가
     const messageInput = document.querySelector(".chat-input textarea");
-    messageInput.value = `${recommendedFood}`
+    messageInput.value = `${recommendedFood} 맛집 추천해줘`
 
     // 메시지 바로 전송
     document.getElementById("send-btn").click();

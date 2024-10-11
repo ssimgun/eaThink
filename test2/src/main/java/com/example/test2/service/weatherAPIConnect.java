@@ -204,7 +204,7 @@ public class weatherAPIConnect {
         // sky + pty 정보에 따른 이미지 변경
         String weatherImageName = weather_data.getPty();
         String skyValue = weather_data.getSky();
-        if(weatherImageName.equals("0")){
+        if(weatherImageName != null && weatherImageName.equals("0")){
             switch (skyValue){
                 case "1":
                     weatherImageName = "sun";
