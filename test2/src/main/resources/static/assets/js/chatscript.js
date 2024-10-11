@@ -87,9 +87,11 @@ const generateResponse = async (chatElement) => {
     if(data.type ==="음식점"){
     // 챗봇 응답을 메시지 요소에 업데이트
         messageElement.textContent = data.bot_output; // FastAPI의 응답에 맞게 수정
-        const restaurantName = getNameFromChatbot(); // 챗봇 응답 후 해당 음식점 이름 추출
-        if (restaurantName) {
-            fetchRestaurantByName(restaurantName); // 추출한 음식점 이름으로 비동기 요청 후 마커 생성
+        const restaurantNames = getNameFromChatbot(); // 챗봇 응답 후 해당 음식점 이름 추출
+        if (restaurantNames) {
+           restaurantNames.forEach(restaurantName => { // 화살표 함수로 수정
+           fetchRestaurantByName(restaurantName); // 추출한 음식점 이름으로 비동기 요청 후 마커 생성
+       });
         }
     } else if (data.type === "레시피") {
         const recipeData = data.bot_output;
@@ -112,16 +114,17 @@ const generateResponse = async (chatElement) => {
             <p><strong>재료:</strong> ${recipeIngredients}</p>
             <p><strong>조리법:</strong></p>
             <p>${recipeSteps.replace(/\|/g, '<br><br>')}</p> `;
-     } else if (data.type === "분류불가"){
-            messageElement.textContent = data.bot_output;
-  }
-  catch (error) {
+     } else if (data.type === "지식"){
+            messageElement.textContent = data.bot_output; // FastAPI의 응답에 맞게 수정
+
+    }
+  }catch (error) {
     messageElement.classList.add("error");
-    messageElement.textContent = error.message;
+    messageElement.textContent = "서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.";
   } finally {
     chatbox.scrollTo(0, chatbox.scrollHeight);
   }
-}
+};
 
 const handleChat = () => {
   userMessage = chatInput.value.trim();
@@ -203,20 +206,19 @@ function calculateDistance(current_x, current_y, data_x, data_y) {
 // 챗봇 출력값에서 음식점 이름 추출
 function getNameFromChatbot(){
     const chatbotOutputElement = document.querySelector("#chatbot-container > div > ul > .chat.incoming:last-child > p");
-    let restaurantName;
     if(chatbotOutputElement){
         var chatbotOutput = chatbotOutputElement.textContent; // 출력 텍스트 가져오기
-        var lines = chatbotOutput.split('\n'); // 줄바꿈 기준으로 나누기
-        var test = lines[0].split(' ')[0] // 테스트
-        console.log(test); // 테스트
-        restaurantName = test; // 첫 번째 줄이 음식적 이름
-
+        var restaurantNames = chatbotOutput.split(',').map(name => name.trim()); // ,로 구분 후 양쪽 공백 제거
+        console.log("추출한 음식점 이름:",restaurantNames);
     } else{
         console.error('출력 요소를 찾을 수 없습니다. ')
 
     }
-    return restaurantName;
+    return restaurantNames;
 }
+
+// 마지막으로 열린 음식점 요소 저장
+let lastOpenedRestaurantElement = null;
 
 // 추출한 음식점 이름로 데이터베이스에 조회 => 해당 음식점이름에 해당하는 음식점 row 를 List 로 반환
 function fetchRestaurantByName(restaurantName){
@@ -247,7 +249,7 @@ function fetchRestaurantByName(restaurantName){
                 }
 
                 // 현재 위치와 음식점 위치 계산
-                if(calculateDistance(x, y, food_x, food_y) <= 500){
+                if(calculateDistance(x, y, food_x, food_y) <= 10000){
                     var position = new naver.maps.LatLng(food_y, food_x);
 
                     // 음식점 마커 옵션
@@ -353,8 +355,8 @@ function fetchRestaurantByName(restaurantName){
                         scoreInfo.style.display = 'none';
                     });
 
-                    // 마지막으로 열린 음식점 요소 저장
-                    let lastOpenedRestaurantElement = null;
+//                    // 마지막으로 열린 음식점 요소 저장
+//                    let lastOpenedRestaurantElement = null;
 
                     // 해당음식점 마커 클릭시 음식점 정보 나타내기
                     naver.maps.Event.addListener(restaurantMarker, 'click', function() {
