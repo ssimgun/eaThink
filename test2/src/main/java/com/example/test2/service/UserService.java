@@ -6,6 +6,7 @@ import com.example.test2.entity.Address;
 import com.example.test2.entity.Users;
 import com.example.test2.entity.Weather_data;
 import com.example.test2.repository.AddressRepository;
+import com.example.test2.repository.SurveyFoodRepository;
 import com.example.test2.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -31,6 +32,9 @@ public class UserService {
 
     @Autowired
     private weatherAPIConnect weatherAPIConnect;
+
+    @Autowired
+    private SurveyFoodRepository surveyFoodRepository;
 
 
 //    로그인 시 회원 정보 있는지 확인
@@ -133,7 +137,9 @@ public class UserService {
     public boolean deleteUserById(Integer Id){
         if (Id != null){
             addressRepository.deleteById(Id);
+            surveyFoodRepository.deleteById(Id);
             userRepository.deleteById(Id);
+
             return true;
         }else {
             return false;

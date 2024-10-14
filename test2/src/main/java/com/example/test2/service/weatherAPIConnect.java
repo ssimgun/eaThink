@@ -51,7 +51,9 @@ public class weatherAPIConnect {
         DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH00");
 
         String base_date = now.format(formatterDay);
+//        String base_date = "20241013";
         String base_time = previousHour.format(formatterHour);
+//        String base_time = "2300";
 
         // 요청지역 변수
         String nx = weather_data.getNx();
@@ -78,6 +80,7 @@ public class weatherAPIConnect {
         //완료된 요청 url 생성 httpURLConnection 객체 활용 api 요청
         URL url = new URL(urlBuilder.toString());
 
+        log.info(url.toString());
         return url;
     }
 

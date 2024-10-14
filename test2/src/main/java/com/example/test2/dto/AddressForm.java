@@ -15,7 +15,7 @@ public class AddressForm {
     private Integer id;
     private String address;
     private String address_name;
-    private Integer userId;
+    private String userId;
 
     private UserRepository userRepository;
 

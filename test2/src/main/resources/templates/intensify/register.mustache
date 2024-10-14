@@ -114,7 +114,7 @@
                     <div id="addressMessage" style="padding-top:10px"></div> <!-- 적합성 유효 메시지 표시 -->
                 </div>
                 <div class="3u$ 12u$(small)">
-                    <input type="button" onclick="sample3_execDaumPostcode()" value="주소찾기" class="fit">
+                    <input type="button" onclick="execDaumPostcode()" value="주소찾기" class="fit">
                 </div>
             </div>
             <!-- 별칭 -->
@@ -140,4 +140,15 @@
 </section>
 
 {{>layouts/footer}}
-{{>layouts/scripts}}
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.scrolly.min.js"></script>
+<script src="/assets/js/skel.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/assets/js/register.js"></script>
+<script src="/assets/js/addressList.js"></script>
+
+</body>
+</html>

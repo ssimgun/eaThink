@@ -27,6 +27,7 @@ public class WeatherTestController {
     // 1. 정각마다 주소지별 날씨 정보 업데이트
     // 매시각 정각에 업데이트
     @Scheduled(cron = "0 0 */1 * * *")
+//    @Scheduled(cron = "0 */1 * * * *")
     public String getWeather() throws Exception {
 
         // DB에 등록된 주소 정보 가져오기
