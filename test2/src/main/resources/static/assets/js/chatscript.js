@@ -345,18 +345,15 @@ function fetchRestaurantByName(restaurantName){
                     `;
                     restaurantContainer.appendChild(restaurantElement);
 
-                    var help_score = document.getElementById('help_score');
-                    var scoreInfo = document.getElementById('score_info');
-                    help_score.addEventListener('mouseover', function() {
+                    const helpScore = restaurantElement.querySelector('#help_score');
+                    const scoreInfo = restaurantElement.querySelector('#score_info');
+                    helpScore.addEventListener('mouseover', function() {
                         scoreInfo.style.display = 'block'; // 정보 표시
                     });
 
-                    help_score.addEventListener('mouseout', function(){
+                    helpScore.addEventListener('mouseout', function(){
                         scoreInfo.style.display = 'none';
                     });
-
-//                    // 마지막으로 열린 음식점 요소 저장
-//                    let lastOpenedRestaurantElement = null;
 
                     // 해당음식점 마커 클릭시 음식점 정보 나타내기
                     naver.maps.Event.addListener(restaurantMarker, 'click', function() {
