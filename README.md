@@ -14,6 +14,5 @@
 <li>Framework : Spring boot(JPA), FastAPI 
 <li>Language : JAVA, Javascript, HTML5, CSS3, Python</li>
 <li>Tool : IntelliJ IDEA, VSCode, Dbeaver</li>
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=ssimgun)](https://github.com/anuraghazra/github-readme-stats)
 <br>
 <h3>내용</h3>
